@@ -1,0 +1,73 @@
+.canvas.popup_box {
+    display: block;
+    position: fixed;
+    cursor: pointer;
+    background: #FFF;
+    z-index: 100000;
+    margin: 0;
+    padding: 0;
+    max-height: 90%;
+}
+
+.canvas .popup_box_main {
+    border: 1px solid #BFBFBF;
+    margin: 10px;
+    padding: 10px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.135);
+    box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.13);
+}
+
+.canvas .popup_box_header_image, .canvas .popup_box_header2_image {
+    display: none;
+}
+
+.canvas .popup_box_heading {
+    margin: -.35em 35px inherit inherit;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #111;
+    white-space: nowrap;
+}
+
+.canvas .popup_box_message {
+    color: #444;
+    line-height: 1.2em;
+}
+
+.canvas .popup_icon {
+    max-width: 100px;
+    float: right;
+    vertical-align: top;
+    border-radius: 2px;
+    padding: 0 10px;
+}
+
+.canvas .popup_box_footer {
+    display: block;
+}
+
+.canvas .popup_box_footer_image {
+    display: none;
+}
+
+.canvas .popup_box_close {
+    position: absolute;
+    cursor: pointer;
+    background: no-repeat url(../../images/clear-header.png) 0 -195px;
+    right: 10px;
+    top: 20px;
+    width: 21px;
+    display: inline-block;
+    height: 13px;
+}
+
+.canvas .popup_box_hr {
+    display: none;
+}
+
+.canvas .powered_by {
+    margin: -0.5em 10px 0.5em 10px;
+}
