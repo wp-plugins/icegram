@@ -1,0 +1,116 @@
+.air-mail .popup-container {
+    position: relative;
+    color: hsl(0, 100%, 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+    display: block;
+    padding: 1em 0;
+    z-index: 100000;
+}
+
+.air-mail .popup-headline {
+    display: block;
+    margin-bottom: 1em;
+    font-size: 2.5em;
+    line-height: 1em;
+    font-weight: 600;
+    text-align: center;
+    color: hsl(206, 69%, 47%);
+    text-shadow: 0 1px 0 #FFF;
+    line-height: normal;
+}
+
+.air-mail .popup-image {
+    display: block;
+    float: right;
+    margin: 0 1em;
+}
+
+.air-mail .popup-message {
+    color: hsl(0, 0%, 44%);
+    margin-bottom: 1em;
+    padding: 0 1em;
+    font-size: 1.2em;
+}
+
+.air-mail .popup-close {
+    background: url(../../images/chosen-sprite.png) no-repeat -43px 0;
+    height: 10px;
+    width: 10px;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    zoom: 1.5;
+}
+
+.air-mail .popup-button, div.air-mail input[type="submit"], div.air-mail input[type="button"] {
+    background: hsl(6, 78%, 57%);
+    width: 50%;
+    display: block;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-bottom: 3px solid hsl(6, 63%, 46%);
+    font-size: 16px;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 auto;
+    padding: 16px 0 13px;
+}
+
+.air-mail .popup-button:hover, div.air-mail input[type="submit"]:hover, div.air-mail input[type="button"]:hover {
+    margin-top: -3px;
+    border-bottom: 6px solid #c0392b;
+}
+
+.air-mail #TB_ajaxContent {
+    overflow: hidden;
+    height: auto !important;
+    width: auto !important;
+    position: relative;
+    display: block;
+    background: #F2F2F2;
+    background-image: -moz-linear-gradient(bottom, #e5e5e5 0%, #f7f7f7 100%);
+    background-image: -o-linear-gradient(bottom, #e5e5e5 0%, #f7f7f7 100%);
+    background-image: -webkit-linear-gradient(bottom, #e5e5e5 0%, #f7f7f7 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e5e5e5 0%), color-stop(1, #f7f7f7 100%));
+    filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#e5e5e5 0%, EndColorStr=#f7f7f7 100%)";
+    background-image: linear-gradient(bottom, #e5e5e5 0%, #f7f7f7 100%);
+}
+
+.air-mail#TB_window {
+    height: auto !important;
+    position: absolute;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    border: 0;
+}
+
+.air-mail#TB_window:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -moz-box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.75), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.75), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.75), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    background: #D1D1D1;
+    background: repeating-linear-gradient(45deg, #b37b7a, #b37b7a 10px, transparent 10px, transparent 20px, #7897ba 20px, #7897ba 30px, transparent 30px, transparent 40px);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    content: "";
+}

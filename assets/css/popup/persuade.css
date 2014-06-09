@@ -1,0 +1,105 @@
+.persuade .popup-container {
+    z-index: 100000;
+}
+.persuade .popup-headline {
+    line-height: 1em;
+    letter-spacing: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: hsl(0, 100%, 100%);
+    font-size: 3em;
+    font-weight: 700;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    margin: .25em auto;
+}
+
+.persuade .popup-image {
+    display: block;
+    float: left;
+    margin: 0 1em; 
+}
+
+.persuade .popup-message {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #FFF;
+    font-size: 1.75em;
+    line-height: normal;
+    font-weight: 300;
+    margin: .5em auto 1em;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1em;
+}
+
+.persuade .popup-close {
+    background-image: url(../../images/popup-close.png);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    height: 32px;
+    width: 30px;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    cursor: pointer
+}
+
+.persuade .popup-close:hover {
+    background-position: left top;
+}
+
+.persuade .popup-button, div.persuade input[type="submit"], div.persuade input[type="button"] {
+    color: hsl(0, 100%, 100%);
+    text-decoration: none;
+    background-color: hsl(0, 0%, 26%);
+    font-size: 2em;
+    font-weight: 400;
+    width: 60%;
+    display: block;
+    -moz-border-radius: .6em;
+    -webkit-border-radius: .6em;
+    border-radius: .6em;
+    -moz-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    -webkit-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    -moz-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    text-align: center;
+    cursor: pointer;
+    margin: .2em auto .5em;
+    padding: 0.5em;
+    line-height: 1.2em;
+    clear: both;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.persuade .popup-button:hover, div.persuade input[type="submit"]:hover, div.persuade input[type="button"]:hover {
+    -moz-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    -webkit-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    -moz-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    -webkit-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    position: relative;
+    top: .2em
+}
+
+.persuade #TB_ajaxContent {
+    overflow: hidden;
+    height: auto !important;
+    width: auto !important;
+    border: .6em dashed hsl(0, 100%, 100%);
+}
+
+.persuade#TB_window {
+    height: auto !important;
+    position: absolute;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: hsl(1, 83%, 62%);
+}

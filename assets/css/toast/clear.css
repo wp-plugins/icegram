@@ -1,0 +1,67 @@
+.clear.toast-container {
+	border: 3px solid rgba(0, 0, 0, 0.4);
+	-moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+    border-radius: .5em;
+    background: #fff;
+}
+
+.clear .toast-wrapper {
+	overflow: hidden;
+	padding: 9px 9px 10px 53px;
+	position: relative;
+	min-height: 34px;
+}
+
+.clear .toast-title, .clear .toast, .clear .toastwrapper, .clear .toast-icon {
+	position: relative;
+}
+
+.clear .toast-title, .clear .toast-message {
+	text-align: left;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.clear .toast-title {
+	color: #222;
+	letter-spacing: 0.7pt;
+	line-height: 16px;
+	display: inline-block;
+	clear: none;
+	margin: 0;
+}
+
+.clear .toast-message {
+	color: #444;
+	margin: 3px 0 0;
+	text-align: left;
+	line-height: 15px;
+}
+
+.clear .toastwrapper {
+	padding: 0 0 0 11px;
+	min-height: 34px;
+}
+
+.clear .toast-icon {
+	max-height: 32px;
+	max-width: 32px;
+	left: 10px;
+	top: 15px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+	position: absolute;
+	z-index: 2;
+}
+
+.clear .toast-iconshadow {
+	position: absolute;
+	left: 13px;
+	top: 8px;
+	background: #000;
+	z-index: 1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+	filter: alpha(opacity=25);
+	opacity: 0.25;
+}
