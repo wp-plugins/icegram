@@ -80,8 +80,11 @@ Icegram is actively developed. If you can't find your favorite feature (or have 
 Contact Us, provide as much detail of the problem as you can. We will try to solve the problem ASAP.
 
 == Screenshots ==
+
 1. Different Icegram messages
+
 2. The Icegram workflow
+
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
