@@ -64,20 +64,20 @@ class WP_Campaign {
 
 	function add_campaigns_metaboxes() {
 
-		$meta_box_title =  '<label class="options_header" for="icegram_messages">' . __( 'Message &mdash; ', 'translate_icegram' ) . '</label>
-							<select id="icegram_messages" name="icegram_messages[]" class="ajax_chosen_select_messages" data-placeholder="' . __( 'Search to add / Create new&hellip;', 'translate_icegram' ) . '">';
+		$meta_box_title =  '<label class="options_header" for="icegram_messages">' . __( 'Message &mdash; ', 'icegram' ) . '</label>
+							<select id="icegram_messages" name="icegram_messages[]" class="ajax_chosen_select_messages" data-placeholder="' . __( 'Search to add / Create new&hellip;', 'icegram' ) . '">';
 
 		$promotype = apply_filters( 'icegram_all_message_type', array() );
 		$meta_box_title .= '<option value=""></option>';
 		foreach ( $promotype as $key => $value ) {
-			$meta_box_title .= '<option value="'.$key.'">'.__( 'Create new', 'translate_icegram' ).' '.$value.' ...</option>';
+			$meta_box_title .= '<option value="'.$key.'">'.__( 'Create new', 'icegram' ).' '.$value.' ...</option>';
 		}
 
 		$meta_box_title .= '</select>';
 		$meta_box_title .= '<div class="button button-primary campaign_preview" value="' . home_url() . '">' . __( 'Preview' ) . '</div>';
 
 		add_meta_box( 'campaign_data', $meta_box_title, array( &$this, 'campaign_data_content' ), 'campaign', 'normal', 'high' );
-		add_meta_box( 'campaign_target_rules', __( 'Targeting Rules <em>Messages in this campaign will be shown when all these rules match...</em>', 'translate_icegram' ), array( &$this, 'campaign_target_rules_content' ), 'campaign', 'normal' );
+		add_meta_box( 'campaign_target_rules', __( 'Targeting Rules <em>Messages in this campaign will be shown when all these rules match...</em>', 'icegram' ), array( &$this, 'campaign_target_rules_content' ), 'campaign', 'normal' );
 
 	}
 
@@ -109,16 +109,16 @@ class WP_Campaign {
 											</td>
 											<td class="message_title">
 												<div class="message-title-text"><?php echo $message_title; ?></div>
-												<input type="text" class="message-title-input" name="message_data[<?php echo $message['id']; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'translate_icegram' ); ?>" style="display: none;">
+												<input type="text" class="message-title-input" name="message_data[<?php echo $message['id']; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'icegram' ); ?>" style="display: none;">
 											</td>
 											<td class="message_seconds">
 												<input type="hidden" name="messages[<?php echo $row; ?>][id]" value="<?php echo $message['id']; ?>" />
 												<input type="number" class="seconds-text" name="messages[<?php echo $row; ?>][time]" min="0" value="<?php echo ( !empty( $message['time'] ) ) ? $message['time'] : 0; ?>" size="3" />
-												<?php _e( ' sec', 'translate_icegram' )?>
+												<?php _e( ' sec', 'icegram' )?>
 											</td>
 											<td class="action_links">
-												<span class="actions message_edit" title="<?php _e( 'Edit Message', 'translate_icegram' ); ?>" ></span> 
-												<span class="actions message_delete" title="<?php _e( 'Remove from Campaign', 'translate_icegram' ); ?>" ></span>
+												<span class="actions message_edit" title="<?php _e( 'Edit Message', 'icegram' ); ?>" ></span> 
+												<span class="actions message_delete" title="<?php _e( 'Remove from Campaign', 'icegram' ); ?>" ></span>
 											</td>
 										</tr>
 										<tr id="message_row_<?php echo $message['id']; ?>" class="message-edit-row" style="display: none;">
@@ -136,7 +136,7 @@ class WP_Campaign {
 					</table>
 					<div class="empty_campaign">
 						<?php
-						echo __( 'No messages yet. Use search / create bar above to add messages to this campaign.', 'translate_icegram' );
+						echo __( 'No messages yet. Use search / create bar above to add messages to this campaign.', 'icegram' );
 						?>
 					</div>
 				</div>
@@ -195,11 +195,11 @@ class WP_Campaign {
 				$found_messages[ $post ] 	= $promo_type . ' &mdash; ' . $message_title;
 
 			}
-			$found_messages[''] 	= __( '- - - - - - - - - - - - - - - - - - - - - - - - - -', 'translate_icegram' );
+			$found_messages[''] 	= __( '- - - - - - - - - - - - - - - - - - - - - - - - - -', 'icegram' );
 		}
 
 		foreach ( $promotype as $key => $value ) {
-			$found_messages[ $key ] = __( 'Create new', 'translate_icegram' ) . ' ' . $value . ' ...';
+			$found_messages[ $key ] = __( 'Create new', 'icegram' ) . ' ' . $value . ' ...';
 		}
 		ob_clean();
 		echo json_encode( $found_messages );
@@ -212,10 +212,10 @@ class WP_Campaign {
 		?>
 		<thead>
 			<tr class="form-field message-row-header">
-				<th class="message_header"><?php _e( 'Type', 'translate_icegram' ); ?></th>
-				<th class="message_title"><?php _e( 'Name', 'translate_icegram' ); ?></th>
-				<th class="message_seconds"><?php _e( 'Show after', 'translate_icegram' ); ?></th>
-				<th class="action_links"><?php _e( 'Actions', 'translate_icegram' ); ?></th> 
+				<th class="message_header"><?php _e( 'Type', 'icegram' ); ?></th>
+				<th class="message_title"><?php _e( 'Name', 'icegram' ); ?></th>
+				<th class="message_seconds"><?php _e( 'Show after', 'icegram' ); ?></th>
+				<th class="action_links"><?php _e( 'Actions', 'icegram' ); ?></th> 
 			</tr>
 		</thead>
 		<?php
@@ -252,15 +252,15 @@ class WP_Campaign {
 			</td>
 			<td class="message_title">
 				<div class="message-title-text" style="display:none;"><?php echo $message_title; ?></div>
-				<input type="text" class="message-title-input" name="message_data[<?php echo $message_id; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'translate_icegram' ); ?>">
+				<input type="text" class="message-title-input" name="message_data[<?php echo $message_id; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'icegram' ); ?>">
 			</td>
 			<td class="message_seconds">
 				<input type="hidden" name="messages[<?php echo $_POST['row']; ?>][id]" value="<?php echo $message_id; ?>" />
-				<input type="number" class="seconds-text" name="messages[<?php echo $_POST['row']; ?>][time]" min="0" value="0" size="3" /><?php _e( ' sec', 'translate_icegram' )?>
+				<input type="number" class="seconds-text" name="messages[<?php echo $_POST['row']; ?>][time]" min="0" value="0" size="3" /><?php _e( ' sec', 'icegram' )?>
 			</td>
 			<td class="action_links">
-				<span class="actions message_edit" title="<?php _e( 'Edit Message', 'translate_icegram' ); ?>" ></span> 
-				<span class="actions message_delete" title="<?php _e( 'Remove from Campaign', 'translate_icegram' ); ?>" ></span>
+				<span class="actions message_edit" title="<?php _e( 'Edit Message', 'icegram' ); ?>" ></span> 
+				<span class="actions message_delete" title="<?php _e( 'Remove from Campaign', 'icegram' ); ?>" ></span>
 			</td> 
 		</tr>
 		<tr id="message_row_<?php echo $message_id; ?>" class="message-edit-row">
@@ -290,30 +290,30 @@ class WP_Campaign {
 		<div class="campaign_target_rules_panel">
 			<div class="options_group" id="campaign_target_rules_where">
 				<p class="form-field">
-					<label class="options_header"><?php _e( 'Where?', 'translate_icegram' ); ?></label>
+					<label class="options_header"><?php _e( 'Where?', 'icegram' ); ?></label>
 					<label for="where_sitewide">
 						<input type="checkbox" name="campaign_target_rules[sitewide]" id="where_sitewide" value="yes" <?php ( !empty( $campaign_target_rules['sitewide'] ) ) ? checked( $campaign_target_rules['sitewide'], 'yes' ) : ''; ?> />
-						<?php _e( 'Sitewide', 'translate_icegram' ); ?>
+						<?php _e( 'Sitewide', 'icegram' ); ?>
 					</label>
 				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
 					<label for="where_homepage">
 						<input type="checkbox" name="campaign_target_rules[homepage]" id="where_homepage" value="yes" <?php ( !empty( $campaign_target_rules['homepage'] ) ) ? checked( $campaign_target_rules['homepage'], 'yes' ) : ''; ?> />
-						<?php _e( 'Homepage', 'translate_icegram' ); ?>
+						<?php _e( 'Homepage', 'icegram' ); ?>
 					</label>
 				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
 					<label for="where_other_page">
 						<input type="checkbox" name="campaign_target_rules[other_page]" id="where_other_page" value="yes" <?php ( !empty( $campaign_target_rules['other_page'] ) ) ? checked( $campaign_target_rules['other_page'], 'yes' ) : ''; ?> />
-						<?php _e( 'Selected pages', 'translate_icegram' ); ?>
+						<?php _e( 'Selected pages', 'icegram' ); ?>
 					</label>
 				</p>
 				<p class="form-field" <?php echo ( !empty( $campaign_target_rules['other_page'] ) && $campaign_target_rules['other_page'] == 'yes' ) ? '' : 'style="display: none;"'; ?>>
 					<label class="options_header">&nbsp;</label>
 					<?php 
-						echo '<select name="page_id[]" id="where_page_id" data-placeholder="' . __( 'Select a page&hellip;', 'translate_icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
+						echo '<select name="page_id[]" id="where_page_id" data-placeholder="' . __( 'Select a page&hellip;', 'icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
 						foreach ( get_pages() as $page ) {
 							echo '<option value="' . $page->ID . '"';
 							if( !empty( $campaign_target_rules['page_id'] ) ) {
@@ -327,29 +327,29 @@ class WP_Campaign {
 				<p class="form-field">
 					<label class="campaign_shortcode">
 						<span class="shortcode_description admin_field_icon"></span>
-						<?php echo sprintf(__( 'Additionally you can insert <code>[%s]</code> wherever you want to run this campaign.', 'translate_icegram' ), 'icegram campaigns="' .$post->ID . '"' ); ?>
+						<?php echo sprintf(__( 'Additionally you can insert <code>[%s]</code> wherever you want to run this campaign.', 'icegram' ), 'icegram campaigns="' .$post->ID . '"' ); ?>
 					</label>
 				</p>
 			</div>
 			<div class="options_group" id="campaign_target_rules_when">
 				<p class="form-field">
-					<label class="options_header"><?php _e( 'When?', 'translate_icegram' ); ?></label>
+					<label class="options_header"><?php _e( 'When?', 'icegram' ); ?></label>
 					<label for="when_always">
 						<input type="radio" class="schedule_rule" name="campaign_target_rules[when]" id="when_always" value="always" <?php ( !empty( $campaign_target_rules['when'] ) ) ? checked( $campaign_target_rules['when'], 'always' ) : ''; ?> />
-						<?php _e( 'Always', 'translate_icegram' ); ?>
+						<?php _e( 'Always', 'icegram' ); ?>
 					</label>
 				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
 					<label for="when_schedule">
 						<input type="radio" class="schedule_rule" name="campaign_target_rules[when]" id="when_schedule" value="schedule" <?php ( !empty( $campaign_target_rules['when'] ) ) ? checked( $campaign_target_rules['when'], 'schedule' ) : ''; ?> />
-						<?php _e( 'Schedule', 'translate_icegram' ); ?>
+						<?php _e( 'Schedule', 'icegram' ); ?>
 						<span class="form-field" id="date_picker" <?php echo ( !empty( $campaign_target_rules['when'] ) && $campaign_target_rules['when'] == 'schedule' ) ? '' : 'style="display: none;"'; ?>>
 							<label class="date_picker">
-								<input type="text" class="date-picker" name="campaign_target_rules[from]" value="<?php echo ( !empty( $campaign_target_rules['from'] ) ) ? $campaign_target_rules['from'] : ''; ?>" placeholder="<?php _e( 'From&hellip;', 'translate_icegram' );?>" />
+								<input type="text" class="date-picker" name="campaign_target_rules[from]" value="<?php echo ( !empty( $campaign_target_rules['from'] ) ) ? $campaign_target_rules['from'] : ''; ?>" placeholder="<?php _e( 'From&hellip;', 'icegram' );?>" />
 							</label>
 							<label class="date_picker">
-								<input type="text" class="date-picker" name="campaign_target_rules[to]" value="<?php echo ( !empty( $campaign_target_rules['to'] ) ) ? $campaign_target_rules['to'] : ''; ?>" placeholder="<?php _e( 'To&hellip;', 'translate_icegram' );?>" />
+								<input type="text" class="date-picker" name="campaign_target_rules[to]" value="<?php echo ( !empty( $campaign_target_rules['to'] ) ) ? $campaign_target_rules['to'] : ''; ?>" placeholder="<?php _e( 'To&hellip;', 'icegram' );?>" />
 							</label>
 						</span>
 					</label>
@@ -357,16 +357,16 @@ class WP_Campaign {
 			</div>
 			<div class="options_group" id="campaign_target_rules_device">
 				<p class="form-field">
-					<label class="options_header"><?php _e( 'Device?', 'translate_icegram' ); ?></label>
-					<label for="device_mobile" class="device" title="<?php _e( 'Mobile / Smartphones', 'translate_icegram' ); ?>">
+					<label class="options_header"><?php _e( 'Device?', 'icegram' ); ?></label>
+					<label for="device_mobile" class="device" title="<?php _e( 'Mobile / Smartphones', 'icegram' ); ?>">
 						<input type="checkbox" name="campaign_target_rules[mobile]" id="device_mobile" value="yes" <?php ( !empty( $campaign_target_rules['mobile'] ) ) ? checked( $campaign_target_rules['mobile'], 'yes' ) : ''; ?> />
 						<span class="device_mobile"></span>
 					</label>
-					<label for="device_tablet" class="device" title="<?php _e( 'Tablet', 'translate_icegram' ); ?>">
+					<label for="device_tablet" class="device" title="<?php _e( 'Tablet', 'icegram' ); ?>">
 						<input type="checkbox" name="campaign_target_rules[tablet]" id="device_tablet" value="yes" <?php ( !empty( $campaign_target_rules['tablet'] ) ) ? checked( $campaign_target_rules['tablet'], 'yes' ) : ''; ?> />
 						<span class="device_tablet"></span>
 					</label>
-					<label for="device_laptop" class="device" title="<?php _e( 'Desktop / Laptop', 'translate_icegram' ); ?>">
+					<label for="device_laptop" class="device" title="<?php _e( 'Desktop / Laptop', 'icegram' ); ?>">
 						<input type="checkbox" name="campaign_target_rules[laptop]" id="device_laptop" value="yes" <?php ( !empty( $campaign_target_rules['laptop'] ) ) ? checked( $campaign_target_rules['laptop'], 'yes' ) : ''; ?> />
 						<span class="device_laptop"></span>
 					</label>
@@ -374,17 +374,17 @@ class WP_Campaign {
 			</div>
 			<div class="options_group" id="campaign_target_rules_users">
 				<p class="form-field">
-					<label class="options_header"><?php _e( 'Who?', 'translate_icegram' ); ?></label>
+					<label class="options_header"><?php _e( 'Who?', 'icegram' ); ?></label>
 					<label for="users_all">
 						<input type="radio" name="campaign_target_rules[logged_in]" id="users_all" value="all" <?php ( !empty( $campaign_target_rules['logged_in'] ) ) ? checked( $campaign_target_rules['logged_in'], 'all' ) : ''; ?> />
-						<?php _e( 'All users', 'translate_icegram' ); ?>
+						<?php _e( 'All users', 'icegram' ); ?>
 					</label>
 				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
 					<label for="users_logged_in">
 						<input type="radio" name="campaign_target_rules[logged_in]" id="users_logged_in" value="logged_in" <?php ( !empty( $campaign_target_rules['logged_in'] ) ) ? checked( $campaign_target_rules['logged_in'], 'logged_in' ) : ''; ?> />
-						<?php _e( 'Logged in users only', 'translate_icegram' ); ?>
+						<?php _e( 'Logged in users only', 'icegram' ); ?>
 					</label>
 				</p>
 				<div class="user_roles">
@@ -402,7 +402,7 @@ class WP_Campaign {
 							$wp_roles = new WP_Roles();
 							$roles = $wp_roles->get_names();
 							
-							echo '<select name="campaign_target_rules[users][]" id="users_roles" data-placeholder="' . __( 'Select a user role&hellip;', 'translate_icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
+							echo '<select name="campaign_target_rules[users][]" id="users_roles" data-placeholder="' . __( 'Select a user role&hellip;', 'icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
 							foreach ( $roles as $role_value => $role_name ) {
 								echo '<option value="' . $role_value . '"';
 								if( !empty( $campaign_target_rules['users'] ) ) {
@@ -417,10 +417,10 @@ class WP_Campaign {
 			</div>
 			<div class="options_group" id="campaign_target_rules_retrageting">
 				<p class="form-field">
-					<label class="options_header"><?php _e( 'Retargeting', 'translate_icegram' ); ?></label>
+					<label class="options_header"><?php _e( 'Retargeting', 'icegram' ); ?></label>
 					<label for="retargeting">
 						<input type="checkbox" name="campaign_target_rules[retargeting]" id="retargeting" value="yes" <?php ( !empty( $campaign_target_rules['retargeting'] ) ) ? checked( $campaign_target_rules['retargeting'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once shown, do NOT show a message again for current session', 'translate_icegram' ); ?>
+						<?php _e( 'Once shown, do NOT show a message again for current session', 'icegram' ); ?>
 					</label>
 				</p>
 			</div>			
