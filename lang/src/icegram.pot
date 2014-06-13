@@ -1,0 +1,801 @@
+# Copyright (C) 2014 Icegram
+# This file is distributed under the same license as the Icegram package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Icegram 1.1.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/icegram\n"
+"POT-Creation-Date: 2014-06-10 06:09:11+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Icegram Team <hello@icegram.com>\n"
+"Language-Team: Icegram Team <hello@icegram.com>\n"
+
+#: about-icegram.php:151 classes/class-wp-campaign.php:216
+#: icegram-includes/class-icegram-upgrade.php:335
+msgid "Name"
+msgstr ""
+
+#: about-icegram.php:155 icegram-includes/class-icegram-upgrade.php:339
+msgid "E-mail"
+msgstr ""
+
+#: about-icegram.php:160 icegram-includes/class-icegram-upgrade.php:343
+msgid "Product"
+msgstr ""
+
+#: about-icegram.php:166 icegram-includes/class-icegram-upgrade.php:347
+msgid "Subject"
+msgstr ""
+
+#: about-icegram.php:170 icegram-includes/class-icegram-upgrade.php:351
+#: icegram.php:446
+msgid "Message"
+msgstr ""
+
+#: about-icegram.php:210 icegram.php:97
+msgid "Welcome to Icegram"
+msgstr ""
+
+#: about-icegram.php:212
+msgid ""
+"Your sample campaign is ready. We've added a few messages for you to test."
+msgstr ""
+
+#: about-icegram.php:220
+msgid "Edit & Publish it"
+msgstr ""
+
+#: about-icegram.php:221
+msgid "OR"
+msgstr ""
+
+#: about-icegram.php:222
+msgid "Preview Campaign"
+msgstr ""
+
+#: about-icegram.php:228
+msgid "Version: %s"
+msgstr ""
+
+#: about-icegram.php:231
+msgid "Questions? Need Help?"
+msgstr ""
+
+#: about-icegram.php:232 about-icegram.php:321
+msgid "Contact Us"
+msgstr ""
+
+#: about-icegram.php:238
+msgid ""
+"Do read Icegram's core concepts below to understand how you can use Icegram "
+"to inspire, convert and engage your audience."
+msgstr ""
+
+#: about-icegram.php:244 icegram.php:445 icegram.php:451 icegram.php:457
+msgid "Messages"
+msgstr ""
+
+#: about-icegram.php:246
+msgid "A 'Message' is a communication you want to deliver to your audience."
+msgstr ""
+
+#: about-icegram.php:247
+msgid "And Icegram comes with not one, but four message types."
+msgstr ""
+
+#: about-icegram.php:248
+msgid ""
+"Different message types look and behave differently, but they all have many "
+"common characteristics. For instance, most message types will allow you to "
+"set a headline, a body text, label for the ‘call to action’ button, a link "
+"for that button, theme and styling options, animation effect and position on "
+"screen where that message should show."
+msgstr ""
+
+#: about-icegram.php:251
+msgid "Action Bar"
+msgstr ""
+
+#: about-icegram.php:253
+msgid ""
+"An action bar is a proven attention grabber. It shows up as a solid bar "
+"either at top or bottom. Use it for your most important messages or time "
+"sensitive announcements. Put longer content in it and it acts like a "
+"collapsible panel!"
+msgstr ""
+
+#: about-icegram.php:254
+msgid "Messenger"
+msgstr ""
+
+#: about-icegram.php:256
+msgid ""
+"A messenger is best used to invoke interest while your visitor is reading "
+"your content. Users perceive it as something new, important and urgent and "
+"are highly likely to click on it."
+msgstr ""
+
+#: about-icegram.php:259
+msgid "Toast Notification"
+msgstr ""
+
+#: about-icegram.php:261
+msgid ""
+"Want to alert your visitor about some news, an update from your blog, a "
+"social proof or an offer? Use Icegram’s unique toast notification, it will "
+"catch their attention, let them click on the message, and disappear after a "
+"while."
+msgstr ""
+
+#: about-icegram.php:262
+msgid "Popup"
+msgstr ""
+
+#: about-icegram.php:264
+msgid ""
+"Lightbox popup windows are most widely used for lead capture, promotions and "
+"additional content display. Ask visitors to sign up to your newsletter, or "
+"like you on social networks, or tell them about a special offer..."
+msgstr ""
+
+#: about-icegram.php:273 icegram.php:408 icegram.php:414
+msgid "Campaigns"
+msgstr ""
+
+#: about-icegram.php:274
+msgid "Campaign = Messages + Rules"
+msgstr ""
+
+#: about-icegram.php:275
+msgid ""
+"A campaign allows sequencing multiple messages and defining targeting rules. "
+"Create different campaigns for different marketing goals. Icegram supports "
+"showing multiple campaigns on any page."
+msgstr ""
+
+#: about-icegram.php:276
+msgid ""
+"You can always preview your campaign to ensure campaign works the way you "
+"want, before making it live."
+msgstr ""
+
+#: about-icegram.php:279
+msgid "Multiple Messages & Sequencing"
+msgstr ""
+
+#: about-icegram.php:281
+msgid ""
+"Add one or as many messages to a campaign as you want. Also choose the "
+"number of seconds after which each message should show up. Showing multiple "
+"messages for same goal, but with slightly different content / presentation, "
+"greatly improves conversions."
+msgstr ""
+
+#: about-icegram.php:284
+msgid "Targeting Rules"
+msgstr ""
+
+#: about-icegram.php:286
+msgid ""
+"You can control who sees a campaign – and on what device, which pages does "
+"it show on, and what time period will it stay active for. You can run "
+"different campaigns with different rules to maximize engagement."
+msgstr ""
+
+#: about-icegram.php:294
+msgid "FAQ / Common Problems"
+msgstr ""
+
+#: about-icegram.php:296
+msgid "Messages look broken / formatting is weird..."
+msgstr ""
+
+#: about-icegram.php:297
+msgid ""
+"This is most likely due to CSS conflicts with current theme. We suggest "
+"using simple formatting for messages. You can also write custom CSS in your "
+"theme to fix any problems."
+msgstr ""
+
+#: about-icegram.php:299
+msgid "Extra Line Breaks / Paragraphs in messages..."
+msgstr ""
+
+#: about-icegram.php:300
+msgid ""
+"Go to HTML mode in content editor and pull your custom HTML code all "
+"together in one line. Don't leave blank lines between two tags. That should "
+"fix it."
+msgstr ""
+
+#: about-icegram.php:302
+msgid "How do I add custom CSS for messages?"
+msgstr ""
+
+#: about-icegram.php:303
+msgid ""
+"You can use custom CSS/JS inline in your message HTML. You can also use your "
+"theme's custom JS / CSS feature to add your changes."
+msgstr ""
+
+#: about-icegram.php:305
+msgid "Optin Forms / Mailing service integration..."
+msgstr ""
+
+#: about-icegram.php:306
+msgid ""
+"You can embed any optin / subscription form to your Icegram messages using "
+"HTML code. You may even use a shortcode if you are using a WP plugin from "
+"your newsletter / lead capture service."
+msgstr ""
+
+#: about-icegram.php:310
+msgid "Preview does not work / not refreshing..."
+msgstr ""
+
+#: about-icegram.php:311
+msgid ""
+"Doing a browser refresh while previewing will not show your most recent "
+"changes. Click 'Preview' button to see a preview with your latest changes."
+msgstr ""
+
+#: about-icegram.php:313
+msgid "Can I use shortcodes in a message?"
+msgstr ""
+
+#: about-icegram.php:314
+msgid ""
+"Yes! Messages support shortcodes. You may need to adjust CSS so the "
+"shortcode output looks good in your message."
+msgstr ""
+
+#: about-icegram.php:317
+msgid "I can't find a way to do X..."
+msgstr ""
+
+#: about-icegram.php:318
+msgid ""
+"Icegram is actively developed. If you can't find your favorite feature (or "
+"have a suggestion) contact us. We'd love to hear from you."
+msgstr ""
+
+#: about-icegram.php:320
+msgid "I'm facing a problem and can't find a way out..."
+msgstr ""
+
+#: about-icegram.php:321
+msgid ""
+", provide as much detail of the problem as you can. We will try to solve the "
+"problem ASAP."
+msgstr ""
+
+#: classes/class-wp-campaign.php:67
+msgid "Message &mdash; "
+msgstr ""
+
+#: classes/class-wp-campaign.php:68
+msgid "Search to add / Create new&hellip;"
+msgstr ""
+
+#: classes/class-wp-campaign.php:73 classes/class-wp-campaign.php:202
+msgid "Create new"
+msgstr ""
+
+#: classes/class-wp-campaign.php:77
+msgid "Preview"
+msgstr ""
+
+#: classes/class-wp-campaign.php:80
+msgid ""
+"Targeting Rules <em>Messages in this campaign will be shown when all these "
+"rules match...</em>"
+msgstr ""
+
+#: classes/class-wp-campaign.php:112 classes/class-wp-campaign.php:255
+msgid "Give this message a name for your own reference"
+msgstr ""
+
+#: classes/class-wp-campaign.php:117 classes/class-wp-campaign.php:259
+msgid " sec"
+msgstr ""
+
+#: classes/class-wp-campaign.php:120 classes/class-wp-campaign.php:262
+#: icegram.php:449
+msgid "Edit Message"
+msgstr ""
+
+#: classes/class-wp-campaign.php:121 classes/class-wp-campaign.php:263
+msgid "Remove from Campaign"
+msgstr ""
+
+#: classes/class-wp-campaign.php:139
+msgid ""
+"No messages yet. Use search / create bar above to add messages to this "
+"campaign."
+msgstr ""
+
+#: classes/class-wp-campaign.php:198
+msgid "- - - - - - - - - - - - - - - - - - - - - - - - - -"
+msgstr ""
+
+#: classes/class-wp-campaign.php:215 classes/class-wp-message.php:72
+#: classes/class-wp-message.php:200
+msgid "Type"
+msgstr ""
+
+#: classes/class-wp-campaign.php:217
+msgid "Show after"
+msgstr ""
+
+#: classes/class-wp-campaign.php:218
+msgid "Actions"
+msgstr ""
+
+#: classes/class-wp-campaign.php:293
+msgid "Where?"
+msgstr ""
+
+#: classes/class-wp-campaign.php:296
+msgid "Sitewide"
+msgstr ""
+
+#: classes/class-wp-campaign.php:303
+msgid "Homepage"
+msgstr ""
+
+#: classes/class-wp-campaign.php:310
+msgid "Selected pages"
+msgstr ""
+
+#: classes/class-wp-campaign.php:316
+msgid "Select a page&hellip;"
+msgstr ""
+
+#: classes/class-wp-campaign.php:330
+msgid ""
+"Additionally you can insert <code>[%s]</code> wherever you want to run this "
+"campaign."
+msgstr ""
+
+#: classes/class-wp-campaign.php:336
+msgid "When?"
+msgstr ""
+
+#: classes/class-wp-campaign.php:339
+msgid "Always"
+msgstr ""
+
+#: classes/class-wp-campaign.php:346
+msgid "Schedule"
+msgstr ""
+
+#: classes/class-wp-campaign.php:349
+msgid "From&hellip;"
+msgstr ""
+
+#: classes/class-wp-campaign.php:352
+msgid "To&hellip;"
+msgstr ""
+
+#: classes/class-wp-campaign.php:360
+msgid "Device?"
+msgstr ""
+
+#: classes/class-wp-campaign.php:361
+msgid "Mobile / Smartphones"
+msgstr ""
+
+#: classes/class-wp-campaign.php:365
+msgid "Tablet"
+msgstr ""
+
+#: classes/class-wp-campaign.php:369
+msgid "Desktop / Laptop"
+msgstr ""
+
+#: classes/class-wp-campaign.php:377
+msgid "Who?"
+msgstr ""
+
+#: classes/class-wp-campaign.php:380
+msgid "All users"
+msgstr ""
+
+#: classes/class-wp-campaign.php:387
+msgid "Logged in users only"
+msgstr ""
+
+#: classes/class-wp-campaign.php:405
+msgid "Select a user role&hellip;"
+msgstr ""
+
+#: classes/class-wp-campaign.php:420
+msgid "Retargeting"
+msgstr ""
+
+#: classes/class-wp-campaign.php:423
+msgid "Once shown, do NOT show a message again for current session"
+msgstr ""
+
+#: classes/class-wp-message.php:73 classes/class-wp-message.php:212
+msgid "Theme"
+msgstr ""
+
+#: classes/class-wp-message.php:74
+msgid "Thumbnail"
+msgstr ""
+
+#: classes/class-wp-message.php:141
+msgid "Message Settings"
+msgstr ""
+
+#: classes/class-wp-message.php:224 classes/class-wp-message.php:232
+msgid "Animation"
+msgstr ""
+
+#: classes/class-wp-message.php:241
+msgid "Headline"
+msgstr ""
+
+#: classes/class-wp-message.php:242
+msgid ""
+"Shown with highest prominence. Click on idea button on right to get a new "
+"headline."
+msgstr ""
+
+#: classes/class-wp-message.php:245
+msgid "Give Me Another Headline"
+msgstr ""
+
+#: classes/class-wp-message.php:251
+msgid "Button Label"
+msgstr ""
+
+#: classes/class-wp-message.php:252
+msgid "Your call to action text. Something unusual will increase conversions."
+msgstr ""
+
+#: classes/class-wp-message.php:258
+msgid "Target Link"
+msgstr ""
+
+#: classes/class-wp-message.php:259
+msgid "Enter destination URL here. Clicking will redirect to this link."
+msgstr ""
+
+#: classes/class-wp-message.php:265
+msgid "Icon / Avatar Image"
+msgstr ""
+
+#: classes/class-wp-message.php:266
+msgid "This image will appear in message content."
+msgstr ""
+
+#: classes/class-wp-message.php:269
+msgid "Upload / Select an image"
+msgstr ""
+
+#: classes/class-wp-message.php:269
+msgid "Upload / Select Image"
+msgstr ""
+
+#: classes/class-wp-message.php:274
+msgid "Backgound Color"
+msgstr ""
+
+#: classes/class-wp-message.php:278
+msgid "Text Color"
+msgstr ""
+
+#: classes/class-wp-message.php:292
+msgid "Message Body"
+msgstr ""
+
+#: classes/class-wp-message.php:297
+msgid "Position"
+msgstr ""
+
+#: classes/class-wp-message.php:358
+msgid ""
+"You can insert <code>[%s]</code> wherever you want to show this message. We "
+"recommend running a campaign though."
+msgstr ""
+
+#: classes/class-wp-message.php:424
+msgid "Here Is A Method That Is Helping ____ To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:425
+msgid "__ Little Known Ways To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:426
+msgid "Get Rid Of ____ Once And For All"
+msgstr ""
+
+#: classes/class-wp-message.php:427
+msgid "How To ____ So You Can ____"
+msgstr ""
+
+#: classes/class-wp-message.php:428
+msgid "They Didn't Think I Could ____, But I Did"
+msgstr ""
+
+#: classes/class-wp-message.php:429
+msgid "How ____ Made Me ____"
+msgstr ""
+
+#: classes/class-wp-message.php:430
+msgid "Are You ____ ?"
+msgstr ""
+
+#: classes/class-wp-message.php:431
+msgid "Warning: ____ !"
+msgstr ""
+
+#: classes/class-wp-message.php:432
+msgid "Do You Make These Mistakes With ____ ?"
+msgstr ""
+
+#: classes/class-wp-message.php:433
+msgid "7 Ways To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:434
+msgid "If You're ____, You Can ____"
+msgstr ""
+
+#: classes/class-wp-message.php:435
+msgid "Turn your ____ into a ____"
+msgstr ""
+
+#: classes/class-wp-message.php:436
+msgid "Want To Be A ____?"
+msgstr ""
+
+#: classes/class-wp-message.php:437
+msgid "The Ugly Truth About Your Beautiful ____"
+msgstr ""
+
+#: classes/class-wp-message.php:438
+msgid "The Secret to ____ Is Simply ____!"
+msgstr ""
+
+#: classes/class-wp-message.php:439
+msgid "The Quickest Way I Know To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:440
+msgid "The Lazy Man's Way To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:441
+msgid ""
+"The Amazing Story Of ____ That Requires So Little Of ____ You Could ____"
+msgstr ""
+
+#: classes/class-wp-message.php:442
+msgid "The Amazing Secret Of The ____ Genius Who Is Afraid Of ____"
+msgstr ""
+
+#: classes/class-wp-message.php:443
+msgid "The 10 Wackiest Ideas That ____... And How You Can Too!"
+msgstr ""
+
+#: classes/class-wp-message.php:444
+msgid "The Inside Secrets To ____ With Crazy, Outlandish And Outrageous ____"
+msgstr ""
+
+#: classes/class-wp-message.php:445
+msgid "____ Like A ____"
+msgstr ""
+
+#: classes/class-wp-message.php:446
+msgid "Remember When You Could Have ____, And You Didn't?"
+msgstr ""
+
+#: classes/class-wp-message.php:447
+msgid "Is The ____ Worth $x To You?"
+msgstr ""
+
+#: classes/class-wp-message.php:448
+msgid "Increase your ____, reduce ____, maintain ____ and ____ with ____"
+msgstr ""
+
+#: classes/class-wp-message.php:449
+msgid "If You Can ____ You Can ____"
+msgstr ""
+
+#: classes/class-wp-message.php:450
+msgid "I Discovered How To ____... Now I'm Revealing My Secret"
+msgstr ""
+
+#: classes/class-wp-message.php:451
+msgid "How To Turn Your ____ Into The Most ____"
+msgstr ""
+
+#: classes/class-wp-message.php:452
+msgid "How To Take The Headache Out Of ____"
+msgstr ""
+
+#: classes/class-wp-message.php:453
+msgid "How To ____ ... Legally"
+msgstr ""
+
+#: classes/class-wp-message.php:454
+msgid "How To ____ That ____"
+msgstr ""
+
+#: classes/class-wp-message.php:455
+msgid "How To Discover The ____ That Lies Hidden In Your ____"
+msgstr ""
+
+#: classes/class-wp-message.php:456
+msgid "How To ____ Even When Your Not ____"
+msgstr ""
+
+#: classes/class-wp-message.php:457
+msgid "____ With No ____!"
+msgstr ""
+
+#: classes/class-wp-message.php:458
+msgid "Greatest Goldmine of ____ Ever Jammed Into One Big ____"
+msgstr ""
+
+#: classes/class-wp-message.php:459
+msgid "Free ____ Tells How To Get Better ____"
+msgstr ""
+
+#: classes/class-wp-message.php:460
+msgid ""
+"FREE ____ Worth $____ for the first 100 People to take Advantage of this "
+"Offer"
+msgstr ""
+
+#: classes/class-wp-message.php:461
+msgid "Don't Try This With Any Other ____"
+msgstr ""
+
+#: classes/class-wp-message.php:462
+msgid "Do You Honestly Want To ____?"
+msgstr ""
+
+#: classes/class-wp-message.php:463
+msgid "Discover The Magic ____ That Will Bring You ____ & ____!"
+msgstr ""
+
+#: classes/class-wp-message.php:464
+msgid "____ Man Reveals A Short-Cut To ____"
+msgstr ""
+
+#: classes/class-wp-message.php:465
+msgid "Confessions Of A ____"
+msgstr ""
+
+#: classes/class-wp-message.php:466
+msgid "Are You Ready To ____?"
+msgstr ""
+
+#: classes/class-wp-message.php:467
+msgid "An Open Letter To Everyone Who ____ More Than ____ Per ____"
+msgstr ""
+
+#: classes/class-wp-message.php:468
+msgid "An Amazing ____ You Can Carry In Your ____"
+msgstr ""
+
+#: classes/class-wp-message.php:469
+msgid "21 Secret ____ that will ____... NOW!"
+msgstr ""
+
+#: icegram-includes/class-icegram-upgrade.php:360
+msgid "Send"
+msgstr ""
+
+#: icegram-includes/class-icegram-upgrade.php:385
+msgid "Submit your query"
+msgstr ""
+
+#: icegram-includes/class-icegram-upgrade.php:385
+msgid "Support"
+msgstr ""
+
+#: icegram-includes/class-icegram-upgrade.php:387
+msgid "Documentation"
+msgstr ""
+
+#: icegram-includes/class-icegram-upgrade.php:387
+msgid "Docs"
+msgstr ""
+
+#: icegram.php:98
+msgid "Docs & Support"
+msgstr ""
+
+#: icegram.php:175
+msgid "Powered by Icegram"
+msgstr ""
+
+#: icegram.php:409
+msgid "Campaign"
+msgstr ""
+
+#: icegram.php:410 icegram.php:411
+msgid "Add New Campaign"
+msgstr ""
+
+#: icegram.php:412
+msgid "Edit Campaign"
+msgstr ""
+
+#: icegram.php:413
+msgid "New Campaign"
+msgstr ""
+
+#: icegram.php:415
+msgid "View Campaign"
+msgstr ""
+
+#: icegram.php:416
+msgid "Search Campaigns"
+msgstr ""
+
+#: icegram.php:417
+msgid "No campaigns found"
+msgstr ""
+
+#: icegram.php:418
+msgid "No campaigns found in Trash"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (Icegram 1.1)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#. #-#-#-#-#  plugin.pot (Icegram 1.1)  #-#-#-#-#
+#. Author of the plugin/theme
+#: icegram.php:420
+msgid "Icegram"
+msgstr ""
+
+#: icegram.php:447
+msgid "Create New"
+msgstr ""
+
+#: icegram.php:448
+msgid "Create New Message"
+msgstr ""
+
+#: icegram.php:450
+msgid "New Message"
+msgstr ""
+
+#: icegram.php:452
+msgid "View Message"
+msgstr ""
+
+#: icegram.php:453
+msgid "Search Messages"
+msgstr ""
+
+#: icegram.php:454
+msgid "No messages found"
+msgstr ""
+
+#: icegram.php:455
+msgid "No messages found in Trash"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (Icegram 1.1)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (Icegram 1.1)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.icegram.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"All in one solution to inspire, convert and engage your audiences. Action "
+"bars, Popup windows, Messengers, Toast notifications and more. Awesome "
+"themes and powerful rules."
+msgstr ""

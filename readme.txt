@@ -4,7 +4,7 @@ Donate link:http://www.icegram.com/
 Tags: popup, window, hellobar, action bar, header bar, footer bar, notification, messenger, targeting, rules, auto responder, icegram, responsive, slide
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,11 +80,8 @@ Icegram is actively developed. If you can't find your favorite feature (or have 
 Contact Us, provide as much detail of the problem as you can. We will try to solve the problem ASAP.
 
 == Screenshots ==
-
 1. Different Icegram messages
-
 2. The Icegram workflow
-
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
@@ -95,6 +92,9 @@ Initial Release
 = 1.1 =
 First release on WordPress.org
 
+= 1.1.1 =
+Compatibility with W3TC and Localization
+
 
 == Changelog ==
 
@@ -103,3 +103,8 @@ First release on WordPress.org
 
 = 1.1 =
 * Loading CSS from own domain instead of Google
+
+= 1.1.1 =
+* Fix for crash on activation with W3 Total Cache
+* Added localization / translation ability
+
