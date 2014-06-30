@@ -1,12 +1,18 @@
 <?php
 /*
-Plugin Name: Icegram
-Plugin URI: http://www.icegram.com/
-Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
-Version: 1.1
-Author: Icegram
-Author URI: http://www.icegram.com/
-Copyright (c) 2014 Icegram All rights reserved.
+ * Plugin Name: Icegram
+ * Plugin URI: http://www.icegram.com/
+ * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
+ * Version: 1.1.2
+ * Author: Icegram
+ * Author URI: http://www.icegram.com/
+ *
+ * Copyright (c) 2014 Icegram
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Text Domain: icegram
+ * Domain Path: /lang/
 */
 
 /**
@@ -74,28 +80,27 @@ class Icegram {
     }
 
     static function install() {
-        // Redirect to welcome screen        
-        set_transient( '_icegram_activation_redirect', 1, 60 * 60 );
+        // Redirect to welcome screen 
+        delete_option( '_icegram_activation_redirect' );      
+        add_option( '_icegram_activation_redirect', 'pending' );
     }
 
     public function welcome() {
-
         // Bail if no activation redirect transient is set
-        if ( ! get_transient( '_icegram_activation_redirect' ) )
+        if ( false === get_option( '_icegram_activation_redirect' ) )
             return;
 
         // Delete the redirect transient
-        delete_transient( '_icegram_activation_redirect' );
+        delete_option( '_icegram_activation_redirect' );
 
         wp_redirect( admin_url( 'edit.php?post_type=campaign&page=icegram-support' ) );
         exit;
-
     }
 
     public function admin_menus() {
 
-        $welcome_page_title = __( 'Welcome to Icegram', 'translate_icegram' );
-        $menu_title = __( 'Docs & Support', 'translate_icegram' );
+        $welcome_page_title = __( 'Welcome to Icegram', 'icegram' );
+        $menu_title = __( 'Docs & Support', 'icegram' );
         $about = add_submenu_page( 'edit.php?post_type=campaign', $welcome_page_title,  $menu_title, 'manage_options', 'icegram-support', array( $this, 'about_screen' ) );
 
         add_action( 'admin_print_styles-'. $about, array( $this, 'admin_css' ) );
@@ -108,6 +113,12 @@ class Icegram {
 
     public function about_screen() {
         global $icegram, $icegram_upgrader;
+
+        // Import data if not done already
+        if( false === get_option( 'icegram_sample_data_imported' ) ) {
+            $icegram->import( $icegram->get_sample_data() );
+        }
+
         include ( 'about-icegram.php' );
     }
 
@@ -171,8 +182,8 @@ class Icegram {
 
         $icegram_default = apply_filters( 'icegram_branding_data', 
                                             array ( 'default_promo_image'   => $this->plugin_url . '/assets/images/icegram-logo-branding-64-grey.png',
-                                                    'powered_by_logo'       => $this->plugin_url . '/assets/images/icegram-logo-branding-64-grey.png',
-                                                    'powered_by_text'       => __( 'Powered by Icegram', 'translate_icegram' )
+                                                    'powered_by_logo'       => '',
+                                                    'powered_by_text'       => ''
                                                     ) );
         $icegram = array ( 'messages'       => array_values( $messages ),
                            'ajax_url'       => admin_url( 'admin-ajax.php' ),
@@ -405,19 +416,19 @@ class Icegram {
     // Register Campaign post type
     function register_campaign_post_type() {
         $labels = array(
-            'name'               => __( 'Campaigns', 'translate_icegram' ),
-            'singular_name'      => __( 'Campaign', 'translate_icegram' ),
-            'add_new'            => __( 'Add New Campaign', 'translate_icegram' ),
-            'add_new_item'       => __( 'Add New Campaign', 'translate_icegram' ),
-            'edit_item'          => __( 'Edit Campaign', 'translate_icegram' ),
-            'new_item'           => __( 'New Campaign', 'translate_icegram' ),
-            'all_items'          => __( 'Campaigns', 'translate_icegram' ),
-            'view_item'          => __( 'View Campaign', 'translate_icegram' ),
-            'search_items'       => __( 'Search Campaigns', 'translate_icegram' ),
-            'not_found'          => __( 'No campaigns found', 'translate_icegram' ),
-            'not_found_in_trash' => __( 'No campaigns found in Trash', 'translate_icegram' ),
-            'parent_item_colon'  => __( '', 'translate_icegram' ),
-            'menu_name'          => __( 'Icegram', 'translate_icegram' )
+            'name'               => __( 'Campaigns', 'icegram' ),
+            'singular_name'      => __( 'Campaign', 'icegram' ),
+            'add_new'            => __( 'Add New Campaign', 'icegram' ),
+            'add_new_item'       => __( 'Add New Campaign', 'icegram' ),
+            'edit_item'          => __( 'Edit Campaign', 'icegram' ),
+            'new_item'           => __( 'New Campaign', 'icegram' ),
+            'all_items'          => __( 'Campaigns', 'icegram' ),
+            'view_item'          => __( 'View Campaign', 'icegram' ),
+            'search_items'       => __( 'Search Campaigns', 'icegram' ),
+            'not_found'          => __( 'No campaigns found', 'icegram' ),
+            'not_found_in_trash' => __( 'No campaigns found in Trash', 'icegram' ),
+            'parent_item_colon'  => __( '', 'icegram' ),
+            'menu_name'          => __( 'Icegram', 'icegram' )
         );
 
         $args = array(
@@ -442,19 +453,19 @@ class Icegram {
     // Register Message promo type
     function register_message_post_type() {
         $labels = array(
-            'name'               => __( 'Messages', 'translate_icegram' ),
-            'singular_name'      => __( 'Message', 'translate_icegram' ),
-            'add_new'            => __( 'Create New', 'translate_icegram' ),
-            'add_new_item'       => __( 'Create New Message', 'translate_icegram' ),
-            'edit_item'          => __( 'Edit Message', 'translate_icegram' ),
-            'new_item'           => __( 'New Message', 'translate_icegram' ),
-            'all_items'          => __( 'Messages', 'translate_icegram' ),
-            'view_item'          => __( 'View Message', 'translate_icegram' ),
-            'search_items'       => __( 'Search Messages', 'translate_icegram' ),
-            'not_found'          => __( 'No messages found', 'translate_icegram' ),
-            'not_found_in_trash' => __( 'No messages found in Trash', 'translate_icegram' ),
-            'parent_item_colon'  => __( '', 'translate_icegram' ),
-            'menu_name'          => __( 'Messages', 'translate_icegram' )
+            'name'               => __( 'Messages', 'icegram' ),
+            'singular_name'      => __( 'Message', 'icegram' ),
+            'add_new'            => __( 'Create New', 'icegram' ),
+            'add_new_item'       => __( 'Create New Message', 'icegram' ),
+            'edit_item'          => __( 'Edit Message', 'icegram' ),
+            'new_item'           => __( 'New Message', 'icegram' ),
+            'all_items'          => __( 'Messages', 'icegram' ),
+            'view_item'          => __( 'View Message', 'icegram' ),
+            'search_items'       => __( 'Search Messages', 'icegram' ),
+            'not_found'          => __( 'No messages found', 'icegram' ),
+            'not_found_in_trash' => __( 'No messages found in Trash', 'icegram' ),
+            'parent_item_colon'  => __( '', 'icegram' ),
+            'menu_name'          => __( 'Messages', 'icegram' )
         );
 
         $args = array(
@@ -521,7 +532,6 @@ class Icegram {
 
                 $target_rules = wp_parse_args( $campaign['target_rules'], $defaults );
                 update_post_meta( $new_campaign_id, 'icegram_campaign_target_rules', $target_rules );
-
             }
 
             if ( !empty( $campaign['messages'] ) ) {
@@ -821,22 +831,10 @@ class Icegram {
 function initialize_icegram() {
     global $icegram, $icegram_upgrader;
 
+    // i18n / l10n - load translations
+    load_plugin_textdomain( 'icegram', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); 
+
     $icegram = new Icegram();
-
-    if ( ! class_exists( 'IceGram_Upgrade' ) ) {
-        require_once 'icegram-includes/class-icegram-upgrade.php';
-    }
-    if( get_option( 'icegram_sample_data_imported' ) === false ) {
-        $icegram->import( $icegram->get_sample_data() );
-    }
-
-    $sku                = 'icegram';
-    $prefix             = 'icegram';
-    $plugin_name        = 'Icegram ';
-    $text_domain        = 'translate_icegram';
-    $documentation_link = '';
-    $icegram_upgrader   = new IceGram_Upgrade( __FILE__, $sku, $prefix, $plugin_name, $text_domain, $documentation_link );
-
 }
 
 add_action( 'plugins_loaded', 'initialize_icegram' );

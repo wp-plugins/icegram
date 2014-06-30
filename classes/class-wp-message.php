@@ -69,9 +69,9 @@ class WP_Message {
 		$date = $existing_columns['date'];
 		unset( $existing_columns['date'] );
 		
-		$existing_columns['message_type']      	= __( 'Type', 'translate_icegram' );
-		$existing_columns['message_theme']    	= __( 'Theme', 'translate_icegram' );
-		$existing_columns['message_thumbnail'] 	= __( 'Thumbnail', 'translate_icegram' );
+		$existing_columns['message_type']      	= __( 'Type', 'icegram' );
+		$existing_columns['message_theme']    	= __( 'Theme', 'icegram' );
+		$existing_columns['message_thumbnail'] 	= __( 'Thumbnail', 'icegram' );
 		$existing_columns['date'] 				= $date;
 
 		return $existing_columns;
@@ -197,7 +197,7 @@ class WP_Message {
 		?>
 		<div class="wp_attachment_details edit-form-section message-setting-fields">
 			<p>
-				<label for="message_type" class="message_label"><strong><?php _e( 'Type', 'translate_icegram' ); ?></strong></label> 
+				<label for="message_type" class="message_label"><strong><?php _e( 'Type', 'icegram' ); ?></strong></label> 
 				<select id="message_type" name="message_data[<?php echo $message_id; ?>][type]" class="message_type icegram_chosen_page">
 				<?php foreach ( $message_types as $value => $label ) { 
 					$selected = ( ( !empty( $message_data['type'] )  && esc_attr( $value ) == $message_data['type'] ) ) ? 'selected' : '';
@@ -209,7 +209,7 @@ class WP_Message {
 
 			<?php foreach ( $message_themes as $message_type => $message_theme ) { ?>
 				<p class="message_row <?php echo $message_type; ?>">
-					<label for="message_theme_<?php echo $message_type; ?>" class="message_label"><strong><?php _e( 'Theme', 'translate_icegram' ); ?></strong></label> 
+					<label for="message_theme_<?php echo $message_type; ?>" class="message_label"><strong><?php _e( 'Theme', 'icegram' ); ?></strong></label> 
 					<select id="message_theme_<?php echo $message_type; ?>" name="message_data[<?php echo $message_id; ?>][theme][<?php echo $message_type; ?>]" class="icegram_chosen_page message_theme message_theme_<?php echo $message_type; ?>">
 						<?php foreach ( $message_theme as $value => $label ) { 
 						$bg_img = "background-image: url(" . $icegram->plugin_url . "/assets/images/themes/" . $message_type . "/" . esc_attr( $value ) .".png)";
@@ -221,7 +221,7 @@ class WP_Message {
 			<?php }	?>
 
 			<p class="message_row messenger">
-				<label for="message_animation" class="message_label"><strong><?php _e( 'Animation', 'translate_icegram' ); ?></strong></label> 
+				<label for="message_animation" class="message_label"><strong><?php _e( 'Animation', 'icegram' ); ?></strong></label> 
 				<select id="message_animation" name="message_data[<?php echo $message_id; ?>][animation]" class="icegram_chosen_page">
 				<?php foreach ( $message_animation as $value => $label ) { ?>
 					<option value="<?php echo esc_attr( $value ) ?>" <?php echo ( !empty( $message_data['animation'] ) && esc_attr( $value ) == $message_data['animation'] ) ? 'selected' : ''; ?>><?php echo esc_html( $label ) ?></option>
@@ -229,7 +229,7 @@ class WP_Message {
 				</select>
 			</p>
 			<p class="message_row toast">
-				<label for="message_toast_animation" class="message_label"><strong><?php _e( 'Animation', 'translate_icegram' ); ?></strong></label> 
+				<label for="message_toast_animation" class="message_label"><strong><?php _e( 'Animation', 'icegram' ); ?></strong></label> 
 				<select id="message_toast_animation" name="message_data[<?php echo $message_id; ?>][toast_animation]" class="icegram_chosen_page">
 				<?php foreach ( $message_toast_animation as $value => $label ) { ?>
 					<option value="<?php echo esc_attr( $value ) ?>" <?php echo ( !empty( $message_data['toast_animation'] ) && esc_attr( $value ) == $message_data['toast_animation'] ) ? 'selected' : ''; ?>><?php echo esc_html( $label ) ?></option>
@@ -238,44 +238,44 @@ class WP_Message {
 			</p>
 			<p class="message_row all_promo">
 				<label for="message_title" class="message_label">
-					<strong><?php _e( 'Headline', 'translate_icegram' ); ?></strong>
-					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Shown with highest prominence. Click on idea button on right to get a new headline.', 'translate_icegram' ); ?>"></span>
+					<strong><?php _e( 'Headline', 'icegram' ); ?></strong>
+					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Shown with highest prominence. Click on idea button on right to get a new headline.', 'icegram' ); ?>"></span>
 				</label>
 				<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][title]" id="message_title" value="<?php echo ( isset( $message_data['title'] ) ) ? $message_data['title'] : $default_message_title; ?>" data-headline="<?php echo $message_title_key; ?>" data-max="<?php echo ( count( $message_headlines ) - 1 ); ?>" />
-				<a class="button message_title_button tips" data-tip="<?php _e( 'Give Me Another Headline', 'translate_icegram' ); ?>">
+				<a class="button message_title_button tips" data-tip="<?php _e( 'Give Me Another Headline', 'icegram' ); ?>">
 					<span class="title-buttons-icon admin_field_icon"></span>
 				</a>
 			</p>
 			<p class="message_row action-bar popup">
 				<label for="message_label" class="message_label">
-					<strong><?php _e( 'Button Label', 'translate_icegram' ); ?></strong>
-					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Your call to action text. Something unusual will increase conversions.', 'translate_icegram' ); ?>"></span>
+					<strong><?php _e( 'Button Label', 'icegram' ); ?></strong>
+					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Your call to action text. Something unusual will increase conversions.', 'icegram' ); ?>"></span>
 				</label>
 				<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][label]" id="message_label" value="<?php if( isset( $message_data['label'] ) ) echo $message_data['label']; ?>" />
 			</p>
 			<p class="message_row all_promo">
 				<label for="message_link" class="message_label">
-					<strong><?php _e( 'Target Link', 'translate_icegram' ); ?></strong>
-					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Enter destination URL here. Clicking will redirect to this link.', 'translate_icegram' ); ?>"></span>
+					<strong><?php _e( 'Target Link', 'icegram' ); ?></strong>
+					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Enter destination URL here. Clicking will redirect to this link.', 'icegram' ); ?>"></span>
 				</label>
 				<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][link]" id="message_link" value="<?php if( isset( $message_data['link'] ) ) echo $message_data['link']; ?>" />
 			</p>
 			<p class="message_row toast messenger">
 				<label for="upload_image" class="message_label">
-					<strong><?php _e( 'Icon / Avatar Image', 'translate_icegram' ); ?></strong>
-					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'This image will appear in message content.', 'translate_icegram' ); ?>"></span>
+					<strong><?php _e( 'Icon / Avatar Image', 'icegram' ); ?></strong>
+					<span class="help_tip admin_field_icon" data-tip="<?php _e( 'This image will appear in message content.', 'icegram' ); ?>"></span>
 				</label>
 				<input id="upload_image" type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][promo_image]" value="<?php if( isset( $message_data['promo_image'] ) ) echo $message_data['promo_image']; ?>"/>
-				<a class="button message_image_button tips" data-tip="<?php _e( 'Upload / Select an image', 'translate_icegram' ); ?>" onclick="tb_show('<?php _e( 'Upload / Select Image' ); ?>', 'media-upload.php?type=image&TB_iframe=true', false);" >
+				<a class="button message_image_button tips" data-tip="<?php _e( 'Upload / Select an image', 'icegram' ); ?>" onclick="tb_show('<?php _e( 'Upload / Select Image' ); ?>', 'media-upload.php?type=image&TB_iframe=true', false);" >
 					<span class="image-buttons-icon admin_field_icon"></span>
 				</a>
 			</p>
 			<p class="message_row action-bar">
-				<label for="message_bg_color" class="message_label"><strong><?php _e( 'Backgound Color', 'translate_icegram' ); ?></strong></label>
+				<label for="message_bg_color" class="message_label"><strong><?php _e( 'Backgound Color', 'icegram' ); ?></strong></label>
 				<input type="text" class="message_field color-field" name="message_data[<?php echo $message_id; ?>][bg_color]" id="message_bg_color" value="<?php if( isset( $message_data['bg_color'] ) ) echo $message_data['bg_color']; ?>" data-default-color="<?php if( isset( $this->default_message_color['bg_color'][$message_data['type']] ) ) echo $this->default_message_color['bg_color'][$message_data['type']]; ?>" />
 			</p>
 			<p class="message_row action-bar">
-				<label for="message_text_color" class="message_label"><strong><?php _e( 'Text Color', 'translate_icegram' ); ?></strong></label>
+				<label for="message_text_color" class="message_label"><strong><?php _e( 'Text Color', 'icegram' ); ?></strong></label>
 				<input type="text" class="message_field color-field" name="message_data[<?php echo $message_id; ?>][text_color]" id="message_text_color" value="<?php if( isset( $message_data['text_color'] ) ) echo $message_data['text_color']; ?>" data-default-color="<?php if( isset( $this->default_message_color['text_color'][$message_data['type']] ) ) echo $this->default_message_color['text_color'][$message_data['type']]; ?>" />
 			</p>
 
@@ -289,12 +289,12 @@ class WP_Message {
 				);
 			?>
 			<p class="message_row all_promo">
-				<label for="message_message" class="message_label"><strong><?php _e( 'Message Body', 'translate_icegram' ); ?></strong></label>
+				<label for="message_message" class="message_label"><strong><?php _e( 'Message Body', 'icegram' ); ?></strong></label>
 				<?php $message = ( !empty( $message_data['message'] ) ) ? $message_data['message'] : ''; ?>
 				<?php wp_editor( $message, 'edit'.$message_id, $editor_args ); ?>
 			</p>			
 			<p class="message_row messenger action-bar toast position">
-				<label for="message_position" class="message_label"><strong><?php _e( 'Position', 'translate_icegram' ); ?></strong></label>
+				<label for="message_position" class="message_label"><strong><?php _e( 'Position', 'icegram' ); ?></strong></label>
 				<span class="message_field location-selector message_label">
 					<input type="radio" id="radio01_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position]" value="00" <?php echo ( !empty( $message_data['position'] ) && "00" == $message_data['position'] ) ? 'checked' : ''; ?> />
 					<label for="radio01_<?php echo $message_id;?>" title="Top Left">
@@ -355,7 +355,7 @@ class WP_Message {
 			?>
 				<span class="shortcode_description admin_field_icon"></span>
 			<?php 
-			echo sprintf(__( 'You can insert <code>[%s]</code> wherever you want to show this message. We recommend running a campaign though.', 'translate_icegram' ), 'icegram messages="' .$post->ID . '"' );
+			echo sprintf(__( 'You can insert <code>[%s]</code> wherever you want to show this message. We recommend running a campaign though.', 'icegram' ), 'icegram messages="' .$post->ID . '"' );
 
 		}
 
@@ -421,52 +421,52 @@ class WP_Message {
 
 	function available_headlines( $available_headlines = array() ) {
 		$available_headlines = array_merge( $available_headlines, array(
-				__( 'Here Is A Method That Is Helping ____ To ____', 'translate_icegram' ),
-				__( '__ Little Known Ways To ____', 'translate_icegram' ),
-				__( 'Get Rid Of ____ Once And For All', 'translate_icegram' ),
-				__( 'How To ____ So You Can ____', 'translate_icegram' ),
-				__( 'They Didn\'t Think I Could ____, But I Did', 'translate_icegram' ),
-				__( 'How ____ Made Me ____', 'translate_icegram' ),
-				__( 'Are You ____ ?', 'translate_icegram' ),
-				__( 'Warning: ____ !', 'translate_icegram' ),
-				__( 'Do You Make These Mistakes With ____ ?', 'translate_icegram' ),
-				__( '7 Ways To ____', 'translate_icegram' ),
-				__( 'If You\'re ____, You Can ____', 'translate_icegram' ),
-				__( 'Turn your ____ into a ____', 'translate_icegram' ),
-				__( 'Want To Be A ____?', 'translate_icegram' ),
-				__( 'The Ugly Truth About Your Beautiful ____', 'translate_icegram' ),
-				__( 'The Secret to ____ Is Simply ____!', 'translate_icegram' ),
-				__( 'The Quickest Way I Know To ____', 'translate_icegram' ),
-				__( 'The Lazy Man\'s Way To ____', 'translate_icegram' ),
-				__( 'The Amazing Story Of ____ That Requires So Little Of ____ You Could ____', 'translate_icegram' ),
-				__( 'The Amazing Secret Of The ____ Genius Who Is Afraid Of ____', 'translate_icegram' ),
-				__( 'The 10 Wackiest Ideas That ____... And How You Can Too!', 'translate_icegram' ),
-				__( 'The Inside Secrets To ____ With Crazy, Outlandish And Outrageous ____', 'translate_icegram' ),
-				__( '____ Like A ____', 'translate_icegram' ),
-				__( 'Remember When You Could Have ____, And You Didn\'t?', 'translate_icegram' ),
-				__( 'Is The ____ Worth $x To You?', 'translate_icegram' ),
-				__( 'Increase your ____, reduce ____, maintain ____ and ____ with ____', 'translate_icegram' ),
-				__( 'If You Can ____ You Can ____', 'translate_icegram' ),
-				__( 'I Discovered How To ____... Now I\'m Revealing My Secret', 'translate_icegram' ),
-				__( 'How To Turn Your ____ Into The Most ____', 'translate_icegram' ),
-				__( 'How To Take The Headache Out Of ____', 'translate_icegram' ),
-				__( 'How To ____ ... Legally', 'translate_icegram' ),
-				__( 'How To ____ That ____', 'translate_icegram' ),
-				__( 'How To Discover The ____ That Lies Hidden In Your ____', 'translate_icegram' ),
-				__( 'How To ____ Even When Your Not ____', 'translate_icegram' ),
-				__( '____ With No ____!', 'translate_icegram' ),
-				__( 'Greatest Goldmine of ____ Ever Jammed Into One Big ____', 'translate_icegram' ),
-				__( 'Free ____ Tells How To Get Better ____', 'translate_icegram' ),
-				__( 'FREE ____ Worth $____ for the first 100 People to take Advantage of this Offer', 'translate_icegram' ),
-				__( 'Don\'t Try This With Any Other ____', 'translate_icegram' ),
-				__( 'Do You Honestly Want To ____?', 'translate_icegram' ),
-				__( 'Discover The Magic ____ That Will Bring You ____ & ____!', 'translate_icegram' ),
-				__( '____ Man Reveals A Short-Cut To ____', 'translate_icegram' ),
-				__( 'Confessions Of A ____', 'translate_icegram' ),
-				__( 'Are You Ready To ____?', 'translate_icegram' ),
-				__( 'An Open Letter To Everyone Who ____ More Than ____ Per ____', 'translate_icegram' ),
-				__( 'An Amazing ____ You Can Carry In Your ____', 'translate_icegram' ),
-				__( '21 Secret ____ that will ____... NOW!', 'translate_icegram' )
+				__( 'Here Is A Method That Is Helping ____ To ____', 'icegram' ),
+				__( '__ Little Known Ways To ____', 'icegram' ),
+				__( 'Get Rid Of ____ Once And For All', 'icegram' ),
+				__( 'How To ____ So You Can ____', 'icegram' ),
+				__( 'They Didn\'t Think I Could ____, But I Did', 'icegram' ),
+				__( 'How ____ Made Me ____', 'icegram' ),
+				__( 'Are You ____ ?', 'icegram' ),
+				__( 'Warning: ____ !', 'icegram' ),
+				__( 'Do You Make These Mistakes With ____ ?', 'icegram' ),
+				__( '7 Ways To ____', 'icegram' ),
+				__( 'If You\'re ____, You Can ____', 'icegram' ),
+				__( 'Turn your ____ into a ____', 'icegram' ),
+				__( 'Want To Be A ____?', 'icegram' ),
+				__( 'The Ugly Truth About Your Beautiful ____', 'icegram' ),
+				__( 'The Secret to ____ Is Simply ____!', 'icegram' ),
+				__( 'The Quickest Way I Know To ____', 'icegram' ),
+				__( 'The Lazy Man\'s Way To ____', 'icegram' ),
+				__( 'The Amazing Story Of ____ That Requires So Little Of ____ You Could ____', 'icegram' ),
+				__( 'The Amazing Secret Of The ____ Genius Who Is Afraid Of ____', 'icegram' ),
+				__( 'The 10 Wackiest Ideas That ____... And How You Can Too!', 'icegram' ),
+				__( 'The Inside Secrets To ____ With Crazy, Outlandish And Outrageous ____', 'icegram' ),
+				__( '____ Like A ____', 'icegram' ),
+				__( 'Remember When You Could Have ____, And You Didn\'t?', 'icegram' ),
+				__( 'Is The ____ Worth $x To You?', 'icegram' ),
+				__( 'Increase your ____, reduce ____, maintain ____ and ____ with ____', 'icegram' ),
+				__( 'If You Can ____ You Can ____', 'icegram' ),
+				__( 'I Discovered How To ____... Now I\'m Revealing My Secret', 'icegram' ),
+				__( 'How To Turn Your ____ Into The Most ____', 'icegram' ),
+				__( 'How To Take The Headache Out Of ____', 'icegram' ),
+				__( 'How To ____ ... Legally', 'icegram' ),
+				__( 'How To ____ That ____', 'icegram' ),
+				__( 'How To Discover The ____ That Lies Hidden In Your ____', 'icegram' ),
+				__( 'How To ____ Even When Your Not ____', 'icegram' ),
+				__( '____ With No ____!', 'icegram' ),
+				__( 'Greatest Goldmine of ____ Ever Jammed Into One Big ____', 'icegram' ),
+				__( 'Free ____ Tells How To Get Better ____', 'icegram' ),
+				__( 'FREE ____ Worth $____ for the first 100 People to take Advantage of this Offer', 'icegram' ),
+				__( 'Don\'t Try This With Any Other ____', 'icegram' ),
+				__( 'Do You Honestly Want To ____?', 'icegram' ),
+				__( 'Discover The Magic ____ That Will Bring You ____ & ____!', 'icegram' ),
+				__( '____ Man Reveals A Short-Cut To ____', 'icegram' ),
+				__( 'Confessions Of A ____', 'icegram' ),
+				__( 'Are You Ready To ____?', 'icegram' ),
+				__( 'An Open Letter To Everyone Who ____ More Than ____ Per ____', 'icegram' ),
+				__( 'An Amazing ____ You Can Carry In Your ____', 'icegram' ),
+				__( '21 Secret ____ that will ____... NOW!', 'icegram' )
 			) );
 		return $available_headlines;
 	}

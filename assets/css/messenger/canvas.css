@@ -2,7 +2,6 @@
     display: block;
     position: fixed;
     cursor: pointer;
-    background: #FFF;
     z-index: 100000;
     margin: 0;
     padding: 0;
@@ -16,6 +15,7 @@
     overflow: hidden;
     -webkit-box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.135);
     box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.13);
+    background: #FFF;
 }
 
 .canvas .popup_box_header_image, .canvas .popup_box_header2_image {
