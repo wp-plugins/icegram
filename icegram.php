@@ -112,7 +112,7 @@ class Icegram {
     }
 
     public function about_screen() {
-        global $icegram, $icegram_upgrader;
+        global $icegram;
 
         // Import data if not done already
         if( false === get_option( 'icegram_sample_data_imported' ) ) {
@@ -829,7 +829,7 @@ class Icegram {
 }
 
 function initialize_icegram() {
-    global $icegram, $icegram_upgrader;
+    global $icegram;
 
     // i18n / l10n - load translations
     load_plugin_textdomain( 'icegram', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); 

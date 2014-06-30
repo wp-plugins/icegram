@@ -7,7 +7,7 @@
 add_action( 'admin_footer', 'icegram_support_ticket_content' );
 
 function icegram_support_ticket_content() {
-    global $current_user, $pagenow, $typenow, $icegram_upgrader;
+    global $current_user, $pagenow, $typenow;
 
     if ( $pagenow != 'edit.php' ) return;
 
