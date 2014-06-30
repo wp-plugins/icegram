@@ -3,10 +3,13 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Icegram
  * Author URI: http://www.icegram.com/
- * Copyright (c) 2014 Icegram All rights reserved.
+ *
+ * Copyright (c) 2014 Icegram
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
  * Text Domain: icegram
  * Domain Path: /lang/
@@ -179,8 +182,8 @@ class Icegram {
 
         $icegram_default = apply_filters( 'icegram_branding_data', 
                                             array ( 'default_promo_image'   => $this->plugin_url . '/assets/images/icegram-logo-branding-64-grey.png',
-                                                    'powered_by_logo'       => $this->plugin_url . '/assets/images/icegram-logo-branding-64-grey.png',
-                                                    'powered_by_text'       => __( 'Powered by Icegram', 'icegram' )
+                                                    'powered_by_logo'       => '',
+                                                    'powered_by_text'       => ''
                                                     ) );
         $icegram = array ( 'messages'       => array_values( $messages ),
                            'ajax_url'       => admin_url( 'admin-ajax.php' ),
@@ -832,18 +835,6 @@ function initialize_icegram() {
     load_plugin_textdomain( 'icegram', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); 
 
     $icegram = new Icegram();
-
-    if ( ! class_exists( 'IceGram_Upgrade' ) ) {
-        require_once 'icegram-includes/class-icegram-upgrade.php';
-    }
-
-    $sku                = 'icegram';
-    $prefix             = 'icegram';
-    $plugin_name        = 'Icegram ';
-    $text_domain        = 'icegram';
-    $documentation_link = '';
-    $icegram_upgrader   = new IceGram_Upgrade( __FILE__, $sku, $prefix, $plugin_name, $text_domain, $documentation_link );
-
 }
 
 add_action( 'plugins_loaded', 'initialize_icegram' );

@@ -15,16 +15,18 @@ function icegram_support_ticket_content() {
 
     if ( !( $current_user instanceof WP_User ) ) return;
 
-    if( isset( $_POST['submit_query'] ) && $_POST['submit_query'] == "Send" ){
+    if( isset( $_POST['submit_query'] ) && $_POST['submit_query'] == "Send" && !empty($_POST['client_email'])){
 
 
         $additional_info = ( isset( $_POST['additional_information'] ) && !empty( $_POST['additional_information'] ) ) ? sanitize_text_field( $_POST['additional_information'] ) : '';
         $additional_info = str_replace( '###', '<br />', $additional_info );
         $additional_info = str_replace( array( '[', ']' ), '', $additional_info );
 
-        $headers = 'From: ';
-        $headers .= ( isset( $_POST['client_name'] ) && !empty( $_POST['client_name'] ) ) ? sanitize_text_field( $_POST['client_name'] ) : '';
-        $headers .= ' <' . sanitize_text_field( $_POST['client_email'] ) . '>' . "\r\n";
+        $from = 'From: ';
+        $from .= ( isset( $_POST['client_name'] ) && !empty( $_POST['client_name'] ) ) ? sanitize_text_field( $_POST['client_name'] ) : '';
+        $from .= ' <' . sanitize_text_field( $_POST['client_email'] ) . '>' . "\r\n";
+        $headers .= $from;
+        $headers .= str_replace('From: ', 'Reply-To: ', $from);
         $headers .= 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
@@ -50,30 +52,6 @@ function icegram_support_ticket_content() {
             $name = $first_name . ' ' . $last_name;
             $customer_name = ( !empty( $name ) ) ? $name : $current_user->data->display_name;
             $customer_email = $current_user->data->user_email;
-            $license_key = $icegram_upgrader->license_key;
-            $wp_version = ( is_multisite() ) ? 'WPMU ' . get_bloginfo('version') : 'WP ' . get_bloginfo('version');
-            $admin_url = admin_url();
-            $php_version = ( function_exists( 'phpversion' ) ) ? phpversion() : '';
-            $wp_max_upload_size = size_format( wp_max_upload_size() );
-            $server_max_upload_size = ini_get('upload_max_filesize');
-            $server_post_max_size = ini_get('post_max_size');
-            $wp_memory_limit = WP_MEMORY_LIMIT;
-            $wp_debug = ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? 'On' : 'Off';
-            $this_plugins_version = $icegram_upgrader->plugin_data['Name'] . ' ' . $icegram_upgrader->plugin_data['Version'];
-            $ip_address = $_SERVER['REMOTE_ADDR'];
-            $additional_information = "Additional Information =>
-                                       (WP Version: $wp_version) ###
-                                       (Admin URL: $admin_url) ###
-                                       (PHP Version: $php_version) ###
-                                       (WP Max Upload Size: $wp_max_upload_size) ###
-                                       (Server Max Upload Size: $server_max_upload_size) ###
-                                       (Server Post Max Size: $server_post_max_size) ###
-                                       (WP Memory Limit: $wp_memory_limit) ###
-                                       (WP Debug: $wp_debug) ###
-                                       (" . $icegram_upgrader->plugin_data['Name'] . " Version: $this_plugins_version) ###
-                                       (License Key: $license_key)###
-                                       (IP Address: $ip_address)
-                                      ";
 
         ?>
         <form id="icegram_form_post_query" method="POST" action="" enctype="multipart/form-data">
@@ -155,13 +133,6 @@ function icegram_support_ticket_content() {
                     <td><label for="client_email"><?php _e('E-mail', 'icegram'); ?>*</label></td>
                     <td><input type="email" class="regular-text sm_text_field" id="client_email" name="client_email" value="<?php echo $customer_email; ?>" /></td>
                 </tr>
-                <!--
-                <tr>
-                    <td><label for="current_plugin"><?php _e('Product', 'icegram'); ?></label></td>
-                    <td><input type="text" class="regular-text sm_text_field" id="current_plugin" name="current_plugin" value="<?php echo $this_plugins_version; ?>" readonly /></td>
-                </tr>
-                -->
-                <input type="hidden" id="current_plugin" name="current_plugin" value="<?php echo $this_plugins_version; ?>" />
                 <tr>
                     <td><label for="subject"><?php _e('Subject', 'icegram'); ?>*</label></td>
                     <td><input type="text" class="regular-text sm_text_field" id="subject" name="subject" value="<?php echo ( !empty( $subject ) ) ? $subject : ''; ?>" /></td>
@@ -179,19 +150,6 @@ function icegram_support_ticket_content() {
                     <td><input type="submit" class="button" id="icegram_submit_query" name="submit_query" value="Send" /></td>
                 </tr>
             </table>
-            <input type="hidden" name="license_key" value="<?php echo $license_key; ?>" />
-            <input type="hidden" name="sku" value="<?php echo $icegram_upgrader->sku; ?>" />
-            <input type="hidden" class="hidden_field" name="wp_version" value="<?php echo $wp_version; ?>" />
-            <input type="hidden" class="hidden_field" name="admin_url" value="<?php echo $admin_url; ?>" />
-            <input type="hidden" class="hidden_field" name="php_version" value="<?php echo $php_version; ?>" />
-            <input type="hidden" class="hidden_field" name="wp_max_upload_size" value="<?php echo $wp_max_upload_size; ?>" />
-            <input type="hidden" class="hidden_field" name="server_max_upload_size" value="<?php echo $server_max_upload_size; ?>" />
-            <input type="hidden" class="hidden_field" name="server_post_max_size" value="<?php echo $server_post_max_size; ?>" />
-            <input type="hidden" class="hidden_field" name="wp_memory_limit" value="<?php echo $wp_memory_limit; ?>" />
-            <input type="hidden" class="hidden_field" name="wp_debug" value="<?php echo $wp_debug; ?>" />
-            <input type="hidden" class="hidden_field" name="current_plugin" value="<?php echo $this_plugins_version; ?>" />
-            <input type="hidden" class="hidden_field" name="ip_address" value="<?php echo $ip_address; ?>" />
-            <input type="hidden" class="hidden_field" name="additional_information" value='<?php echo $additional_information; ?>' />
         </form>
     </div>
     <?php
