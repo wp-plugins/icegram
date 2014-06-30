@@ -183,7 +183,7 @@ if ( !wp_script_is( 'thickbox' ) ) {
             </div>
             
             <div class="icegram-badge">
-               <?php printf(__( "Version: %s", "icegram"), $icegram_upgrader->plugin_data['Version'] ); ?>
+               <?php printf(__( "Version: %s", "icegram"), "1.1.2" ); ?>
             </div>
             <div class="icegram-support">
                     <?php _e( 'Questions? Need Help?', "icegram" ); ?>
