@@ -1,0 +1,30 @@
+.stand-out .ig_wrapper {
+	padding: 5px 50px 5px 10px;
+}
+
+.stand-out.ig_container {
+	background-color: hsl(0, 0%, 12%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(255, 255, 255, 0.1))), url(../images/stand-out.png);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 -1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 4px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 -1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 4px rgba(0, 0, 0, 0.7);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 -1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 4px rgba(0, 0, 0, 0.7);
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+	border: 1px solid #111;
+}
+
+.stand-out .ig_icon {
+	right: 10px;
+	left: auto;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.stand-out .ig_message {
+	color: rgba(255, 255, 255, 0.7);
+	line-height: 15px;
+}

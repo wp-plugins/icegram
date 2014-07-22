@@ -1,0 +1,47 @@
+.night-glow.ig_container {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.2);
+	-webkit-box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.2);
+	box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.2);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+	-webkit-font-smoothing: antialiased;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.83)), to(rgba(51, 51, 51, 0.73)), color-stop(0.5, rgba(0, 0, 0, 0.83)));
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	color: rgba(150, 150, 150, 1);
+	text-shadow: 0 -1px 0 #000;
+}
+
+.night-glow .ig_wrapper {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background-image: url(../images/toast-glow.png);
+	background-repeat: no-repeat;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	-moz-border-image: stretch;
+	-ms-border-image: stretch;
+	-o-border-image: stretch;
+	-webkit-border-image: stretch;
+	border-image: stretch;
+	position: auto;
+}
+
+.night-glow .ig_content {
+	padding-left: 8px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.night-glow .ig_headline {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.night-glow .ig_message {
+	color: rgba(255, 255, 255, 0.9);
+}

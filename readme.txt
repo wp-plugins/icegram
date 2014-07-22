@@ -4,7 +4,7 @@ Donate link:http://www.icegram.com/
 Tags: popup, window, hellobar, action bar, header bar, footer bar, notification, messenger, targeting, rules, auto responder, icegram, responsive, slide
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 1.1.2
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -86,8 +86,8 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 
 == Upgrade Notice ==
 
-= 1.1.2 =
-Recommended. Code cleanup for better WP repo compatibility
+= 1.2 =
+Lots of enhancements... [WPML](http://wpml.org/?aid=21266&affiliate_key=W1YOdHyWrIjY) support, pluggable architecture, many internal changes. Do upgrade.
 
 = 1.1.1 =
 Compatibility with W3TC and Localization
@@ -101,8 +101,21 @@ Initial Release
 
 == Changelog ==
 
-= 1.1.2 = 
-* Code cleanup for better WP repo compatibility
+= 1.2 =
+* NEW: Icegram is now fully pluggable. External plugins can add message types and themes.
+* NEW: [WPML](http://wpml.org/?aid=21266&affiliate_key=W1YOdHyWrIjY) support
+* Update: Icegram branding is optional
+* NEW: Setting to show Icegram branding
+* Fix: Popups show correctly on long pages now
+* Fix: Single day schedule for message display is correctly handled now
+* NEW: Rewritten message display system - can even control with JavaScript now
+* Fix: For problems showing a campaign on homepage
+* Update: Simplified CSS and JS
+* Update: Changed custom post type names to ig_message and ig_campaign
+* Update: Compatibility with All in One SEO plugin
+* Update: Newsletter subscription form added
+* Fix: For displaying messages via shortcode
+* Update: And many more!!!
 
 = 1.1.1 =
 * Fix for crash on activation with W3 Total Cache

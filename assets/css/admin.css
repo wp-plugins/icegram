@@ -68,6 +68,10 @@ th.message_header {
 
 .message_title {
 	text-align: left;
+}
+
+.message_headline {
+	text-align: left;
 	padding-left: 1.2em;
 }
 
@@ -117,8 +121,7 @@ th.message_header {
 	margin: 0 2px;
 }
 
-.campaign_preview,
-.message_preview {
+.campaign_preview {
 	float: right;
 	margin-right: 1em !important;
 }
@@ -227,22 +230,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	text-transform: uppercase;
 }
 
-.message_header .messenger {
-	background-color: #883EB0;
-}
-
-.message_header .action-bar {
-	background-color: #DF6B00;
-}
-
-.message_header .toast {
-	background-color: #EDBB00;
-}
-
-.message_header .popup {
-	background-color: #22B189;
-}
-
 .message_label {
 	float: left;
 	width: 25%;
@@ -258,7 +245,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	content: "\f128";
 }
 
-.message_title_button .title-buttons-icon:before {
+.message_headline_button .headline-buttons-icon:before {
 	content: "\f130";
 }
 
@@ -368,47 +355,17 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .message_theme + .chosen-container.chosen-container .chosen-results {
 	max-height: 30em !important;
 }
-.message_theme_action-bar + .chosen-container-single .chosen-single {
-	height: 3.1em !important;
-}
-.message_theme_messenger + .chosen-container-single .chosen-single {
-	height: 7em !important;
-}
-.message_theme_popup + .chosen-container-single .chosen-single {
-	height: 6em !important;
-}
-.message_theme_toast + .chosen-container-single .chosen-single {
-	height: 5em !important;
-}
+
 .message_theme + .chosen-container-single .chosen-single span {
 	background-repeat: no-repeat !important;
-}
-.message_theme_action-bar + .chosen-container-single .chosen-single span {
-	background-size: 350px !important;
 	background-position: 100% 50% !important;
-	line-height: 3em !important;
-}
-.message_theme_messenger + .chosen-container-single .chosen-single span {
-	background-size: 70px !important;
-	background-position: 100% 50% !important;
-	line-height: 7em !important;
-}
-.message_theme_popup + .chosen-container-single .chosen-single span {
-	background-size: 9em !important;
-	background-position: 100% 50% !important;
-	line-height: 6em !important;
-}
-.message_theme_toast + .chosen-container-single .chosen-single span {
-	background-size: 11em !important;
-	background-position: 100% 50% !important;
-	line-height: 5em !important;
-}
-.message_theme + .chosen-container .chosen-results li.highlighted {
-	color: #000 !important;
-	border: 2px solid #2ea2cc !important;
-	background-color: #EAEFFF !important;
-}
-.message_theme + .chosen-container .chosen-results li{
+} 
+
+.message_theme + .chosen-container .chosen-results li {								
+	margin: 0% 0% 2% 2%;
+	background-position: 0.5em 2em !important;
+	-webkit-background-size: 95% !important;
+	background-size: 95% !important;
 	border: 2px solid #EEE !important;
 	font-weight: 700 !important;
 	display: inline-block !important;
@@ -416,37 +373,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	background-repeat: no-repeat !important;
 }
 
-.message_theme_action-bar + .chosen-container .chosen-results li {
-	width: 92% !important;
-	height: 4.5em !important;
-	margin: 0% 0% 3% 2%;
-	background-position: 0.6em 1.9em !important;
-	-webkit-background-size: 97% !important;
-	background-size: 97% !important;
-}
-.message_theme_messenger + .chosen-container .chosen-results li {
-	width: 28.5% !important;
-	height: 13.6em !important;
-	margin: 0% 0% 1% 1%;
-	background-position: 0.3em 1.9em !important;
-	-webkit-background-size: 96% !important;
-	background-size: 96% !important;
-}
-.message_theme_popup + .chosen-container .chosen-results li {
-	width: 43% !important;
-	height: 10em !important;
-	margin: 0% 0% 2% 2%;
-	background-position: 0.5em 2em !important;
-	-webkit-background-size: 95% !important;
-	background-size: 95% !important;
-}
-.message_theme_toast + .chosen-container .chosen-results li {
-	width: 43% !important;
-	height: 7.5em !important;
-	margin: 0% 0% 2% 2%;
-	background-position: 0.5em 2em !important;
-	-webkit-background-size: 94% !important;
-	background-size: 94% !important;
+.message_theme + .chosen-container .chosen-results li.highlighted {
+	color: #000 !important;
+	border: 2px solid #2ea2cc !important;
+	background-color: #EAEFFF !important;
 }
 
 /************* jQuery TipTip ************/

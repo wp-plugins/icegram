@@ -3,20 +3,19 @@
  * About Icegram
  */
 
-// Actions for License Validation & Upgrade process
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// Actions for support
 add_action( 'admin_footer', 'icegram_support_ticket_content' );
 
 function icegram_support_ticket_content() {
-    global $current_user, $pagenow, $typenow;
+    global $current_user, $pagenow, $typenow, $icegram;
 
     if ( $pagenow != 'edit.php' ) return;
-
-    if ( $typenow != 'campaign') return;
-
+    if ( $typenow != 'ig_campaign') return;
     if ( !( $current_user instanceof WP_User ) ) return;
 
     if( isset( $_POST['submit_query'] ) && $_POST['submit_query'] == "Send" && !empty($_POST['client_email'])){
-
 
         $additional_info = ( isset( $_POST['additional_information'] ) && !empty( $_POST['additional_information'] ) ) ? sanitize_text_field( $_POST['additional_information'] ) : '';
         $additional_info = str_replace( '###', '<br />', $additional_info );
@@ -150,6 +149,7 @@ function icegram_support_ticket_content() {
                     <td><input type="submit" class="button" id="icegram_submit_query" name="submit_query" value="Send" /></td>
                 </tr>
             </table>
+            <input type="hidden" id="current_plugin" name="additional_info[current_plugin]" value="Icegram <?php echo $icegram->version; ?>" />
         </form>
     </div>
     <?php
@@ -163,8 +163,7 @@ if ( !wp_script_is( 'thickbox' ) ) {
 } 
 
 ?>
-<div class="wrap about-wrap icegram">
-             
+        <div class="wrap about-wrap icegram">             
             <h1><?php _e( "Welcome to Icegram", "icegram" ); ?></h1>
             <div class="about-text icegram-about-text">
                 <?php _e( "Your sample campaign is ready. We've added a few messages for you to test.", "icegram" )?>
@@ -172,38 +171,40 @@ if ( !wp_script_is( 'thickbox' ) ) {
                     $sample_id = get_option('icegram_sample_data_imported');
                     $view_campaign = admin_url( 'post.php?post='.$sample_id[0].'&action=edit' );
                     $preview_url = home_url('?campaign_preview_id='.$sample_id[0]);
-                    $assets_base = $icegram->plugin_url . '/assets/images/';
+                    $assets_base = $this->plugin_url . '/assets/images/';
                 ?>
                 <p class="icegram-actions">
                     <a class="button button-primary button-large" href="<?php echo $view_campaign ; ?>"><?php _e( 'Edit & Publish it', 'icegram' ); ?></a>
                     <?php _e( "OR", "icegram")?>
                     <b><a href="<?php echo $preview_url; ?>" target="_blank"><?php _e( 'Preview Campaign', 'icegram' ); ?></a></b>
                 </p>
-               
             </div>
             
             <div class="icegram-badge">
-               <?php printf(__( "Version: %s", "icegram"), "1.1.2" ); ?>
+               <?php printf(__( "Version: %s", "icegram"), $this->version ); ?>
             </div>
             <div class="icegram-support">
                     <?php _e( 'Questions? Need Help?', "icegram" ); ?>
-                    <div id="icegram-contact-us" class="icegram-contact-us"><a  class="thickbox"  href="<?php echo admin_url() . "#TB_inline?inlineId=icegram_post_query_form&post_type=icegram" ?>"><?php _e("Contact Us", "icegram"); ?></a></div>
+                    <div id="icegram-contact-us" class="icegram-contact-us"><a class="thickbox"  href="<?php echo admin_url() . "#TB_inline?inlineId=icegram_post_query_form&post_type=ig_campaign" ?>"><?php _e("Contact Us", "icegram"); ?></a></div>
             </div>
             <hr>
             <div class="changelog">
+
+                <?php do_action('icegram_about_changelog'); ?>
+
+                <hr>
 
                 <div class="about-text">
                 <?php _e("Do read Icegram's core concepts below to understand how you can use Icegram to inspire, convert and engage your audience.", "icegram"); ?>
                 </div>
 
                 <div class="feature-section col three-col">
-                        <div class="col-1">
-                                
+                        <div class="col-1">                                
                                 <h2 class="icegram-dashicons dashicons-testimonial"><?php _e( "Messages", "icegram" ); ?></h2>
-                                <!--<img src="//s.w.org/images/core/3.9/editor.jpg?0">-->
                                 <p><?php _e("A 'Message' is a communication you want to deliver to your audience.","icegram"); ?></p>
                                 <p><?php _e("And Icegram comes with not one, but four message types.","icegram"); ?></p>
                                 <p><?php _e("Different message types look and behave differently, but they all have many common characteristics. For instance, most message types will allow you to set a headline, a body text, label for the ‘call to action’ button, a link for that button, theme and styling options, animation effect and position on screen where that message should show.","icegram"); ?></p>
+                                <?php do_action('icegram_about_after_core_message_types_col1'); ?>
                         </div>
                         <div class="col-2">
                                 <h4><?php _e("Action Bar", "icegram"); ?></h4>
@@ -212,6 +213,7 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("Messenger", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-messenger.png" width="180" height="145">
                                 <p><?php _e("A messenger is best used to invoke interest while your visitor is reading your content. Users perceive it as something new, important and urgent and are highly likely to click on it.", "icegram"); ?></p>
+                                <?php do_action('icegram_about_after_core_message_types_col2'); ?>
                         </div>
                         <div class="col-3 last-feature">
                                 <h4><?php _e("Toast Notification", "icegram"); ?></h4>
@@ -220,11 +222,12 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                <h4><?php _e("Popup", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-popup.png" width="180" height="145">
                                 <p><?php _e("Lightbox popup windows are most widely used for lead capture, promotions and additional content display. Ask visitors to sign up to your newsletter, or like you on social networks, or tell them about a special offer...", "icegram"); ?></p>
-                        
+                                <?php do_action('icegram_about_after_core_message_types_col3'); ?>
                         </div>
-                </div>
-                
+                </div>                
                 <hr>
+
+                <?php do_action('icegram_about_after_core_message_types'); ?>
                 
                 <div class="feature-section col three-col">
                         <div class="col-1">                                
@@ -232,21 +235,25 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <p><?php _e("Campaign = Messages + Rules", "icegram"); ?></p>
                                 <p><?php _e("A campaign allows sequencing multiple messages and defining targeting rules. Create different campaigns for different marketing goals. Icegram supports showing multiple campaigns on any page.", "icegram"); ?></p>
 								<p><?php _e("You can always preview your campaign to ensure campaign works the way you want, before making it live.", "icegram"); ?></p>
+                                <?php do_action('icegram_about_after_core_campaigns_col1'); ?>
                         </div>
                         <div class="col-2">
                                 <h4><?php _e("Multiple Messages & Sequencing", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-multiple-sequence.png" width="180" height="145">
                                 <p><?php _e("Add one or as many messages to a campaign as you want. Also choose the number of seconds after which each message should show up. Showing multiple messages for same goal, but with slightly different content / presentation, greatly improves conversions.", "icegram"); ?></p>
+                                <?php do_action('icegram_about_after_core_campaigns_col2'); ?>
                         </div>
                         <div class="col-3 last-feature">                                
                                 <h4><?php _e("Targeting Rules", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-rules.png" width="180" height="145">
                                 <p><?php _e("You can control who sees a campaign – and on what device, which pages does it show on, and what time period will it stay active for. You can run different campaigns with different rules to maximize engagement.", "icegram"); ?></p>
+                                <?php do_action('icegram_about_after_core_campaigns_col3'); ?>
                         </div>
                 </div>
 
-                <hr>
-                
+                <?php do_action('icegram_about_after_core_campaigns'); ?>
+
+                <hr>                
                 <div class="feature-section col two-col">
                         <div class="col-1">
                             <h2 class="icegram-dashicons dashicons-editor-help"><?php _e("FAQ / Common Problems", "icegram"); ?></h2>
@@ -263,6 +270,8 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("Optin Forms / Mailing service integration...", "icegram"); ?></h4>
                                 <p><?php _e("You can embed any optin / subscription form to your Icegram messages using HTML code. You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service.", "icegram"); ?></p>
 
+                                <?php do_action('icegram_about_after_faq_col1'); ?>
+
                         </div>
                         <div class="col-2 last-feature">                                
                                 <h4><?php _e("Preview does not work / not refreshing...", "icegram"); ?></h4>
@@ -276,14 +285,13 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <p><?php _e("Icegram is actively developed. If you can't find your favorite feature (or have a suggestion) contact us. We'd love to hear from you.", "icegram"); ?></p>
 
                                 <h4><?php _e("I'm facing a problem and can't find a way out...", "icegram"); ?></h4>
-                                <p><a class="thickbox"  href="<?php echo admin_url() . "#TB_inline?inlineId=icegram_post_query_form&post_type=icegram" ?>"><?php _e("Contact Us", "icegram"); ?></a><?php _e(", provide as much detail of the problem as you can. We will try to solve the problem ASAP.", "icegram"); ?></p>
+                                <p><a class="thickbox"  href="<?php echo admin_url() . "#TB_inline?inlineId=icegram_post_query_form&post_type=ig_campaign" ?>"><?php _e("Contact Us", "icegram"); ?></a><?php _e(", provide as much detail of the problem as you can. We will try to solve the problem ASAP.", "icegram"); ?></p>
 
-                                <h4><?php _e("", "icegram"); ?></h4>
-                                <p><?php _e("", "icegram"); ?></p>
+                                <?php do_action('icegram_about_after_faq_col2'); ?>
                         </div>
                 </div>
 
+                <?php do_action('icegram_about_after_faq'); ?>
 
-            </div>
-            
-</div>
+            </div>            
+        </div>
