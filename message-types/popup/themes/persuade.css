@@ -1,0 +1,74 @@
+.popup.persuade.ig_container {
+}
+.popup.persuade .ig_headline {
+    letter-spacing: 0;
+    color: hsl(0, 100%, 100%);
+    font-size: 3em;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    margin: .25em auto;
+}
+
+.popup.persuade .ig_image {
+    float: left;
+}
+
+.popup.persuade .ig_message {
+    color: #FFF;
+    font-size: 1.75em;
+    font-weight: 300;
+    margin: .5em auto 1em;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+.popup.persuade .ig_close {
+    top: -15px;
+    right: -15px;
+}
+
+.popup.persuade .ig_button, .popup.persuade input[type="submit"], .popup.persuade input[type="button"] {
+    color: hsl(0, 100%, 100%);
+    text-decoration: none;
+    background-color: hsl(0, 0%, 26%);
+    font-size: 2em;
+    font-weight: 400;
+    width: 60%;
+    -moz-border-radius: .6em;
+    -webkit-border-radius: .6em;
+    border-radius: .6em;
+    -moz-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    -webkit-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
+    -moz-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    text-align: center;
+    margin: .2em auto .5em;
+    padding: 0.5em;
+    line-height: 1.2em;
+    clear: both;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.popup.persuade .ig_button:hover, .popup.persuade input[type="submit"]:hover, .popup.persuade input[type="button"]:hover {
+    -moz-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    -webkit-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
+    -moz-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    -webkit-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    position: relative;
+    top: .2em
+}
+
+.popup.persuade #TB_ajaxContent {
+    border: .6em dashed hsl(0, 100%, 100%);
+}
+
+.popup.persuade#TB_window {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: hsl(1, 83%, 62%);
+}

@@ -1,0 +1,236 @@
+.toast.ig_container {
+	display: none;
+}
+
+.toast .ig_wrapper {
+	overflow: hidden;
+	padding: 5px 5px 5px 50px;
+	position: relative;
+	min-height: 34px;
+}
+
+.toast .ig_content {
+	overflow: hidden;
+}
+
+.toast.ig_container:hover {
+
+}
+
+.toast .ig_headline {
+	display: inline-block;
+	margin: 0;
+	text-align: left;
+	position: relative;
+}
+
+.toast .ig_icon {
+	overflow: hidden;
+	display: block;	
+	max-height: 32px;
+	max-width: 32px;
+	left: 10px;
+	top: 10px;
+	position: absolute;
+}
+
+.toast .ig_icon img {
+	max-width: 32px;
+	max-height: 32px;
+	margin: 0;
+	padding: 0;
+}
+
+.toast .ig_message {
+	margin: -3px 0 0 -2px;
+}
+
+.toast .ig_message p {
+	margin: 0.15em;
+}
+
+.ig_toast_block {
+	position: fixed;
+	list-style: none;
+	z-index: 999999;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+	padding: 0;
+	margin: 5px;
+}
+
+.ig_toast_block * {
+    -webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	text-transform: none;
+}
+
+.ig_toast_block .ig_container {
+	margin: 10px 0;
+}
+
+.ig_toast_block .ig_headline {
+	font-weight: bold;
+	clear: none;
+	padding: 0;
+}
+
+.ig_toast_block .ig_message {
+	font-size: 12px;
+	text-align: left;
+	line-height: 15px;
+}
+
+/* animation 1*/
+.ig_toast_block .bang .ig_icon {
+	-webkit-animation: MainMoveIcon 1s;
+}
+
+.ig_toast_block .bang .ig_base {
+	-webkit-animation: MainMove 1s;
+}
+
+.ig_toast_block .bang .ig_headline, .ig_toast_block .bang .ig_message {
+	-webkit-animation: MainMoveText 1s;
+}
+@-webkit-keyframes MainMove {
+    0%   	{ opacity: 0; }
+    70%   	{ opacity: 0.1;-webkit-transform: scale(.3) rotateX(180deg); }
+    90% 	{ opacity: 0.7; -webkit-transform: scale(1.1) rotateX(0deg); }
+    100% 	{ opacity: 1;-webkit-transform: scale(1) rotateX(0deg); }
+}
+@-webkit-keyframes MainMoveIcon {
+    0%   	{ opacity: 0; -webkit-transform: scale(.3) rotateY(180deg);  }
+    70% 	{ opacity: 1; -webkit-transform: scale(1.1) rotateY(0deg);  }
+    100% 	{ -webkit-transform: scale(1) rotateY(0deg); }
+}
+@-webkit-keyframes MainMoveText {
+	0%   	{ opacity: 0; }
+    90%   	{ opacity: 0; -webkit-transform:  translate(0px, 10px); }
+    100% 	{ opacity: 1; -webkit-transform: translate(0px, 0px); }
+}
+/* animation 2*/
+.ig_toast_block .slide-down .ig_headline {
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.ig_toast_block .slide-down .ig_message {
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.ig_toast_block .slide-down.ig_container {
+	-webkit-animation-name: banner;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-in;
+}
+
+.ig_toast_block .slide-down .ig_icon {
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 0.7s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-in;
+}
+
+@-webkit-keyframes banner {
+    from {
+        -webkit-transform: rotateX(90deg) translateY(-40px) perspective(300);
+        opacity: 0;
+    }
+
+    60% {
+        -webkit-transform: rotateX(-10deg) translateY(5px) perspective(400);
+        opacity: 1;
+    }
+    
+    to {
+        -webkit-transform: rotateX(0deg) translateY(0px) perspective(400);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade {
+    from {
+        opacity: 0;
+    }
+    
+    30% {
+        opacity: 0;
+    }
+    
+    to {
+        opacity: 1;
+    }
+}
+/* animation 3*/
+.ig_toast_block .pop.ig_container {
+	-webkit-animation: BangTidy 1s ease forwards;
+}
+
+.ig_toast_block .pop .ig_icon {
+	-webkit-animation: BangTidyIcon 1s 0.5s ease both;
+}
+
+.ig_toast_block .pop .ig_headline, .ig_toast_block .pop .ig_message {
+	-webkit-animation: BangTidyText 0.4s 0.5s ease both;
+}
+@-webkit-keyframes BangTidy {
+    0%   { opacity: 0; -webkit-transform: scale(.3) rotateX(-360deg); }
+    50%  { opacity: 1; -webkit-transform: scale(1.01) rotateX(0deg); }
+    70%  { -webkit-transform: scale(.9) rotateX(0deg); }
+    100% { -webkit-transform: scale(1) rotateX(0deg); }
+}
+
+@-webkit-keyframes BangTidyIcon {
+    0%   { opacity: 0; -webkit-transform: scale(2.8) rotateX(180deg); }
+    50%  { opacity: 1; -webkit-transform: scale(0.9) rotateX(0deg); }
+    70%  { -webkit-transform: scale(1.25) rotateX(0deg); }
+    100% { -webkit-transform: scale(1) rotateX(0deg); }
+}
+
+@-webkit-keyframes BangTidyText {
+    0%   { opacity: 0; -webkit-transform:  translate(0px, 10px); }
+    100% { opacity: 1; -webkit-transform: translate(0px, 0px); }
+}
+/* animation 4*/
+.ig_toast_block .appear.ig_container {
+	-webkit-animation-duration: 0.4s;
+	-moz-transition: all 0.15s ease-in-out;
+	-o-transition: all 0.15s ease-in-out;
+	-webkit-transition: all 0.15s ease-in-out;
+	transition: all 0.15s ease-in-out;
+	-webkit-animation-name: bubble;
+}
+@-webkit-keyframes 'bubble' {
+      from {
+		opacity: 0;
+		-webkit-transform: scale(0.7);
+        -webkit-animation-timing-function: ease-out;
+      }
+
+      50% {
+		-webkit-transform: scale(1.02);
+        -webkit-animation-timing-function: cubic-bezier(0.5, 0.2, 0.3, 1.0);
+      }
+ 
+      to {
+		opacity: ignored;
+		-webkit-transform: scale(1.0);
+        -webkit-animation-timing-function: ease-in;
+      } 
+}
+/* animation 8*/
+.ig_toast_block .slide-left.ig_container {
+	-webkit-animation: slideFromBottom .5s ease-in-out;
+}
+@-webkit-keyframes slideFromBottom {
+	0%   { opacity: 0; -webkit-transform: translate3d( -20px, 0, 0 );}
+	100%  { opacity: 1; -webkit-transform: translate3d( 0, 0, 0 ); }
+}

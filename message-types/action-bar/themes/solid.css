@@ -1,0 +1,59 @@
+.action_bar.solid.ig_container {
+}
+
+.action_bar.solid.ig_container.top {
+}
+
+.action_bar.solid.ig_container.bottom {
+}
+
+.action_bar.solid .ig_content {
+    padding: 1em 0 0 1em;
+}
+
+.action_bar.solid .ig_headline {
+    font-size: 1.2em;
+    line-height: 1em;
+    padding: 0 10px;
+}
+
+.action_bar.solid .ig_message {
+    line-height: 1em;
+    padding: 5px 10px;
+}
+
+.action_bar.solid img.icon {
+    width: 50px;
+}
+
+.action_bar.solid .ig_data {
+    max-width: 75%;
+    display: inline-block;
+}
+
+.action_bar.solid .ig_button, .action_bar.solid input[type="submit"], .action_bar.solid input[type="button"] {
+    background: #02612B;
+    color: hsl(0, 100%, 100%);
+    display: inline-block;
+    font-size: 1em;
+    letter-spacing: .1em;
+    -moz-border-radius: 0.1em;
+    -webkit-border-radius: 0.1em;
+    border-radius: 0.1em;
+    vertical-align: text-bottom;
+    font-weight: 700;
+    padding: .6em 2em;
+}
+
+.action_bar.solid .ig_button:hover, .action_bar.solid input[type="submit"]:hover, .action_bar.solid input[type="button"]:hover {
+    background-color: #25a25a;
+}
+
+.action_bar.solid.top .ig_arrow_block.border, .action_bar.solid.bottom .ig_arrow_block {
+    border-width: 0 3px 3px 3px;
+}
+
+.action_bar.solid.bottom .ig_arrow_block.border, .action_bar.solid.top .ig_arrow_block {
+    border-width: 3px 3px 0 3px;
+    padding: .8em .4em;
+}

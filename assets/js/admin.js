@@ -1,13 +1,19 @@
 jQuery(function() {
 
-	var preview_block;
 	function display_message_themes(this_data) {
-		var message_type = jQuery(this_data).find('.message_type option:selected').val();
-		var message_theme = jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').val();
+		var message_type 	= jQuery(this_data).find('.message_type option:selected').val();
+		var message_theme 	= jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').val();
+		var message_thumb 	= jQuery(this_data).find('#message_theme_'+message_type).find('.'+message_theme).attr('style');
 
 		jQuery(this_data).find('.message_row, .location').hide();
-		jQuery(this_data).find('.' + message_type + ', .all_promo').show();
-		jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').css('background-image', 'url(../wp-content/plugins/icegram/assets/images/themes/'+message_type+'/'+message_theme+'.png)');
+		jQuery(this_data).find('.' + message_type).show();
+		jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').attr('style',message_thumb);
+
+		if( jQuery(this_data).find('.message_body').parent().css('display') !== 'block' ) {
+			jQuery(this_data).find('.message_body').parent().next('.wp-editor-wrap').hide();
+		} else {
+			jQuery(this_data).find('.message_body').parent().next('.wp-editor-wrap').show();
+		}
 	}
 
 	function get_random_int(current, min, max) {
@@ -19,11 +25,14 @@ jQuery(function() {
 		}
 	}
 
+	// Type box
+	jQuery('#campaign_data').find('h3.hndle').hide();
+	jQuery('.target_rules_desc').appendTo( '#campaign_target_rules h3.hndle span' );
+
 	jQuery(document).ready(function() {
 		var original_send_to_editor = window.send_to_editor;
 
 		jQuery('#postdivrich').hide();
-		preview_block = jQuery('body').append('<div id="message_preview"></div>');
 		jQuery('.color-field').wpColorPicker();
 		hide_empty_campaign_message();
 		jQuery('.message_edit:first').trigger('click');
@@ -39,26 +48,28 @@ jQuery(function() {
 
 		jQuery('.message-setting-fields').live('change', '.message_theme', function() {
 			
-			var message_type = jQuery(this).find('.message_type').val();
-			var message_theme = jQuery(this).find('.message_row.'+message_type).find('.message_theme').val();
+			var message_type 	= jQuery(this).find('.message_type').val();
+			var message_theme 	= jQuery(this).find('.message_row.'+message_type).find('.message_theme').val();
+			var message_thumb 	= jQuery(this).find('#message_theme_'+message_type).find('.'+message_theme).attr('style');
 
-			jQuery(this).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').css('background-image', 'url(../wp-content/plugins/icegram/assets/images/themes/'+message_type+'/'+message_theme+'.png)');
+			jQuery(this).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').attr('style',message_thumb);
 
 		});
 
 		jQuery('.message_image_button').live('click', function(event) {
+			var that = this;
 			window.send_to_editor = function(html) {
 				imgurl = jQuery('img', html).attr('src');
-				jQuery('#upload_image').val(imgurl);
+				jQuery(that).parent().find('#upload_image').val(imgurl);
 				tb_remove();
 				window.send_to_editor = original_send_to_editor;
 			};
 			return false;
 		});
 
-		jQuery('.message_title_button').live('click', function() {
+		jQuery('.message_headline_button').live('click', function() {
 			var headline_key = jQuery(this).prev().attr('data-headline');
-			var headline_max = jQuery(this).prev().attr('data-max');
+			var headline_max = icegram_writepanel_params.available_headlines.length;
 			var new_headline_key = get_random_int( headline_key, 0, headline_max );
 			var new_headline = icegram_writepanel_params.available_headlines[ new_headline_key ];
 			jQuery(this).prev().val( new_headline );
@@ -189,22 +200,6 @@ jQuery(function() {
 			}
 		});
 	
-	});
-
-	jQuery('.message_preview').on( 'click', function() {
-		jQuery(this).closest('h3.hndle').trigger('click');
-
-		var message_type 	= jQuery('.message_type option:selected').val();
-		var message_theme = jQuery('.message_theme_' + message_type + ' option:selected').val();
-
-		jQuery('ul.toast, #action_bar_'+jQuery('#post_ID').val()).remove();
-		jQuery('#message_preview').html('<div id="'+message_type+'_'+message_theme+'"></div>');
-		jQuery('#message_preview').append('<link rel="stylesheet" href="../wp-content/plugins/icegram/assets/css/' + message_type + '/' + message_theme + '.css" type="text/css" />');
-		jQuery('#message_preview').append('<link rel="stylesheet" href="../wp-content/plugins/icegram/assets/css/frontend.css" type="text/css" />');
-		jQuery('#'+message_type+'_'+message_theme).load("../wp-content/plugins/icegram/templates/" + message_type + ".php", jQuery('#post').serializeArray(), function() {
-			apply_animation_to_promo(jQuery('#post').serializeArray(), message_theme);
-		});
-
 	});
 
 	jQuery("select.icegram_chosen_page").chosen({
