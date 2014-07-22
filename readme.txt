@@ -105,12 +105,17 @@ Initial Release
 * NEW: Icegram is now fully pluggable. External plugins can add message types and themes.
 * NEW: [WPML](http://wpml.org/?aid=21266&affiliate_key=W1YOdHyWrIjY) support
 * Update: Icegram branding is optional
+* NEW: Setting to show Icegram branding
 * Fix: Popups show correctly on long pages now
 * Fix: Single day schedule for message display is correctly handled now
 * NEW: Rewritten message display system - can even control with JavaScript now
 * Fix: For problems showing a campaign on homepage
 * Update: Simplified CSS and JS
 * Update: Changed custom post type names to ig_message and ig_campaign
+* Update: Compatibility with All in One SEO plugin
+* Update: Newsletter subscription form added
+* Fix: For displaying messages via shortcode
+* Update: And many more!!!
 
 = 1.1.1 =
 * Fix for crash on activation with W3 Total Cache
