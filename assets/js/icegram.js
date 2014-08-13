@@ -10,6 +10,9 @@
 	}
 
 	Icegram.prototype.init = function ( data ) {
+		// Pre-init - can allow others to modify message data
+		jQuery( window ).trigger( 'preinit.icegram', [ data ] );
+
 		this.data = data;
 		this.defaults = jQuery.extend( {}, data.defaults );
 		this.message_data = data.messages;
@@ -51,6 +54,9 @@
 				window.icegram.submit_tracking_data();
 			}
 		} );
+
+		// Trigger event for others!
+		jQuery( window ).trigger( 'init.icegram', [ this ] );
 	};
 
 
@@ -108,6 +114,7 @@
 	//Event tracking
 	Icegram.prototype.track = function ( ev, params ) {
 		if (typeof(params) === 'object' && params.hasOwnProperty('message_id') && params.hasOwnProperty('campaign_id')) {
+			jQuery( window ).trigger( 'track.icegram', [ ev, params ] );
 			this.tracking_data.push( { 'type': ev, 'params': params} );
 		}
 	}
@@ -174,18 +181,34 @@
 		}
 
 		// Hide elements if insufficient data...
-    	if(this.data.headline == '') {
+    	if(this.data.headline == undefined || this.data.headline == '') {
             this.el.find('.ig_headline').hide();
         }
-        if(this.data.icon == '') {
+        if(this.data.icon == undefined || this.data.icon == '') {
             this.el.find('.ig_icon').hide();
         }
-        if(this.data.message == '') {
+        if(this.data.message == undefined || this.data.message == '') {
             this.el.find('.ig_message').hide();
         }
-        if(this.data.label == '') {
+        if(this.data.label == undefined || this.data.label == '') {
             this.el.find('.ig_button').hide();
         }
+
+        // Apply colors if available
+        if (this.data.text_color != undefined && this.data.text_color != '') {
+        	this.el.css('color', this.data.text_color);
+        	this.el.find('.ig_content').css('color', this.data.text_color);
+        }
+
+        if (this.data.bg_color != undefined && this.data.bg_color != '') {
+        	this.el.css('background-color', this.data.bg_color);
+        	this.el.find('.ig_content').css('background-color', this.data.bg_color);
+    	}
+
+    	// Hint clickability for buttons / ctas
+    	if (typeof(this.data.link) === 'string' && this.data.link != '') {
+    		this.el.parent().find('.ig_cta, .ig_button').css('cursor', 'pointer');
+    	}
 
 		this.post_render();
 		
@@ -276,7 +299,6 @@
 		}
 	};
 
-	
 	Icegram_Message_Type.prototype.is_visible = function ( ) {
 		return this.el.is(':visible');
 	};
@@ -298,8 +320,11 @@
 			e.data.self.hide();
 			return;
 		}
-		// Any other click is considered as CTA click
-		e.data.self.on_cta_click( e );
+		// Clicking on ig_button or any other link with a class ig_cta will trigger cta click
+		if(jQuery(e.target).filter('.ig_button, .ig_cta').length || jQuery(e.target).parents('.ig_button, .ig_cta').length){
+            e.data.self.on_cta_click( e );
+        }
+		
 	};
 	Icegram_Message_Type.prototype.on_resize = function ( e ) {
 
@@ -311,6 +336,13 @@
 		typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '' ? window.location.href = e.data.self.data.link : e.data.self.hide();
 	};
 
+	Icegram_Message_Type.prototype.on_cta_click_no_hide = function ( e ) {
+	        e.data = e.data || { self: this };
+	        e.data.self.track( 'clicked' );
+	        if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
+	          window.location.href = e.data.self.data.link;
+	        }
+	};
 
 
 	/**

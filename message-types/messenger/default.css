@@ -6,13 +6,18 @@
     margin: 0;
     padding: 0;
     font-family: "Lucida Grande", Arial, sans-serif;
-    background: transparent !important;
     overflow: hidden;
     text-align: left;
 }
+
+.messenger.ig_container, .messenger.ig_container .ig_content {
+    background-color: transparent !important;
+}
+
 .messenger .ig_content {
 
 }
+
 .messenger .ig_header {
     position: relative;
     overflow: hidden;

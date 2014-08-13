@@ -219,7 +219,7 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("Toast Notification", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-toast-notification.png" width="180" height="145">
                                 <p><?php _e("Want to alert your visitor about some news, an update from your blog, a social proof or an offer? Use Icegram’s unique toast notification, it will catch their attention, let them click on the message, and disappear after a while.", "icegram"); ?></p>
-                               <h4><?php _e("Popup", "icegram"); ?></h4>
+                                <h4><?php _e("Popup", "icegram"); ?></h4>
                                 <img src="<?php echo $assets_base; ?>/sketch-popup.png" width="180" height="145">
                                 <p><?php _e("Lightbox popup windows are most widely used for lead capture, promotions and additional content display. Ask visitors to sign up to your newsletter, or like you on social networks, or tell them about a special offer...", "icegram"); ?></p>
                                 <?php do_action('icegram_about_after_core_message_types_col3'); ?>
@@ -270,6 +270,9 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("Optin Forms / Mailing service integration...", "icegram"); ?></h4>
                                 <p><?php _e("You can embed any optin / subscription form to your Icegram messages using HTML code. You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service.", "icegram"); ?></p>
 
+                                <h4><?php _e("How many messages should I show on a page?", "icegram"); ?></h4>
+                                <p><?php _e("While Icegram provides you lots of different message types and ability to add multiple messages to a campaign, we discourage you to go overboard. We've observed two messages on a page work well, but YMMV!", "icegram"); ?></p>
+
                                 <?php do_action('icegram_about_after_faq_col1'); ?>
 
                         </div>
@@ -280,6 +283,10 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("Can I use shortcodes in a message?", "icegram"); ?></h4>
                                 <p><?php _e("Yes! Messages support shortcodes. You may need to adjust CSS so the shortcode output looks good in your message.", "icegram"); ?></p>
 
+                                <h4><?php _e("WPML / Multilingual usage...", "icegram"); ?></h4>
+                                <p><?php _e("Go to <code>Messages</code> from Icegram menu. Edit a message and translate it like any other post. Icegram will show translated message where possible. Choose <code>All posts</code> under WPML Language setting - Blog Posts to display, to fall back to default language messages.", "icegram"); ?></p>
+
+                                <?php do_action('icegram_about_after_faq_col2'); ?>
 
                                 <h4><?php _e("I can't find a way to do X...", "icegram"); ?></h4>
                                 <p><?php _e("Icegram is actively developed. If you can't find your favorite feature (or have a suggestion) contact us. We'd love to hear from you.", "icegram"); ?></p>
@@ -287,7 +294,6 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <h4><?php _e("I'm facing a problem and can't find a way out...", "icegram"); ?></h4>
                                 <p><a class="thickbox"  href="<?php echo admin_url() . "#TB_inline?inlineId=icegram_post_query_form&post_type=ig_campaign" ?>"><?php _e("Contact Us", "icegram"); ?></a><?php _e(", provide as much detail of the problem as you can. We will try to solve the problem ASAP.", "icegram"); ?></p>
 
-                                <?php do_action('icegram_about_after_faq_col2'); ?>
                         </div>
                 </div>
 

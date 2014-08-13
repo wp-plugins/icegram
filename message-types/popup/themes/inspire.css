@@ -9,6 +9,10 @@
     font-size: 2.5em;
 }
 
+.popup.inspire .ig_content {
+    background-color: transparent !important;
+}
+
 .popup.inspire .ig_image {
     float: left;
 }

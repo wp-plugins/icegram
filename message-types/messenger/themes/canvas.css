@@ -11,7 +11,7 @@
     overflow: hidden;
     -webkit-box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.135);
     box-shadow: 0 0.15em 0.35em 0 rgba(0, 0, 0, 0.13);
-    background: #FFF;
+    background-color: #FFF !important;
 }
 
 .messenger.canvas .ig_header {
