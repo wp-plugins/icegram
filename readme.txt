@@ -4,7 +4,7 @@ Donate link:http://www.icegram.com/
 Tags: popup, window, hellobar, action bar, header bar, footer bar, notification, messenger, targeting, rules, auto responder, icegram, responsive, slide
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -86,6 +86,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 
 == Upgrade Notice ==
 
+= 1.3 =
+7 premium addons available now. Plus lot of improvements. Recommended upgrade.
+
 = 1.2 =
 Lots of enhancements... [WPML](http://wpml.org/?aid=21266&affiliate_key=W1YOdHyWrIjY) support, pluggable architecture, many internal changes. Do upgrade.
 
@@ -100,6 +103,22 @@ Initial Release
 
 
 == Changelog ==
+
+= 1.3 =
+* NEW: 7 Premium add-ons available
+* Fix: [icegram] shortcode not working for campaigns
+* Update: Improved CTA click handling
+* Update: Internal changes for better performance
+* NEW: Setting display time to -1 will hide the message
+* Fix: Can use quotes and other special characters in headline now
+* Update: #WPML Show default language message only if "Blog posts to display" is set to "All posts"
+* Fix: Hide campaign and messages from public pages / search / search engines
+* Fix: Other plugins adding content to messages (social media links etc)
+* NEW: Clicking on any item with class "ig_cta" will trigger cta click action
+* Fix: Campaigns not working on archive pages (like Shop / Categories...)
+* Fix: Campaigns with multiple target pages not working
+* Fix: #WPML Messages added from Campaigns page not showing on Messages page
+* Update: And then some changes we are forgetting for now...
 
 = 1.2 =
 * NEW: Icegram is now fully pluggable. External plugins can add message types and themes.
@@ -116,6 +135,7 @@ Initial Release
 * Update: Newsletter subscription form added
 * Fix: For displaying messages via shortcode
 * Update: And many more!!!
+
 
 = 1.1.1 =
 * Fix for crash on activation with W3 Total Cache

@@ -5,14 +5,14 @@
     function Icegram_Message_Type_Toast( data ) {
         var width;
         this.width = 300;
-        Icegram_Message_Type.call(this, data);
+        Icegram_Message_Type.apply(this, arguments);
     }
     Icegram_Message_Type_Toast.prototype = Object.create(Icegram_Message_Type.prototype);
     Icegram_Message_Type_Toast.prototype.constructor = Icegram_Message_Type_Toast;
 
     Icegram_Message_Type_Toast.prototype.get_template_default = function () {
           //'<div id="icegram_message_{{=id}}">'+
-        return  '<li class="icegram toast ig_container {{=animation}} {{=theme}}" id="icegram_message_{{=id}}">'+
+        return  '<li class="icegram toast ig_container {{=animation}} {{=theme}} ig_cta" id="icegram_message_{{=id}}">'+
                     '<div class="ig_wrapper">'+
                         '<div class="ig_content">'+
                             '<div class="ig_base"></div>'+
@@ -80,7 +80,7 @@
 
     Icegram_Message_Type_Toast.prototype.hide = function ( options, silent ) {
         if ( !this.is_visible() ) return;
-        this.el.remove();
+        this.el.hide();
         silent !== true && this.track( 'closed' );
     };
    
