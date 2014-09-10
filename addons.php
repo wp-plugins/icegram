@@ -11,9 +11,6 @@ if ( empty($ig_addons) ) {
 <div class="wrap ig_addons_wrap">
 	<h2>
 		<?php _e( 'Icegram Add-ons', 'icegram' ); ?>
-		<?php if (time() < strtotime("31 August 2014")) { ?>
-		<span class="ig_addons_special_message">25% Discount on All Items till August 30, 2014. Use Coopon <code><a href="http://www.icegram.com/addons/?coupon-code=launch25&utm_source=inapp&utm_campaign=launch&utm_medium=store" target="_blank">LAUNCH25</a></code></span>
-		<?php } ?>
 	</h2>
 	<ul class="addons">
 	<?php
@@ -23,6 +20,18 @@ if ( empty($ig_addons) ) {
 			<li class="addon">
 				<a href="<?php echo $addon->link;?>?utm_source=inapp&utm_campaign=addons&utm_medium=store" target="_blank">			
 					<h3><?php echo $addon->name; ?></h3>
+					<?php
+					if( !empty( $addon->category ) ) {
+						$categories = explode(",", $addon->category);
+						if (!empty($categories)) {
+							echo "<div class='ig_addon_category'>";
+							foreach ($categories as $cat) {
+								echo "<span class='{$cat}'>{$cat}</span> ";
+							}
+							echo "</div>";							
+						}
+					}
+					?>
 					<p>
 						<?php
 						if( !empty( $addon->image ) ) {

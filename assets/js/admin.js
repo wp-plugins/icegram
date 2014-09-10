@@ -227,6 +227,12 @@ jQuery(function() {
 			jQuery('#where_page_id_chosen').find('input').trigger('click');
 		}
 	});
+	jQuery('input#where_sitewide').on('change', function() {
+		jQuery('select#exclude_page_id').parent('p').slideToggle();
+		if (jQuery(this).is(':checked')) {
+			jQuery('#exclude_page_id_chosen').find('input').trigger('click');
+		}
+	});
 
 	jQuery('.date-picker').datepicker({
 		dateFormat: 'yy-mm-dd',

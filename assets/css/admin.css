@@ -586,6 +586,25 @@ CSS for landing page and Help and Support
 .ig_addons_wrap .addons li a:focus, .ig_addons_wrap .addons li a:hover {
     background-color: #fff;
 }
+.ig_addons_wrap .addons li .ig_addon_category {
+	margin-top: -3.5em;
+	float: right;
+	text-transform: capitalize;
+	font-style: normal;
+	margin-right: 1em;
+	font-size: 80%;
+}
+.ig_addons_wrap .addons li .ig_addon_category span {
+	margin-left: 1.2em;
+	padding: 2px 3px;
+	background-color: #DEDEDE;
+	border-radius: .3em;
+}
+.ig_addons_wrap .addons li .ig_addon_category span.free {
+	background-color: #C3D3FF;
+	color: #3754a8;
+}
+
 .ig_addons_special_message {
 	font-size: 60%;
 	line-height: 60%;

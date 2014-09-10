@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.3
+ * Version: 1.4
  * Author: Icegram
  * Author URI: http://www.icegram.com/
  *
@@ -33,7 +33,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.3";
+        $this->version = "1.4";
         $this->shortcode_instances = array();
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
         $this->plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -51,6 +51,7 @@ class Icegram {
 
             add_action( 'icegram_settings_after', array( &$this, 'klawoo_subscribe_form' ) ); 
             add_action( 'icegram_about_changelog', array( &$this, 'klawoo_subscribe_form' ) ); 
+            add_action( 'icegram_settings_after', array( &$this, 'icegram_houskeeping' ) ); 
         } else {
             add_action( 'wp_footer', array( &$this, 'display_messages' ) );
             //add_action( 'wp_head', array( &$this, 'nofollow_noindex' ) );
@@ -70,6 +71,7 @@ class Icegram {
             add_action( 'wp_ajax_icegram_event_track', array( &$this, 'icegram_event_track' ) );
             add_action( 'wp_ajax_nopriv_icegram_event_track', array( &$this, 'icegram_event_track' ) );
             add_action( 'wp_ajax_klawoo_subscribe', array( &$this, 'klawoo_subscribe' ) );
+            add_action( 'wp_ajax_icegram_run_housekeeping', array( &$this, 'run_housekeeping' ) );
         }
 
     }
@@ -79,12 +81,12 @@ class Icegram {
         <div class="wrap">
             <?php 
             if ( stripos(get_current_screen()->base, 'settings') !== false ) {
-                echo "<h2>".__( 'Get Updates', 'icegram' )."</h2>";
+                echo "<h2>".__( 'Free Add-ons, Proven Marketing Tricks and  Updates', 'icegram' )."</h2>";
             }
             ?>
             <table class="form-table">
                  <tr>
-                    <th scope="row"><?php _e( 'Join our newsletter', 'icegram' ) ?></th>
+                    <th scope="row"><?php _e( 'Get add-ons and tips...', 'icegram' ) ?></th>
                     <td>
                         <form name="klawoo_subscribe" action="#" method="POST" accept-charset="utf-8">
                             <input class="ltr" type="text" name="name" id="name" placeholder="Name"/>
@@ -126,6 +128,7 @@ class Icegram {
         <?php
     }
 
+ 
     public function klawoo_subscribe() {
         $url = 'http://app.klawoo.com/subscribe';
 
@@ -165,6 +168,96 @@ class Icegram {
             }
         }
         exit();
+    }
+
+    public function icegram_houskeeping(){
+        ?>
+        <div class="wrap">
+            <?php 
+            if ( stripos(get_current_screen()->base, 'settings') !== false ) {
+            ?>
+                <form name="icegram_housekeeping" action="#" method="POST" accept-charset="utf-8">
+                        <h2><?php _e( 'Housekeeping', 'icegram' ) ?></h2>
+                        <p class="ig_housekeeping">
+                            <label for="icegram_remove_shortcodes">
+                                <input type="checkbox" name="icegram_remove_shortcodes" value="yes" />
+                                <?php _e( 'Remove all Icegram shortcodes', 'icegram' ); ?>                        
+                            </label>
+                            <br/><br/>
+                            <label for="icegram_remove_all_data">
+                                <input type="checkbox" name="icegram_remove_all_data" value="yes" />
+                                <?php _e( 'Remove all Icegram campaigns and messages', 'icegram' ); ?>                        
+                            </label>
+                            <br/><br/>
+                            <img alt="" src="<?php echo admin_url( 'images/wpspin_light.gif' ) ?>" class="ig_loader" style="vertical-align:middle;display:none" />
+                            <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Clean Up', 'icegram' ); ?>">
+                            <div id="icegram_housekeeping_response"></div>
+                        </p>
+                </form>
+          
+        </div>
+        <script type="text/javascript">
+            jQuery(function () {
+                jQuery("form[name=icegram_housekeeping]").submit(function (e) {
+                    if(confirm("<?php _e( 'You won\'t be able to recover this data once you proceed. Do you really want to perform this action?', 'icegram' ); ?>") == true){
+                        e.preventDefault();
+                        jQuery('.ig_loader').show();
+                        jQuery('#icegram_housekeeping_response').text("");                        
+                        params = jQuery("form[name=icegram_housekeeping]").serializeArray();
+                        params.push( {name: 'action', value: 'icegram_run_housekeeping' });
+
+                        jQuery.ajax({
+                            method: 'POST',
+                            type: 'text',
+                            url: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
+                            data: params,
+                            success: function(response) {                   
+                                jQuery('.ig_loader').hide();
+                                jQuery('#icegram_housekeeping_response').text("<?php _e('Done!', 'icegram'); ?>");
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    <?php
+        }
+    }
+    public function run_housekeeping() {
+        global $wpdb;
+        $params = $_POST; 
+        $_POST = array();
+
+        if(!empty($params['icegram_remove_shortcodes']) && $params['icegram_remove_shortcodes'] == 'yes') {
+            // first get all posts with [icegram] shortcode in them
+            $sql = "SELECT * FROM `$wpdb->posts` WHERE  `post_content` LIKE  '%[icegram %]%' and `post_type` != 'revision' ";
+            $posts = $wpdb->get_results($sql, OBJECT);
+            if ( !empty($posts) && is_array($posts) ) {
+                foreach ($posts as $post) {
+                    $post_content = $post->post_content;
+                    // remove shortcode with regexp now
+                    $re = "/\\[icegram(.)*\\]/i"; 
+                    $post_content = preg_replace($re, '', $post_content);
+                    // save post content back
+                    if ($post_content && $post_content != $post->post_content) {
+                        wp_update_post( array ( 'ID'            => $post->ID,
+                                                'post_content'  => $post_content
+                                        ) );
+                    }
+                }
+            }
+        }
+
+        if(!empty($params['icegram_remove_all_data']) && $params['icegram_remove_all_data'] == 'yes') {
+            $posts = get_posts( array( 'post_type' => array( 'ig_campaign', 'ig_message' ) ) );
+            if ( !empty($posts) && is_array($posts) ) {
+                foreach ($posts as $post) {
+                    wp_delete_post( $post->ID, true);
+                }
+            }
+            do_action('icegram_remove_all_data');
+        }
+        $_POST = $params;
     }
 
     public function icegram_event_track() {        
@@ -216,12 +309,10 @@ class Icegram {
     }
 
     function db_update() {
-
         $current_db_version = get_option( 'icegram_db_version' );
         if ( !$current_db_version || version_compare( $current_db_version, '1.2', '<' ) ) {
             include( 'updates/icegram-update-1.2.php' );
         }
-
     }
 
     public function admin_menus() {
@@ -421,11 +512,11 @@ class Icegram {
                                                     'powered_by_text'       => __( 'Powered by Icegram', 'icegram' )
                                                     ) );
         $messages   = apply_filters( 'icegram_messages_to_show', $messages );
-        $icegram    = array ( 'messages'       => array_values( $messages ),
+        $icegram    = apply_filters( 'icegram_data', array ( 'messages'       => array_values( $messages ),
                            'ajax_url'       => admin_url( 'admin-ajax.php' ),
                            'preview_id'     => !empty( $_GET['campaign_preview_id'] ) ? $_GET['campaign_preview_id'] : '',
                            'defaults'       => $icegram_default
-                        );
+                        ));
         if (empty($icegram['preview_id'])) {
             unset($icegram['preview_id']);
         }
@@ -549,6 +640,7 @@ class Icegram {
         global $wpdb;
 
         $message_data = array();
+        $original_message_id_map = array();
         $meta_key = $preview ? 'icegram_message_preview_data' : 'icegram_message_data';
         $message_data_query = "SELECT post_id, meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key LIKE '$meta_key'";
         if ( !empty( $message_ids ) && is_array( $message_ids ) ) {
@@ -557,7 +649,9 @@ class Icegram {
                 $wpml_settings = get_option('icl_sitepress_settings');
                 $original_if_missing = (is_array($wpml_settings) && array_key_exists('show_untranslated_blog_posts', $wpml_settings) && !empty($wpml_settings['show_untranslated_blog_posts']) ) ? true : false;
                 foreach ($message_ids as $i=>$id ) {
-                    $message_ids[ $i ] = icl_object_id( $id, 'ig_message', $original_if_missing );
+                    $translated = icl_object_id( $id, 'ig_message', $original_if_missing );
+                    $message_ids[ $i ] = $translated;
+                    $original_message_id_map[ $translated ] = $id;
                 }              
             }
             $message_ids  = array_filter(array_unique($message_ids));
@@ -566,6 +660,10 @@ class Icegram {
                 $message_data_results = $wpdb->get_results( $message_data_query, 'ARRAY_A' );
                 foreach ( $message_data_results as $message_data_result ) {
                     $message_data[$message_data_result['post_id']] = maybe_unserialize( $message_data_result['meta_value'] );
+                    // For WPML compatibility
+                    if (!empty( $original_message_id_map[ $message_data_result['post_id'] ])) {
+                           $message_data[$message_data_result['post_id']]['original_message_id'] = $original_message_id_map[ $message_data_result['post_id'] ]; 
+                    }
                 }
             } 
         }
@@ -629,11 +727,12 @@ class Icegram {
             $message_data['campaign_id']    = ($preview_mode) ? $_GET['campaign_preview_id'] : '';
 
             // Pull display time and retargeting rule from campaign if possible
-            if (!empty($message_campaign_map[ $id ])) {
-                $message_data['campaign_id'] = $message_campaign_map[ $id ];
+            $message_id = (!empty($message_data['original_message_id'])) ? $message_data['original_message_id'] : $id;
+            if (!empty($message_campaign_map[ $message_id ])) {
+                $message_data['campaign_id'] = $message_campaign_map[ $message_id ];
                 $campaign = $valid_campaigns[ $message_data['campaign_id'] ];
                 if (!empty($campaign) && $campaign instanceof Icegram_Campaign) {
-                    $message_meta_from_campaign = $campaign->get_message_meta_by_id( $id );
+                    $message_meta_from_campaign = $campaign->get_message_meta_by_id( $message_id );
                     if (!empty($message_meta_from_campaign['time'])) {
                        $message_data['delay_time'] = $message_meta_from_campaign['time'];
                     }
@@ -1044,6 +1143,7 @@ class Icegram {
         global $post, $wpdb;
 
         $obj = get_queried_object();
+        $id = 0;
         if( !empty( $obj->has_archive ) ) {
             $id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type='page'", $obj->has_archive ) );
         } elseif( is_object( $post ) && isset( $post->ID ) ) {            

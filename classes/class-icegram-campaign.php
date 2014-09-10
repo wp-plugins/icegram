@@ -21,7 +21,6 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 				$this->title 		= $this->_post->post_title;
 				$this->messages 	= get_post_meta( $this->_post->ID, 'messages', true );
 				$this->rules 		= get_post_meta( $this->_post->ID, 'icegram_campaign_target_rules', true );
-
 				$this->rules_summary['where'] = array(
 										'homepage' 		=> ( !empty( $this->rules['homepage'] ) ) ? $this->rules['homepage'] : '',
 										'other_page' 	=> ( !empty( $this->rules['other_page'] ) && $this->rules['other_page'] == 'yes' && !empty( $this->rules['page_id'] ) ) ? $this->rules['page_id'] : '',
@@ -112,16 +111,20 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 		}
 		
 		function _is_valid_page( $campaign_valid, $campaign, $options ) {
+			$page_id = Icegram::get_current_page_id();
 			if( !$campaign_valid || !empty($options['skip_page_check']) ) {
 				return $campaign_valid;
 			}
-			if ( !empty( $campaign->rules_summary['where']['sitewide'] ) && $campaign->rules_summary['where']['sitewide'] == 'yes' ) {
+			if ( (!empty( $campaign->rules_summary['where']['sitewide'] ) && $campaign->rules_summary['where']['sitewide'] == 'yes' ))  {
+				if (!empty($campaign->rules['exclude_page_id']) && in_array($page_id, $campaign->rules['exclude_page_id'])){ 
+					return false;
+				}else{
 					return true;
+				}
 			}
 			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( is_home() || is_front_page() ) ) {
 					return true;
 			}
-			$page_id = Icegram::get_current_page_id();
 			if ( !empty( $page_id ) ) {
 				if ( !empty( $campaign->rules_summary['where']['other_page'] ) && in_array( $page_id, $campaign->rules_summary['where']['other_page'] ) ) {
 					return true;

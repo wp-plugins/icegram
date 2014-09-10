@@ -1,10 +1,10 @@
 === Icegram ===
 Contributors: storeapps, nareshvachhani, niravmehta, ratnakardubey, putler
-Donate link:http://www.icegram.com/
-Tags: popup, window, hellobar, action bar, header bar, footer bar, notification, messenger, targeting, rules, auto responder, icegram, responsive, slide
+Donate link: http://www.icegram.com/
+Tags: popup, window, hellobar, optin, lead capture, marketing, header, footer, notification, messenger, targeting, segment, responsive
 Requires at least: 3.9
-Tested up to: 3.9.1
-Stable tag: 1.3
+Tested up to: 4.0
+Stable tag: 1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,17 +14,24 @@ All in one solution to inspire, convert and engage your audiences. Action bars, 
 
 **The Ultimate Plugin To Capture Leads And Connect With Your Audience**
 
+Decrease bounce rates, increase engagement and grab your visitors' attention with this unique marketing plugin.
+
 = Includes: =
 * Popups, header / footer bars, notifications, messengers 
 * Powerful targeting rules 
 * All-in-one, fully integrated WordPress plugin 
 * Compatible with auto responders, other plugins and themes 
 
-= Beautiful, Customizable Theme Designs Proven to Engage & Convert = 
+[youtube http://www.youtube.com/watch?v=89N0SXDDvOI]
+
+= Proven to Engage & Convert = 
+Icegram is based on time tested marketing and behavior science principles. Icegram messages have given phenomenal 60% click through rates to people and they never fail to deliver. When you use Icegram, you don't need to learn all those marketing secrets.. Icegram does that for you...
+
+= Beautiful, Customizable Theme Designs = 
 Icegram comes with 20 beautiful themes. They integrate well with your favorite WordPress theme and do not slow down your site. When you want to customize override styling with custom CSS.
 
-= Complete Control Over Message Content =
-Icegram gives you the fully powered WordPress editor for your content. You can use any layout and formatting for content within each message container.
+= Complete Control Over Message Delivery & Content =
+Determine where, when and how to show on-site marketing messages to visitors. Use fine grained targeting rules for niche segmentation. Plus, Icegram gives you the fully powered WordPress editor for your content. You can use any layout and formatting for content within each message container.
 
 * Continue using powerful **short codes your theme provides** for layout and styling
 * Add **HD Videos / Audio or any other multimedia** content
@@ -36,6 +43,7 @@ Icegram gives you the fully powered WordPress editor for your content. You can u
 = Learn More =
 
 * **[Discover all features and see demos on official Icegram website](http://www.icegram.com/)**
+* **[Free and paid add-ons](http://www.icegram.com/addons/)**
 * Follow us on Twitter [@icegram](https://twitter.com/icegram/)
 
 
@@ -86,6 +94,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 
 == Upgrade Notice ==
 
+= 1.4 = 
+Many small improvements. Support for analytics added. WordPress 4.0 compatible.
+
 = 1.3 =
 7 premium addons available now. Plus lot of improvements. Recommended upgrade.
 
@@ -103,6 +114,12 @@ Initial Release
 
 
 == Changelog ==
+= 1.4 =
+* NEW: Targeting Rule: "Exclude pages" from a site wide campaign
+* NEW: Options to cleanup Icegram data and remove shortcodes from content
+* NEW: CTA button color is automatically determined based on background color
+* NEW: FREE Analytics add-on (available from www.icegram.com)
+* Update: This version is compatible with WordPress 4.0
 
 = 1.3 =
 * NEW: 7 Premium add-ons available

@@ -33,7 +33,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 		// Initialize campaign metabox
 		function add_campaigns_metaboxes() {
 			$meta_box_title = __( 'Message', 'icegram' );
-			add_meta_box( 'campaign_data', $meta_box_title, array( &$this, 'campaign_data_content' ), 'ig_campaign', 'normal', 'high' );
+			add_meta_box( 'campaign_data', $meta_box_title, array( &$this, 'campaign_data_content' ), 'ig_campaign', 'normal', 'default' );
 			add_meta_box( 'campaign_target_rules', __( 'Targeting Rules', 'icegram' ), array( &$this, 'campaign_target_rules_content' ), 'ig_campaign', 'normal' );
 		}
 
@@ -146,6 +146,20 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<input type="checkbox" name="campaign_target_rules[sitewide]" id="where_sitewide" value="yes" <?php ( !empty( $campaign_target_rules['sitewide'] ) ) ? checked( $campaign_target_rules['sitewide'], 'yes' ) : ''; ?> />
 						<?php _e( 'Sitewide', 'icegram' ); ?>
 					</label>
+				</p>
+				<p class="form-field" <?php echo ( !empty( $campaign_target_rules['sitewide'] ) && $campaign_target_rules['sitewide'] == 'yes' ) ? '' : 'style="display: none;"'; ?>>
+					<label class="options_header"></label>
+					<?php 
+						echo '<select name="exclude_page_id[]" id="exclude_page_id" data-placeholder="' . __( 'Select pages to exclude&hellip;', 'icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
+						foreach ( get_pages() as $page ) {
+							echo '<option value="' . $page->ID . '"';
+							if( !empty( $campaign_target_rules['exclude_page_id'] ) ) {
+								echo selected( in_array( $page->ID, $campaign_target_rules['exclude_page_id'] ) );
+							}
+							echo '>' . $page->post_title . '</option>';
+						}
+						echo '</select>';
+					?>
 				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
@@ -426,6 +440,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			if ( isset( $_POST['page_id'] ) ) {
 				$campaign_target_rules['page_id'] = $_POST['page_id'];
 				update_post_meta( $post_id, 'icegram_campaign_target_pages', $_POST['page_id'] );
+			}
+			if ( isset( $_POST['exclude_page_id'] ) ) {
+				$campaign_target_rules['exclude_page_id'] = $_POST['exclude_page_id'];
+				update_post_meta( $post_id, 'icegram_campaign_target_pages', $_POST['exclude_page_id'] );
 			}
 
 			if ( count( $campaign_target_rules ) > 0 ) {

@@ -280,7 +280,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 		// Used to save the settings which are being made in the message form and added to message page appropriately 
 		function update_message_settings( $post_id, $post ) {
 
-			if (empty( $post_id ) || empty( $post ) || empty( $_POST )) return;
+			if (empty( $post_id ) || empty( $post ) || empty( $_POST['message_data'] ) || empty( $_POST['message_data'][$post_id] ) ) return;
 			if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) return;
 			if (is_int( wp_is_post_revision( $post ) )) return;
 			if (is_int( wp_is_post_autosave( $post ) )) return;
