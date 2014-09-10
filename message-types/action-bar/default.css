@@ -114,3 +114,12 @@ div.icegram .action_bar form {
 div.icegram .action_bar input, div.icegram .action_bar label {
     display: inline-block;
 }
+
+div.icegram .action_bar .clear:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}

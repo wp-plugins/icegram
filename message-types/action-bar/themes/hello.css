@@ -82,9 +82,6 @@
 
 .action_bar.hello .ig_arrow_block.border {
     border: 3px solid #fff;
-    -moz-box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
-    -webkit-box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
-    box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
     -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);

@@ -4,10 +4,18 @@
     z-index: 100000;
 }
 
+.popup.ig_container, .popup.ig_container .ig_content {
+    background-color: transparent !important;
+}
+
 .popup .ig_headline {
     text-decoration: none;
     font-weight: 800;
     line-height: 1em;
+}
+
+.popup .ig_data {
+    overflow-y: auto;
 }
 
 .popup .ig_image {

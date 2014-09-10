@@ -32,8 +32,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 
 		// Initialize campaign metabox
 		function add_campaigns_metaboxes() {
-			$meta_box_title = '<label class="options_header" for="icegram_messages">' . __( 'Message', 'icegram' ) . '</label>';
-			add_meta_box( 'campaign_data', $meta_box_title, array( &$this, 'campaign_data_content' ), 'ig_campaign', 'normal', 'high' );
+			$meta_box_title = __( 'Message', 'icegram' );
+			add_meta_box( 'campaign_data', $meta_box_title, array( &$this, 'campaign_data_content' ), 'ig_campaign', 'normal', 'default' );
 			add_meta_box( 'campaign_target_rules', __( 'Targeting Rules', 'icegram' ), array( &$this, 'campaign_target_rules_content' ), 'ig_campaign', 'normal' );
 		}
 
@@ -71,8 +71,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 										foreach ( $messages as $row => $message ) {
 											$message_title = get_the_title( $message['id'] );
 											$message_data = get_post_meta( $message['id'], 'icegram_message_data', true );
-											$messsage_type = ( !empty( $message_data['type'] ) ) ? $message_data['type'] : '';
-											if ( empty( $icegram->message_types[ $messsage_type ] ) ) continue;
+											$message_type = ( !empty( $message_data['type'] ) ) ? $message_data['type'] : '';
+											if ( empty( $icegram->message_types[ $message_type ] ) ) continue;
 											?>
 											<tr class="form-field message-row" value="<?php echo $message['id']; ?>">
 												<td class="message_header">
@@ -84,7 +84,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 												</td>
 												<td class="message_seconds">
 													<input type="hidden" name="messages[<?php echo $row; ?>][id]" value="<?php echo $message['id']; ?>" />
-													<input type="number" class="seconds-text" name="messages[<?php echo $row; ?>][time]" min="0" value="<?php echo ( !empty( $message['time'] ) ) ? $message['time'] : 0; ?>" size="3" />
+													<input type="number" class="seconds-text" name="messages[<?php echo $row; ?>][time]" min="-1" value="<?php echo ( !empty( $message['time'] ) ) ? $message['time'] : 0; ?>" size="3" />
 													<?php _e( ' sec', 'icegram' )?>
 												</td>
 												<td class="action_links">
@@ -147,6 +147,20 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<?php _e( 'Sitewide', 'icegram' ); ?>
 					</label>
 				</p>
+				<p class="form-field" <?php echo ( !empty( $campaign_target_rules['sitewide'] ) && $campaign_target_rules['sitewide'] == 'yes' ) ? '' : 'style="display: none;"'; ?>>
+					<label class="options_header"></label>
+					<?php 
+						echo '<select name="exclude_page_id[]" id="exclude_page_id" data-placeholder="' . __( 'Select pages to exclude&hellip;', 'icegram' ) .  '" style="min-width:300px;" class="icegram_chosen_page" multiple>';
+						foreach ( get_pages() as $page ) {
+							echo '<option value="' . $page->ID . '"';
+							if( !empty( $campaign_target_rules['exclude_page_id'] ) ) {
+								echo selected( in_array( $page->ID, $campaign_target_rules['exclude_page_id'] ) );
+							}
+							echo '>' . $page->post_title . '</option>';
+						}
+						echo '</select>';
+					?>
+				</p>
 				<p class="form-field">
 					<label class="options_header">&nbsp;</label>
 					<label for="where_homepage">
@@ -197,10 +211,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<?php _e( 'Schedule', 'icegram' ); ?>
 						<span class="form-field" id="date_picker" <?php echo ( !empty( $campaign_target_rules['when'] ) && $campaign_target_rules['when'] == 'schedule' ) ? '' : 'style="display: none;"'; ?>>
 							<label class="date_picker">
-								<input type="text" class="date-picker" name="campaign_target_rules[from]" value="<?php echo ( !empty( $campaign_target_rules['from'] ) ) ? $campaign_target_rules['from'] : ''; ?>" placeholder="<?php _e( 'From&hellip;', 'icegram' );?>" />
+								<input type="text" class="date-picker" name="campaign_target_rules[from]" value="<?php echo ( !empty( $campaign_target_rules['from'] ) ) ? esc_attr( $campaign_target_rules['from'] ) : ''; ?>" placeholder="<?php _e( 'From&hellip;', 'icegram' );?>" />
 							</label>
 							<label class="date_picker">
-								<input type="text" class="date-picker" name="campaign_target_rules[to]" value="<?php echo ( !empty( $campaign_target_rules['to'] ) ) ? $campaign_target_rules['to'] : ''; ?>" placeholder="<?php _e( 'To&hellip;', 'icegram' );?>" />
+								<input type="text" class="date-picker" name="campaign_target_rules[to]" value="<?php echo ( !empty( $campaign_target_rules['to'] ) ) ? esc_attr( $campaign_target_rules['to'] ) : ''; ?>" placeholder="<?php _e( 'To&hellip;', 'icegram' );?>" />
 							</label>
 						</span>
 					</label>
@@ -323,8 +337,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 
 					$message_title 			= get_the_title( $post );
 					$message_data 			= get_post_meta( $post, 'icegram_message_data', true );
-					$messsage_type 				= ( !empty( $icegram->message_types[ $message_data['type'] ]['type'] ) ) ? $icegram->message_types[ $message_data['type'] ]['type'] : '';
-					$found_messages[ $post ] 	= $messsage_type . ' &mdash; ' . $message_title;
+					$message_type 				= ( !empty( $icegram->message_types[ $message_data['type'] ]['type'] ) ) ? $icegram->message_types[ $message_data['type'] ]['type'] : '';
+					$found_messages[ $post ] 	= $message_type . ' &mdash; ' . $message_title;
 
 				}
 				$found_messages[''] 	= __( '- - - - - - - - - - - - - - - - - - - - - - - - - -', 'icegram' );
@@ -399,7 +413,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			<tr id="message_row_<?php echo $message_id; ?>" class="message-edit-row">
 				<td colspan="4">
 				<?php 
-					$ig_message_admin->message_form_fields( '', array( 'messsage_type' => $message_type, 'message_id' => $message_id, 'new_message_row' => true ) );
+					$ig_message_admin->message_form_fields( '', array( 'message_type' => $message_type, 'message_id' => $message_id, 'new_message_row' => true ) );
 				?>
 				</td>
 			</tr>
@@ -427,6 +441,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				$campaign_target_rules['page_id'] = $_POST['page_id'];
 				update_post_meta( $post_id, 'icegram_campaign_target_pages', $_POST['page_id'] );
 			}
+			if ( isset( $_POST['exclude_page_id'] ) ) {
+				$campaign_target_rules['exclude_page_id'] = $_POST['exclude_page_id'];
+				update_post_meta( $post_id, 'icegram_campaign_target_pages', $_POST['exclude_page_id'] );
+			}
 
 			if ( count( $campaign_target_rules ) > 0 ) {
 				update_post_meta( $post_id, 'icegram_campaign_target_rules', $campaign_target_rules );
@@ -439,7 +457,12 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				update_post_meta( $post_id, 'messages', array_values( $_POST['messages'] ) );
 				update_post_meta( $post_id, 'campaign_preview', array_values( $_POST['messages'] ) );
 
-				foreach ( $_POST['message_data'] as $message_id => $message_data ) {
+				// Saving $_POST to temp var before updating messages 
+				// to avoid problems with action handlers that rely on
+				// $_POST vars - e.g. WPML!!
+				$old_post = $_POST;
+				$_POST = array();
+				foreach ( $old_post['message_data'] as $message_id => $message_data ) {
 
 					$type = $message_data['type'];
 					if( isset( $message_data['theme'][$type] ) ) {
@@ -457,6 +480,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					} elseif( isset( $message_data['position']['ig_default'] ) ) {
 						$message_data['position'] = $message_data['position']['ig_default'];
 					}
+
 					update_post_meta( $message_id, 'icegram_message_data', $message_data );
 					update_post_meta( $message_id, 'icegram_message_preview_data', $message_data );
 					wp_update_post( array ( 'ID' 			=> $message_id,
@@ -465,9 +489,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			  								'post_title'	=> empty( $message_data['post_title'] ) ? $message_data['headline']: $message_data['post_title']
 									) );			
 				}
-				
+				$_POST = $old_post;
 			}
-
 		}
 
 		// On preview button click save campaign messages list

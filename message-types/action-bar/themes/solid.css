@@ -8,7 +8,7 @@
 }
 
 .action_bar.solid .ig_content {
-    padding: 1em 0 0 1em;
+    padding: 1em 0 1em 1em;
 }
 
 .action_bar.solid .ig_headline {
@@ -29,11 +29,10 @@
 .action_bar.solid .ig_data {
     max-width: 75%;
     display: inline-block;
+    float: left;
 }
 
 .action_bar.solid .ig_button, .action_bar.solid input[type="submit"], .action_bar.solid input[type="button"] {
-    background: #02612B;
-    color: hsl(0, 100%, 100%);
     display: inline-block;
     font-size: 1em;
     letter-spacing: .1em;
@@ -46,7 +45,9 @@
 }
 
 .action_bar.solid .ig_button:hover, .action_bar.solid input[type="submit"]:hover, .action_bar.solid input[type="button"]:hover {
-    background-color: #25a25a;
+    -moz-box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
+    -webkit-box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
 }
 
 .action_bar.solid.top .ig_arrow_block.border, .action_bar.solid.bottom .ig_arrow_block {

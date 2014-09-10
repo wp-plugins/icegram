@@ -142,7 +142,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						<strong><?php _e( 'Headline', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Shown with highest prominence. Click on idea button on right to get a new headline.', 'icegram' ); ?>"></span>
 					</label>
-					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][headline]" id="message_title" value="<?php echo ( isset( $message_data['headline'] ) ) ? $message_data['headline'] : $default_message_title; ?>" data-headline="<?php echo $message_title_key; ?>" />
+					<?php
+					$message_headline = ( isset( $message_data['headline'] ) ) ? $message_data['headline'] : $default_message_title;
+					?>
+					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][headline]" id="message_title" value="<?php echo esc_attr( $message_headline ); ?>" data-headline="<?php echo $message_title_key; ?>" />
 					<a class="button message_headline_button tips" data-tip="<?php _e( 'Give Me Another Headline', 'icegram' ); ?>">
 						<span class="headline-buttons-icon admin_field_icon"></span>
 					</a>
@@ -152,21 +155,21 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						<strong><?php _e( 'Button Label', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Your call to action text. Something unusual will increase conversions.', 'icegram' ); ?>"></span>
 					</label>
-					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][label]" id="message_label" value="<?php if( isset( $message_data['label'] ) ) echo $message_data['label']; ?>" />
+					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][label]" id="message_label" value="<?php if( isset( $message_data['label'] ) ) echo esc_attr( $message_data['label'] ); ?>" />
 				</p>
 				<p class="message_row <?php echo implode( ' ', $settings['link'] )?>">
 					<label for="message_link" class="message_label">
 						<strong><?php _e( 'Target Link', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Enter destination URL here. Clicking will redirect to this link.', 'icegram' ); ?>"></span>
 					</label>
-					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][link]" id="message_link" value="<?php if( isset( $message_data['link'] ) ) echo $message_data['link']; ?>" />
+					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][link]" id="message_link" value="<?php if( isset( $message_data['link'] ) ) echo esc_attr( $message_data['link'] ); ?>" />
 				</p>
 				<p class="message_row <?php echo implode( ' ', $settings['icon'] )?>">
 					<label for="upload_image" class="message_label">
 						<strong><?php _e( 'Icon / Avatar Image', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'This image will appear in message content.', 'icegram' ); ?>"></span>
 					</label>
-					<input id="upload_image" type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][icon]" value="<?php if( isset( $message_data['icon'] ) ) echo $message_data['icon']; ?>"/>
+					<input id="upload_image" type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][icon]" value="<?php if( isset( $message_data['icon'] ) ) echo esc_attr( $message_data['icon'] ); ?>"/>
 					<a class="button message_image_button tips" data-tip="<?php _e( 'Upload / Select an image', 'icegram' ); ?>" onclick="tb_show('<?php _e( 'Upload / Select Image' ); ?>', 'media-upload.php?type=image&TB_iframe=true', false);" >
 						<span class="image-buttons-icon admin_field_icon"></span>
 					</a>
@@ -261,10 +264,15 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 			} else {
 				
 				?>
+					<p class="message_row">
+					<label class="message_label">&nbsp;</label>
+					<span>
 					<span class="shortcode_description admin_field_icon"></span>
 				<?php 
-				echo sprintf(__( 'You can insert <code>[%s]</code> wherever you want to show this message. We recommend running a campaign though.', 'icegram' ), 'icegram messages="' .$post->ID . '"' );
-
+				echo sprintf(__( 'You may add <code>[%s]</code> where you want to show this message.', 'icegram' ), 'icegram messages="' .$post->ID . '"' );
+				?>
+					</span></p>
+				<?php
 			}
 
 		}
@@ -272,7 +280,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 		// Used to save the settings which are being made in the message form and added to message page appropriately 
 		function update_message_settings( $post_id, $post ) {
 
-			if (empty( $post_id ) || empty( $post ) || empty( $_POST )) return;
+			if (empty( $post_id ) || empty( $post ) || empty( $_POST['message_data'] ) || empty( $_POST['message_data'][$post_id] ) ) return;
 			if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) return;
 			if (is_int( wp_is_post_revision( $post ) )) return;
 			if (is_int( wp_is_post_autosave( $post ) )) return;
@@ -357,7 +365,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
             }			
 			$type 	= ucwords( str_replace( "-", ' ', $message_data['type'] ) );
 			$theme 	= ucwords( str_replace( "-", ' ', $message_data['theme'] ) );
-			$bg_img = $icegram->message_types[$message_data['type']]['baseurl'] . "/themes/" . $message_data['theme'] . ".png";						
+			$bg_img = $icegram->message_types[$message_data['type']]['baseurl'] . "themes/" . $message_data['theme'] . ".png";						
 
 			switch ($column) {
 				case 'message_type':

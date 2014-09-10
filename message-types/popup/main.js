@@ -2,22 +2,23 @@
      * Icegram Message Type - Popup
      **/
     function Icegram_Message_Type_Popup( data ) {
-
-        Icegram_Message_Type.call(this, data);
+        Icegram_Message_Type.apply(this, arguments);
     }
     Icegram_Message_Type_Popup.prototype = Object.create(Icegram_Message_Type.prototype);
     Icegram_Message_Type_Popup.prototype.constructor = Icegram_Message_Type_Popup;
 
     Icegram_Message_Type_Popup.prototype.get_template_default = function () {
         return  '<div id="popup_main_{{=id}}" data={{=id}}>'+
-                    '<div class="icegram popup ig_container {{=theme}}" id="icegram_message_{{=id}}">'+
+                    '<div class="icegram popup ig_container {{=theme}}" id="icegram_message_{{=id}}" data={{=id}}>'+
                        '<div class="ig_close" id="popup_box_close_{{=id}}"></div>'+
-                        '<div class="ig_headline">{{=headline}}</div>'+
-                        '<div class="ig_content">'+
-                            '<div class="ig_image">'+
-                                '<img class="ig_icon" src="{{=icon}}"/>'+
+                       '<div class="ig_data">'+
+                            '<div class="ig_headline">{{=headline}}</div>'+
+                            '<div class="ig_content">'+
+                                '<div class="ig_image">'+
+                                    '<img class="ig_icon" src="{{=icon}}"/>'+
+                                '</div>'+
+                                '<div class="ig_message">{{=message}}</div>'+
                             '</div>'+
-                            '<div class="ig_message">{{=message}}</div>'+
                         '</div>'+
                         '<div class="ig_button" >{{=label}}</div>'+
                     '</div>'+
@@ -27,17 +28,24 @@
         if ( this.is_visible() ) return;
         var self = this;
         var popup_delay = 0;
-        if( jQuery('body').find('#TB_window').length ) {   
+        if( jQuery('body').find('#TB_window').length ) { 
+            var current_popup_id = jQuery('#TB_window').find('.popup').attr('data');
+            if (typeof(current_popup_id) != 'undefined') {
+                var current_popup = window.icegram.get_message_by_id(current_popup_id);
+                if (typeof('current_popup') != 'Icegram_Message_Type_Popup') {
+                    current_popup.hide();
+                }
+            }
             popup_delay = 800;
-            tb_remove();
         }
         setTimeout( function() {
             var popup_width = (jQuery(window).width() * 60) / 100;
             self.el.show();
             tb_show('Popup', "#TB_inline?width="+popup_width+"&modal=true&inlineId=popup_main_" + self.data.id, true);
-            jQuery('#popup_main_' + self.data.id).remove();
             self.el = jQuery('#TB_window .popup');
             self.el.on('click', {self: self}, self.on_click);
+            var max_height = jQuery(window).height()-jQuery('#TB_window').height() + 150;
+            self.el.find('.ig_data').css('max-height', max_height);
             jQuery('#TB_window').addClass(self.data.theme).addClass(self.data.type);
             silent !== true && self.track( 'shown' );
         }, popup_delay);
@@ -53,9 +61,8 @@
         if ( !this.is_visible() ) return;
         var self = this;
         tb_remove();
-        setTimeout( function() {
-            self.el.hide();
-        },0);
+        self.el = jQuery('#popup_main_' + self.data.id);
+        self.el.hide();
         silent !== true && this.track( 'closed' );
     };
     Icegram_Message_Type_Popup.prototype.on_resize = function(){
@@ -85,10 +92,3 @@
         }
 
     }
-    Icegram_Message_Type_Popup.prototype.on_cta_click = function ( e ) {
-        e.data = e.data || { self: this };
-        e.data.self.track( 'clicked' );
-        if(jQuery(e.target).filter('.popup .ig_button').length){
-            typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '' ? window.location.href = e.data.self.data.link : e.data.self.hide();
-        }
-    };

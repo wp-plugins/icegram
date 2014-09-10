@@ -38,20 +38,19 @@
 .action_bar.bold .ig_data {
     max-width: 75%;
     display: inline-block;
+    float: left;
 }
 
 .action_bar.bold .ig_button, .action_bar.bold input[type="submit"], .action_bar.bold input[type="button"] {
-    background: hsl(145, 82%, 30%);
-    color: hsl(0, 100%, 100%);
     display: inline-block;
     font-size: 1em;
     letter-spacing: 1px;
     vertical-align: text-bottom;
     font-weight: 700;
     text-align: center;
-    -moz-box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.45), 0 2px 2px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.45), 0 2px 2px rgba(0, 0, 0, 0.25);
-    box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.45), 0 2px 2px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.35), 0 2px 2px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.35), 0 2px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 -3px 1px rgba(0, 0, 0, 0.35), 0 2px 2px rgba(0, 0, 0, 0.25);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -62,16 +61,13 @@
 .action_bar.bold .ig_button:active, .action_bar.bold input[type="submit"]:active, .action_bar.bold input[type="button"]:active {
     position: relative;
     top: 3px;
-    -moz-box-shadow: inset 0 -3px 1px #2ECC70, inset 0 0 3px #2ECC70;
-    -webkit-box-shadow: inset 0 -3px 1px #2ECC70, inset 0 0 3px #2ECC70;
-    box-shadow: inset 0 -3px 1px #2ECC70, inset 0 0 3px #2ECC70;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .action_bar.bold .ig_arrow_block.border {
     border: 3px solid #fff;
-    -moz-box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
-    -webkit-box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
-    box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.35);
     -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
