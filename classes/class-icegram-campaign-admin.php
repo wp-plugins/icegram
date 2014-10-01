@@ -40,8 +40,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 		// Display list of messages of campaign
 		function campaign_data_content() {
 			global $post, $icegram;
-				
-			$ig_message_admin = new Icegram_Message_Admin();
+			$ig_message_admin = Icegram_Message_Admin::getInstance();
 
 			$campaign_box =  '<select id="icegram_messages" name="icegram_messages[]" class="ajax_chosen_select_messages" data-placeholder="' . __( 'Search to add / Create new&hellip;', 'icegram' ) . '">';
 			$campaign_box .= '<option value=""></option>';
@@ -252,9 +251,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<?php _e( 'Logged in users only', 'icegram' ); ?>
 					</label>
 				</p>
+				
 				<div class="user_roles">
 					<?php
-						if ( !empty( $campaign_target_rules['logged_in'] ) && $campaign_target_rules['logged_in'] == 'all' ) {
+						if ( !empty( $campaign_target_rules['logged_in'] ) && ($campaign_target_rules['logged_in'] == 'all' || $campaign_target_rules['logged_in'] == 'not_logged_in') ) {
 							$campaign_logged_in_user_style = 'style="display: none;"';
 						} else {
 							$campaign_logged_in_user_style = 'style="display: block;"';
@@ -279,13 +279,37 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						}
 					?>
 				</div>
+				<p class="form-field">
+					<label class="options_header">&nbsp;</label>
+					<label for="users_not_logged_in">
+						<input type="radio" name="campaign_target_rules[logged_in]" id="users_not_logged_in" value="not_logged_in" <?php ( !empty( $campaign_target_rules['logged_in'] ) ) ? checked( $campaign_target_rules['logged_in'], 'not_logged_in' ) : ''; ?> />
+						<?php _e( 'Not Logged in users', 'icegram' ); ?>
+					</label>
+				</p>
 			</div>
+			<?php $expiry_options = array(  'current_session' => __('Current Session' ,'icegram'),
+											'today' => __('Today' ,'icegram'),
+											'+1 week' => __('One week' ,'icegram') ,
+											'+2 week' => __('Two week' ,'icegram'),
+											'+1 month' => __('One Month ' ,'icegram'),
+											'+3 months' => __('Three Months ' ,'icegram') ,
+											'+1 year' => __('One year' ,'icegram') ,
+											'+2 years' => __('Two Years' ,'icegram')); 
+											?>
 			<div class="options_group" id="campaign_target_rules_retrageting">
 				<p class="form-field">
 					<label class="options_header"><?php _e( 'Retargeting', 'icegram' ); ?></label>
 					<label for="retargeting">
 						<input type="checkbox" name="campaign_target_rules[retargeting]" id="retargeting" value="yes" <?php ( !empty( $campaign_target_rules['retargeting'] ) ) ? checked( $campaign_target_rules['retargeting'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once shown, do NOT show a message again for current session', 'icegram' ); ?>
+						<?php _e( 'Once shown, do NOT show a message again for', 'icegram' ); ?>
+						<select name="campaign_target_rules[expiry_time]">
+							<?php foreach($expiry_options as $key => $option){
+									?>
+									<option value="<?php echo $key; ?>" <?php selected( $campaign_target_rules['expiry_time'], $key ); ?>><?php echo $option; ?></option>
+							<?php
+								  }
+							?>
+						</select>
 					</label>
 				</p>
 			</div>
@@ -370,7 +394,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 		// Return html for message row in json encoded format
 		function get_message_action_row() {
 
-			$ig_message_admin = new Icegram_Message_Admin();
+			$ig_message_admin = Icegram_Message_Admin::getInstance();
+			$ig_message_admin->is_icegram_editor = true;
 
 			if ( empty( $_POST['message_id'] ) || !is_numeric( $_POST['message_id'] ) ) {
 
@@ -418,7 +443,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				</td>
 			</tr>
 			<?php
-		
+		     
 			echo json_encode( array( 'id' => $message_id, 'main' => ob_get_clean() ) );
 			die();
 

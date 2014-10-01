@@ -96,7 +96,8 @@ abstract class Icegram_Message_Type {
 						    'icon' 			=> array( 'type' => 'text' ),
 						    'bg_color' 		=> array( 'type' => 'color' ),
 						    'text_color' 	=> array( 'type' => 'color' ),
-						    'position' 		=> array( 'type' => 'position' )
+						    'position' 		=> array( 'type' => 'position' ),
+						    'embed_form'    => array( 'type' => 'form' )
 						    );
 
 	}

@@ -37,9 +37,10 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 										'tablet' => ( !empty( $this->rules['tablet'] ) ) ? $this->rules['tablet'] : '',
 										'laptop' => ( !empty( $this->rules['laptop'] ) ) ? $this->rules['laptop'] : ''
 									);
-				$this->rules_summary['users'] = ( !empty( $this->rules['logged_in'] ) && $this->rules['logged_in'] == 'logged_in' ) ? ( ( !empty( $this->rules['users'] ) ) ? $this->rules['users'] : array( 'none' ) ) : array( 'all' );
+				$this->rules_summary['users'] = ( !empty( $this->rules['logged_in'] ) && $this->rules['logged_in'] == 'logged_in' ) ? ( ( !empty( $this->rules['users'] ) ) ? $this->rules['users'] : array( 'none' ) ) : array($this->rules['logged_in']);
 
-				$this->rules_summary['retargeting'] = array( 'retargeting' => ( !empty( $this->rules['retargeting'] ) ) ? $this->rules['retargeting'] : '' );
+				$this->rules_summary['retargeting'] = array( 'retargeting' => ( !empty( $this->rules['retargeting'] ) ) ? $this->rules['retargeting'] : '' ,
+															 'expiry_time' => ( !empty( $this->rules['retargeting']) ) ? $this->rules['expiry_time'] : '' );
 
 			}	
 
@@ -73,7 +74,10 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			if( !$campaign_valid ) {
 				return $campaign_valid;
 			}
-			if ( in_array( 'all', $campaign->rules_summary['users'], true ) ) {
+			if(in_array( 'not_logged_in', $campaign->rules_summary['users'], true ) && !is_user_logged_in() ){
+					return true;
+			}
+			elseif ( in_array( 'all', $campaign->rules_summary['users'], true ) ) {
 				return true;
 			} elseif ( is_user_logged_in() && !in_array( 'none', $campaign->rules_summary['users'], true ) ) {
 				$current_user = wp_get_current_user();

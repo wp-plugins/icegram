@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.4
+ * Version: 1.5
  * Author: Icegram
  * Author URI: http://www.icegram.com/
  *
@@ -33,7 +33,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.4";
+        $this->version = "1.5";
         $this->shortcode_instances = array();
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
         $this->plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -41,7 +41,7 @@ class Icegram {
 
         if( is_admin() && current_user_can( 'manage_options' ) ) {
             new Icegram_Campaign_Admin();
-            new Icegram_Message_Admin();
+            $ig_message_admin = Icegram_Message_Admin::getInstance();
             add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_styles_and_scripts' ) );
             add_action( 'admin_print_styles', array( &$this, 'remove_preview_button' ) );        
             add_filter( 'post_row_actions', array( &$this , 'remove_row_actions' ), 10, 2 );
@@ -261,16 +261,23 @@ class Icegram {
     }
 
     public function icegram_event_track() {        
-
         if( !empty( $_POST['event_data'] ) ) {
-
-            $messages_shown = (array) explode(",", html_entity_decode( (!empty($_COOKIE['icegram_messages_shown']) ? stripslashes( $_COOKIE['icegram_messages_shown'] ) : '') ) );
 
             foreach ( $_POST['event_data'] as $event ) {
                 switch ($event['type']) {
                     case 'shown':
                         if (is_array($event['params']) && !empty($event['params']['message_id'])) {
                             $messages_shown[] = $event['params']['message_id'];
+                            if(!empty($event['params']['expiry_time'])){
+                                if($event['params']['expiry_time'] =='today'){
+                                    $event['params']['expiry_time'] = strtotime('+1 day', mktime(0, 0, 0));
+                                }else if($event['params']['expiry_time'] == 'current_session'){
+                                    $event['params']['expiry_time'] = 0;
+                                }else{
+                                    $event['params']['expiry_time'] = strtotime($event['params']['expiry_time']);
+                                }
+                                setcookie('icegram_messages_shown_'.$event['params']['message_id'],true , $event['params']['expiry_time'] , '/');    
+                            }
                         }
                         break;
                     
@@ -283,8 +290,6 @@ class Icegram {
                 do_action('icegram_event_track_'.$event['type'], $event['params']);
             }
         }
-        $messages_shown = array_values ( array_filter ( array_unique($messages_shown) ) ); 
-        setcookie('icegram_messages_shown', implode(",", $messages_shown), 0, '/');    
         exit();
     }
 
@@ -449,19 +454,16 @@ class Icegram {
             return;
         }
 
-        $messages_shown = (array) explode(",", html_entity_decode( (!empty($_COOKIE['icegram_messages_shown']) ? stripslashes( $_COOKIE['icegram_messages_shown'] ) : '') ) );
         $types_shown    = array(); $messages_to_show_ids = array();
-
         foreach ( $messages as $key => $message_data ) {
 
             if( !is_array( $message_data ) || empty( $message_data ) ) {
                 continue;
             }
-
             // Don't show a seen message again - if needed
             if( !empty( $message_data['id'] ) &&
                 empty( $_GET['campaign_preview_id'] ) &&
-                in_array( $message_data['id'], $messages_shown ) &&
+                !empty($_COOKIE['icegram_messages_shown_'.$message_data['id']])&&
                 !empty( $message_data['retargeting'] ) &&
                 $message_data['retargeting'] == 'yes' 
             ) {
@@ -477,7 +479,6 @@ class Icegram {
                 $messages_to_show_ids[] = $message_data['id'];    
             }
             
-            $types_shown[] = $message_data['type'];
 
             /*
             // Our own implementation so WP does not mess with script, style and pre tags
@@ -517,6 +518,9 @@ class Icegram {
                            'preview_id'     => !empty( $_GET['campaign_preview_id'] ) ? $_GET['campaign_preview_id'] : '',
                            'defaults'       => $icegram_default
                         ));
+        foreach ($icegram['messages'] as $key => $message_data) {
+            $types_shown[] = $message_data['type'];
+        }
         if (empty($icegram['preview_id'])) {
             unset($icegram['preview_id']);
         }
@@ -528,7 +532,7 @@ class Icegram {
 
         // Load JS and default CSS
         $types_shown = array_unique($types_shown);
-        
+            
         if (in_array('popup', $types_shown)) {
             wp_enqueue_script( 'thickbox' );
             wp_enqueue_style( 'thickbox' ); 
@@ -738,6 +742,7 @@ class Icegram {
                     }
                     $rule_value = $campaign->get_rule_value('retargeting');
                     $message_data['retargeting']   = !empty( $rule_value['retargeting'] ) ? $rule_value['retargeting'] : '';
+                    $message_data['expiry_time']   = !empty( $rule_value['retargeting'] ) ? $rule_value['expiry_time'] : '';
                 }
             }
             $valid_messages[$id] = $message_data;

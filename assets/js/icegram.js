@@ -182,7 +182,6 @@
 		jQuery(this.root_container).append(html);
 		this.dom_id = 'icegram_message_'+this.data.id;
 		this.el = jQuery('#'+this.dom_id);
-
 		this.set_position();
 
 		var pb = window.icegram.get_powered_by( this.type );
@@ -199,6 +198,30 @@
         }
         if(this.data.message == undefined || this.data.message == '') {
             this.el.find('.ig_message').hide();
+        }else{
+        	var form_el = this.el.find('.ig_embed_form').get(0);
+        	if(form_el){
+        		var form_content = jQuery(form_el).html();
+	        	form_el = jQuery(form_el).empty();
+	        	jQuery(form_el).replaceWith(form_content);
+	        	if(this.data.type == 'messenger'){
+		        	this.el.find('.ig_message_body').html(form_el.append(this.el.find('.ig_message_body').html()));
+				}else{
+		        	this.el.find('.ig_message').html(form_el.append(this.el.find('.ig_message').html()));
+				}
+	        	var prev_tag = this.el.find('.ig_embed_form_container').prev();
+	        	var next_tag = this.el.find('.ig_embed_form_container').next();
+	        	// var allowed_tags = ['P', 'DIV', 'SPAN']; // dont need this, no working !
+	        	// if(form_el.hasClass('ig_inline') && prev_tag.get(0) && jQuery.inArray(prev_tag.get(0).tagName, allowed_tags) != -1){
+	        	if(form_el.hasClass('ig_inline') && prev_tag.get(0)){
+		        	this.el.find('.ig_embed_form_container')
+		        		.appendTo(prev_tag);
+	        		if(next_tag.get(0) && next_tag.get(0).tagName == prev_tag.get(0).tagName){
+	        			prev_tag.append(next_tag.html());
+	        			next_tag.remove();
+	        		}
+	        	}
+        	}
         }
         if(this.data.label == undefined || this.data.label == '') {
             this.el.find('.ig_button').hide();
@@ -220,6 +243,8 @@
         }else if (this.data.bg_color != undefined && this.data.bg_color != '') {
         	var hsl_color = window.icegram.get_complementary_color(this.data.bg_color);
             this.el.find('.ig_button').css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
+            this.el.find('.ig_embed_form input[type="submit"]').css('background', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
+
         }
     	// Hint clickability for buttons / ctas
     	if (typeof(this.data.link) === 'string' && this.data.link != '') {
@@ -311,7 +336,7 @@
 	Icegram_Message_Type.prototype.track = function ( e, params ) {
 		if (typeof( window.icegram.track ) === 'function' ) {
 			params = params || {};
-			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id } );
+			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id ,expiry_time:this.data.expiry_time} );
 			window.icegram.track( e, params);
 		}
 	};
@@ -337,11 +362,11 @@
 			e.data.self.hide();
 			return;
 		}
+		var form = jQuery(e.target).closest('.icegram').find('form').first();
 		// Clicking on ig_button or any other link with a class ig_cta will trigger cta click
-		if(jQuery(e.target).filter('.ig_button, .ig_cta').length || jQuery(e.target).parents('.ig_button, .ig_cta').length){
+		if(jQuery(e.target).filter('.ig_button, .ig_cta ,:submit').length || jQuery(e.target).parents('.ig_button, .ig_cta ').length && !(form.find('ig_button').length > 0 || form.find('input[type=button]').length > 0 || form.find('input[type=submit]').length > 0 )){
             e.data.self.on_cta_click( e );
         }
-		
 	};
 	Icegram_Message_Type.prototype.on_resize = function ( e ) {
 
@@ -350,15 +375,14 @@
 	Icegram_Message_Type.prototype.on_cta_click = function ( e ) {
 		e.data = e.data || { self: this };
 		e.data.self.track( 'clicked' );
-		typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '' ? window.location.href = e.data.self.data.link : e.data.self.hide();
-	};
-
-	Icegram_Message_Type.prototype.on_cta_click_no_hide = function ( e ) {
-	        e.data = e.data || { self: this };
-	        e.data.self.track( 'clicked' );
-	        if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
-	          window.location.href = e.data.self.data.link;
-	        }
+		if(jQuery(e.target).closest('.icegram').find('form').length ){
+			var form = jQuery(e.target).closest('.icegram').find('form').first();
+			jQuery(form).submit();
+		}else if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
+	        window.location.href = e.data.self.data.link;
+	    }else if(e.data.self.data.hide !== false){
+	    	e.data.self.hide()
+	    }
 	};
 
 

@@ -109,3 +109,29 @@
     font-size: 10px;
     position: relative;
 }
+.messenger .ig_embed_form.ig_vertical.ig_quarter .ig_embed_form_container,
+.messenger .ig_embed_form.ig_horizontal.ig_quarter .ig_embed_form_container{
+    width: 50%!important;
+}
+
+.messenger .ig_embed_form.ig_vertical.ig_half li,
+.messenger .ig_embed_form.ig_vertical.ig_quarter li,
+.messenger .ig_embed_form.ig_horizontal.ig_half li,
+.messenger .ig_embed_form.ig_horizontal.ig_quarter li{
+    min-width: 96% !important;
+}
+
+.messenger .ig_button, 
+.messenger input[type="submit"], 
+.messenger input[type="button"] {
+    border-bottom : none;
+    cursor: pointer;
+}
+.messenger .ig_button:active, 
+.messenger input[type="submit"]:active, 
+.messenger input[type="button"]:active {
+    border-top : none;
+}
+
+
+
