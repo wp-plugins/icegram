@@ -30,8 +30,16 @@
 .action_bar .ig_data {
 }
 
-.action_bar .ig_button, .action_bar input[type="submit"], .action_bar input[type="button"] {
+.action_bar .ig_button, 
+.action_bar input[type="submit"], 
+.action_bar input[type="button"] {
+    border-bottom : none;
     cursor: pointer;
+}
+.action_bar .ig_button:active, 
+.action_bar input[type="submit"]:active, 
+.action_bar input[type="button"]:active {
+    border-top : none;
 }
 
 .action_bar .ig_close {
@@ -114,12 +122,11 @@ div.icegram .action_bar form {
 div.icegram .action_bar input, div.icegram .action_bar label {
     display: inline-block;
 }
-
-div.icegram .action_bar .clear:after {
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+   .icegram .action_bar .ig_button{
+     margin: .4em !important;
+   }
 }

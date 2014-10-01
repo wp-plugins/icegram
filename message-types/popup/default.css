@@ -44,13 +44,22 @@
     background-position: left top;    
 }
 
-.popup .ig_button, .popup input[type="submit"], .popup input[type="button"] {
+.popup .ig_button, 
+.popup input[type="submit"], 
+.popup input[type="button"] {
     cursor: pointer;
     display: block;
+    border-bottom : none;
 }
 
-.popup .ig_button:hover, .popup input[type="submit"]:hover, .popup input[type="button"]:hover {
+.popup .ig_button:hover,
+.popup input[type="submit"]:hover,
+.popup input[type="button"]:hover {
 
+}
+.popup .ig_button:active,
+div.popup input[type="submit"]:active,
+div.popup input[type="button"]:active{
 }
 
 .popup #TB_ajaxContent {

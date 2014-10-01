@@ -4,7 +4,7 @@ jQuery(function() {
 		var message_type 	= jQuery(this_data).find('.message_type option:selected').val();
 		var message_theme 	= jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').val();
 		var message_thumb 	= jQuery(this_data).find('#message_theme_'+message_type).find('.'+message_theme).attr('style');
-
+        jQuery(this_data).find('#embed_form_but').hide();
 		jQuery(this_data).find('.message_row, .location').hide();
 		jQuery(this_data).find('.' + message_type).show();
 		jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').attr('style',message_thumb);
@@ -24,6 +24,7 @@ jQuery(function() {
 			return random_int;
 		}
 	}
+
 
 	// Type box
 	jQuery('#campaign_data').find('h3.hndle').hide();
@@ -121,6 +122,128 @@ jQuery(function() {
 		});
 		return terms;
 	});
+	
+	jQuery('.parse_form').live('click', function(event) {
+			var that = this;
+			var parent_node = jQuery(that).parent().parent();
+			var form_layout = jQuery(parent_node).find('.embed_form_layouts input[type=radio]:checked').val();
+			var form_width = jQuery(parent_node).find('#embed_form_width option:selected').val();
+			var form_position = jQuery(parent_node).find('#embed_form_positions option:selected').val();
+			// var form_container = jQuery('<div class="ig_embed_form_container"></div>').addClass(form_layout);
+			var form_container = jQuery('<ul class="ig_embed_form_container"></ul>').addClass('ig_clear');
+			var has_label = (jQuery(parent_node).find('.has_label_check input[type=checkbox]:checked').length > 0) ? true : false;
+			var form_text = jQuery(parent_node).find('textarea#form_data').val().trim();
+
+			var form_tags = jQuery('<div/>')
+								.html(form_text)
+								.find('input, label, select, textarea, button')
+								.not('br'); // Get only these tags from the form
+
+			if(jQuery(parent_node).find('.use_cta_check input[type=checkbox]:checked').length > 0){
+				form_tags = form_tags.not('input[type=submit]');
+				form_tags = form_tags.not('button[type=submit]');
+			}
+			var form_html = '';
+			var form_object = jQuery('<div/>')
+							.html(form_text)
+							.find('form')
+							.removeAttr('class')
+							.addClass('ig_embed_form')
+							.addClass(form_layout)
+							.addClass(form_layout)
+							.addClass(form_width)
+							.addClass(form_position)
+							.addClass('ig_clear')
+							.empty();
+			var label_text = null;
+			var el_count = 0;
+			jQuery.each(form_tags, function(i, form_el){
+				var el_obj = jQuery(form_el);
+				var el_group = jQuery('<li class="ig_form_el_group"></li>');
+					el_obj.removeAttr('class');
+				if(el_obj.attr('tabindex') == -1){
+					// el_obj.css('display', 'none');
+					el_obj.addClass('ig_detected_bot_fields');
+					el_count--;
+				}
+				if(el_obj.is('label')){
+					label_text = el_obj.not('input, select, textarea, button, br').text().trim();
+				}else if((el_obj.is('input') || el_obj.is('button') || el_obj.is('textarea')) && !el_obj.is('input[type=radio]') ) {
+					el_obj.removeAttr('id');
+					if(has_label){
+						el_obj.removeAttr('placeholder');
+						if(label_text){
+							jQuery('<label>' + label_text + '</label>').appendTo(el_group);
+							label_text = null;
+						}
+					}else {
+						if(label_text){
+							el_obj.attr('placeholder', label_text);
+							label_text = null;
+						}
+					}
+					el_group.append(el_obj);
+					if(el_obj.is('textarea')){
+						el_group.append(el_obj).addClass('ig_form_el_textarea');
+					}else{
+						el_group.append(el_obj).addClass('ig_form_el_input');
+					}
+					form_container.append(el_group);
+					el_count++;
+				}else if(el_obj.is('select')) {
+					if(label_text){
+						if(has_label){
+							jQuery('<label>' + label_text + '</label>').appendTo(el_group);
+						}else{
+							jQuery('<option>' + label_text + '</option>').prependTo(el_obj);
+						}
+						label_text = null;	
+					}
+					el_group.append(el_obj).addClass('ig_form_el_select');
+					form_container.append(el_group);
+					el_count++;
+				}else if(el_obj.is('input[type=radio]') ) {
+					if(label_text){
+						jQuery('<label>' + label_text + '</label>').prepend(el_obj).appendTo(el_group);
+						label_text = null;
+					}
+					el_group.addClass('ig_form_el_radio');
+					form_container.append(el_group);
+					el_count++;
+				}
+			});
+			if(form_layout == 'ig_horizontal'){
+				var max_el = (form_width == 'ig_full') ? 4 : ((form_width == 'ig_half') ? 2  : 1);
+				el_count = (el_count > max_el ) ? max_el : el_count;
+				var li_width = (100 - el_count) / el_count;
+				form_container
+					.find('input, select, textarea')
+					.not('input[type=submit]')
+					.not('input[type=radio]')
+					.parent()
+					.css('width', li_width + '%' );
+				form_container
+					.find('input[type=radio]')
+					.parent()
+					.parent()
+					.css('width', li_width + '%' );
+			}
+			form_container.find('.ig_detected_bot_fields').parent().css('display', 'none');
+			form_object.append(form_container);
+			tb_remove();
+			window.send_to_editor(jQuery('<div/>').append(form_object).html());
+			// reset all fields of Embed form setting
+			// jQuery(document).find('form#embed_form').get(0).reset();
+			jQuery(parent_node).find('textarea#form_data').val('');
+			jQuery(parent_node).find('.embed_form_layouts input[type=radio]:first').attr('checked', 'checked');
+			jQuery(parent_node).find('.use_cta_check input[type=checkbox]').attr('checked', 'checked');
+			jQuery(parent_node).find('.has_label_check input[type=checkbox]').attr('checked', 'checked');
+			// jQuery(parent_node).find('#embed_form_width option:first').attr('selected', 'selected')
+			// jQuery(parent_node).find('#embed_form_positions option:first').attr('selected', 'selected')
+
+			return false;
+		});
+	
 
 	var message_rows = jQuery('.message-row').length;
 	jQuery('.ajax_chosen_select_messages').chosen().on('change', function() {
@@ -206,10 +329,12 @@ jQuery(function() {
 		disable_search_threshold: 10
 	});
 
-	jQuery('input#users_logged_in, input#users_all').on('change', function() {
-		jQuery('select#users_roles').parent('p').slideToggle();
+	jQuery('input#users_logged_in, input#users_all ,input#users_not_logged_in').on('change', function() {
 		if (jQuery(this).val() == 'logged_in') {
+		    jQuery('select#users_roles').parent('p').show();
 			jQuery('#users_roles_chosen').find('input').trigger('click');
+		}else{
+		    jQuery('select#users_roles').parent('p').hide();
 		}
 	});
 	

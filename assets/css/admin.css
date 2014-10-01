@@ -85,7 +85,7 @@ th.message_header {
 }
 
 .message-row .seconds-text {
-	width: 40px;
+	width: 40px !important;
 	text-align: center;
 }
 
@@ -612,4 +612,10 @@ CSS for landing page and Help and Support
 	padding: 3px 10px;
 	background-color: #FCF0AD;
 	border: 1px solid #CCC;
+}
+
+
+#embed_form #popup_container {
+	width: 500px;
+	height: 560px;
 }

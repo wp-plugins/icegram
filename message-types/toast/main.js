@@ -66,14 +66,9 @@
         }, this.data.delay_time); 
         
         !sticky && duration > 0 && (setTimeout(function() {
-            self.el.animate({
-                height: 0,
-                opacity: 0
-            }, 'fast', function() {
+                self.el.fadeOut('slow');
                 self.hide();
                 self.root_container.children().length || self.root_container.removeClass('active').hide();
-            });
-
         }, duration));
 
     };

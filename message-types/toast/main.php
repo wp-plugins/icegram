@@ -26,7 +26,8 @@ class Icegram_Message_Type_Toast extends Icegram_Message_Type {
 		$this->settings['theme']['default']		= 'announce';
 		unset ( $this->settings['text_color'],
 				$this->settings['bg_color'],
-				$this->settings['label']
+				$this->settings['label'],
+				$this->settings['embed_form']
 				);
 	}
 

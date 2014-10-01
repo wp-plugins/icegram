@@ -11,7 +11,7 @@ Icegram_Message_Type_Action_Bar.prototype.constructor = Icegram_Message_Type_Act
 Icegram_Message_Type_Action_Bar.prototype.get_template_default = function () {
     return  '<div class="icegram action_bar_{{=id}}" >'+
                 '<div class="action_bar ig_container {{=theme}}" id="icegram_message_{{=id}}">'+
-                    '<div class="ig_content clear">'+
+                    '<div class="ig_content ig_clear">'+
                         '<div class="ig_arrow_block" id="action_bar_close_{{=id}}">'+
                             '<span class="ig_arrow"></span>'+
                         '</div>'+
