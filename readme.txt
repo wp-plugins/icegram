@@ -50,8 +50,13 @@ Determine where, when and how to show on-site marketing messages to visitors. Us
 * **Full HTML** editing capability for maximum control
 
 = Icegram is a Good Neighbour =
-Icegram works with most WordPress plugins and themes. You 
+Icegram works with most WordPress plugins and themes. It can integrate with all mailing list / newsletter / optin / CRM / form services that provide embeddable HTML form too. 
 
+Icegram works with MailChimp, Aweber, Constant Contact, MadMimi, Campaign Monitor, Get Response, Klawoo, iContact, e-GOI, SendPress, MailPoet, Infusion Soft, Email Buddy, My Mail and all others..
+
+Similarly, you can embed forms in Icegram messages using shortcodes / HTML from Gravity Forms, Contact Form 7, Ninja Forms, JetPack, Formidable Pro, Inbound Now, Quform, Fast Secure Form, Visual Form Builder and many others...
+
+Icegram campaigns and messages can be shown anywhere in WordPress using shortcodes. And Icegram has a fairly extensive API for creating new message types, themes and addons.
 
 
 = Do More with Addons =
@@ -217,3 +222,4 @@ Initial Release
 
 = 1.0 =
 * Initial Release
+
