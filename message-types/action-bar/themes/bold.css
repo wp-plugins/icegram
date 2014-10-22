@@ -41,7 +41,9 @@
     float: left;
 }
 
-.action_bar.bold .ig_button, .action_bar.bold input[type="submit"], .action_bar.bold input[type="button"] {
+.action_bar.bold input[type="submit"], 
+.action_bar.bold input[type="button"],
+.action_bar.bold .ig_button {
     display: inline-block;
     font-size: 1em;
     letter-spacing: 1px;
@@ -58,7 +60,9 @@
     padding: .7em 2em;
 }
 
-.action_bar.bold .ig_button:active, .action_bar.bold input[type="submit"]:active, .action_bar.bold input[type="button"]:active {
+.action_bar.bold input[type="submit"]:active, 
+.action_bar.bold input[type="button"]:active,
+.action_bar.bold .ig_button:active{
     position: relative;
     top: 3px;
     -moz-box-shadow: none;

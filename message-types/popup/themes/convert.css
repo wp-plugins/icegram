@@ -26,14 +26,17 @@
     right: -15px;
 }
 
-.popup.convert .ig_button, .popup.convert input[type="submit"], .popup.convert input[type="button"] {
+.popup.convert .ig_button, 
+.popup.convert input[type="submit"], 
+.popup.convert input[type="button"] {
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
-    background-color: hsl(0, 94%, 41%);
+    background-color: hsl(0, 94%, 41%) !important;
+    background: hsl(0, 94%, 41%) !important; 
     font-size: 1.75em;
     color: hsl(0, 33%, 98%);
-    border: .3em solid hsl(0, 6%, 71%);
+    border: .3em solid hsl(0, 6%, 71%) !important;
     width: 50%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -moz-border-radius: 1em;
@@ -46,6 +49,16 @@
     margin: 0.1em auto;
     padding: 0.1em 2em;
     clear: both;
+}
+
+.popup.convert .ig_button, 
+.popup.convertinput[type="submit"]:active,
+.popup.convert input[type="button"]:active{
+    border-top: .3em solid hsl(0, 6%, 71%) !important;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+
 }
 
 .popup.convert #TB_ajaxContent {

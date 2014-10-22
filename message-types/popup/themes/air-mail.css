@@ -38,13 +38,15 @@
     zoom: 1.5;
 }
 
-.popup.air-mail .ig_button, div.popup.air-mail input[type="submit"], div.popup.air-mail input[type="button"] {
-    background: hsl(6, 78%, 57%);
-    width: 50%;
+.popup.air-mail .ig_button,
+ div.popup.air-mail input[type="submit"],
+ div.popup.air-mail input[type="button"] {
+    background: hsl(6, 78%, 57%) !important;
+    width: 50% !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    border-bottom: 3px solid hsl(6, 63%, 46%);
+    border-bottom: 3px solid hsl(6, 63%, 46%) !important;
     font-size: 16px;
     color: hsl(0, 0%, 100%);
     text-transform: uppercase;
@@ -54,9 +56,17 @@
     padding: 16px 0 13px;
 }
 
-.popup.air-mail .ig_button:hover, div.popup.air-mail input[type="submit"]:hover, div.popup.air-mail input[type="button"]:hover {
+.popup.air-mail .ig_button:hover,
+div.popup.air-mail input[type="submit"]:hover,
+div.popup.air-mail input[type="button"]:hover {
     margin-top: -3px;
-    border-bottom: 6px solid #c0392b;
+    border-bottom: 6px solid #c0392b !important;
+}
+
+.popup.air-mail .ig_button:active,
+div.popup.air-mail input[type="submit"]:active,
+div.popup.air-mail input[type="button"]:active{
+    border-top: none;
 }
 
 .popup.air-mail #TB_ajaxContent {
