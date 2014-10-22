@@ -44,7 +44,7 @@
 .popup.compel input[type="submit"], 
 .popup.compel input[type="button"] {
     background: hsl(6, 78%, 57%) !important;
-    width: 50%;
+    width: 50% !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;

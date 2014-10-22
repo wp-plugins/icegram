@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.5
+ * Version: 1.6
  * Author: Icegram
  * Author URI: http://www.icegram.com/
  *
@@ -33,7 +33,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.5";
+        $this->version = "1.6";
         $this->shortcode_instances = array();
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
         $this->plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -52,6 +52,7 @@ class Icegram {
             add_action( 'icegram_settings_after', array( &$this, 'klawoo_subscribe_form' ) ); 
             add_action( 'icegram_about_changelog', array( &$this, 'klawoo_subscribe_form' ) ); 
             add_action( 'icegram_settings_after', array( &$this, 'icegram_houskeeping' ) ); 
+            add_action('admin_notices', array( &$this,'add_admin_notices'));
         } else {
             add_action( 'wp_footer', array( &$this, 'display_messages' ) );
             //add_action( 'wp_head', array( &$this, 'nofollow_noindex' ) );
@@ -75,7 +76,50 @@ class Icegram {
         }
 
     }
+    public function add_admin_notices(){
+        $active_plugins =  get_option( 'active_plugins', array() );
+        ?>
+        <style>
+            p.icegram_notice {
+                border-left: 4px solid hsl(94, 61%, 52%);
+                padding: 10px 12px;
+                background-color: hsl(0, 100%, 100%);
+                -webkit-box-shadow: 0 1px 1px 0 hsla(0, 0%, 0%, 0.1);
+                box-shadow: 0 1px 1px 0 hsla(0, 0%, 0%, 0.1);
 
+            }
+            a.ig-admin-btn{
+                margin-left: 4px;
+                padding: 4px 8px;
+                position: relative;
+                text-decoration: none;
+                border: none;
+                -webkit-border-radius: 2px;
+                border-radius: 2px;
+                background: hsl(0, 0%, 88%);
+                text-shadow: none;
+                font-weight: 600;
+                font-size: 13px;
+            }
+
+            a.ig-admin-btn:hover{
+                color: hsl(0, 100%, 100%);
+                background-color: hsl(207, 8%, 23%);
+            }
+        </style>
+        <?php
+        // Admin notices for free bonuses!
+        if(in_array('ig-analytics/ig-analytics.php' ,$active_plugins)  && !in_array('ig-themes-pack-1/ig-themes-pack-1.php' , $active_plugins)){
+            // themes 
+            echo "<p class='icegram_notice'>Get <b>17 bonus themes</b> for Icegram. Free!! <a class='ig-admin-btn' href='http://www.icegram.com/addons/theme-pack-1/?utm_source=inapp&utm_campaign=freebonus&utm_medium=notices' target='_blank'>Yes, I want them!</a></p>";
+        }else if(in_array('ig-themes-pack-1/ig-themes-pack-1.php', $active_plugins)  && !in_array('ig-analytics/ig-analytics.php', $active_plugins)){
+            //analytics 
+            echo "<p class='icegram_notice'>Measure performance of your Icegram messages with the <b>free Analytics addon</b>. <a class='ig-admin-btn' href='http://www.icegram.com/addons/analytics/?utm_source=inapp&utm_campaign=freebonus&utm_medium=notices' target='_blank'>Cool, Let's begin</a></p>";
+        }else if(!in_array('ig-analytics/ig-analytics.php', $active_plugins) && !in_array('ig-themes-pack-1/ig-themes-pack-1.php', $active_plugins)){
+            // both
+            echo "<p class='icegram_notice'>Claim your Icegram bonuses today. <b>17 themes &amp; Analytics addon</b> for free! <a class='ig-admin-btn' href='http://www.icegram.com/product-category/addons/free/?utm_source=inapp&utm_campaign=freebonus&utm_medium=notices' target='_blank'>Yes, Let's begin</a></p>";
+        }
+    }
     public function klawoo_subscribe_form() {
         ?>
         <div class="wrap">
@@ -503,8 +547,8 @@ class Icegram {
         if( empty( $messages ) )
             return;
         
-        wp_register_script( 'icegram_js', $this->plugin_url . '/assets/js/icegram.js', array ( 'jquery' ), '', true);
-        wp_enqueue_style( 'icegram_css', $this->plugin_url . '/assets/css/frontend.css' );
+        wp_register_script( 'icegram_js', $this->plugin_url . '/assets/js/icegram.js', array ( 'jquery' ), $this->version, true);
+        wp_enqueue_style( 'icegram_css', $this->plugin_url . '/assets/css/frontend.css', array(), $this->version );
         wp_enqueue_style( 'dashicons' );
 
         $icegram_default = apply_filters( 'icegram_branding_data', 
@@ -539,9 +583,10 @@ class Icegram {
         }
 
         foreach ($types_shown as $message_type) {
-            wp_register_script( 'icegram_message_type_'.$message_type, $this->message_types[$message_type]['baseurl'] . "main.js" , array ( 'icegram_js' ), '', true );
+            $ver = ( !empty($this->message_types[$message_type]['version'])) ? $this->message_types[$message_type]['version'] : $this->version;
+            wp_register_script( 'icegram_message_type_'.$message_type, $this->message_types[$message_type]['baseurl'] . "main.js" , array ( 'icegram_js' ), $ver, true );
             wp_enqueue_script( 'icegram_message_type_'.$message_type );  
-            wp_enqueue_style( 'icegram_css_'.$message_type, $this->message_types[$message_type]['baseurl'] . 'default.css' );
+            wp_enqueue_style( 'icegram_css_'.$message_type, $this->message_types[$message_type]['baseurl'] . 'default.css', array(), $ver );
         }
 
         // Load theme CSS
@@ -560,10 +605,10 @@ class Icegram {
         if ( !in_array( $screen->id, array( 'ig_campaign', 'ig_message' ), true ) ) return;
 
         // Register scripts
-        wp_register_script( 'icegram_writepanel', $this->plugin_url . '/assets/js/admin.js' , array ( 'jquery', 'wp-color-picker' ) );
-        wp_register_script( 'icegram_chosen', $this->plugin_url . '/assets/js/chosen.jquery.min.js' , array ( 'jquery' ), '1.0' );
-        wp_register_script( 'icegram_ajax-chosen', $this->plugin_url . '/assets/js/ajax-chosen.jquery.min.js' , array ( 'icegram_chosen' ), '1.0' );
-        wp_register_script( 'icegram_tiptip', $this->plugin_url . '/assets/js/jquery.tipTip.min.js' , array ( 'jquery' ), get_bloginfo( 'version' ) );
+        wp_register_script( 'icegram_writepanel', $this->plugin_url . '/assets/js/admin.js' , array ( 'jquery', 'wp-color-picker' ), $this->version );
+        wp_register_script( 'icegram_chosen', $this->plugin_url . '/assets/js/chosen.jquery.min.js' , array ( 'jquery' ), $this->version );
+        wp_register_script( 'icegram_ajax-chosen', $this->plugin_url . '/assets/js/ajax-chosen.jquery.min.js' , array ( 'icegram_chosen' ), $this->version );
+        wp_register_script( 'icegram_tiptip', $this->plugin_url . '/assets/js/jquery.tipTip.min.js' , array ( 'jquery' ), $this->version );
         
         wp_enqueue_script( 'icegram_writepanel' );
         wp_enqueue_script( 'icegram_ajax-chosen' );
@@ -579,9 +624,9 @@ class Icegram {
         wp_enqueue_style( 'thickbox' );
         wp_enqueue_style( 'dashicons' );
         wp_enqueue_style( 'wp-color-picker' );
-        wp_enqueue_style( 'icegram_admin_styles', $this->plugin_url . '/assets/css/admin.css' );
-        wp_enqueue_style( 'icegram_jquery-ui-style', $this->plugin_url . '/assets/css/jquery-ui.min.css' );
-        wp_enqueue_style( 'icegram_chosen_styles', $this->plugin_url . '/assets/css/chosen.min.css' );
+        wp_enqueue_style( 'icegram_admin_styles', $this->plugin_url . '/assets/css/admin.css', array(), $this->version  );
+        wp_enqueue_style( 'icegram_jquery-ui-style', $this->plugin_url . '/assets/css/jquery-ui.min.css', array(), $this->version );
+        wp_enqueue_style( 'icegram_chosen_styles', $this->plugin_url . '/assets/css/chosen.min.css', array(), $this->version );
 
         if ( !wp_script_is( 'jquery-ui-datepicker' ) ) {
             wp_enqueue_script( 'jquery-ui-datepicker' );

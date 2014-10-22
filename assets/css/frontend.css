@@ -178,7 +178,7 @@ div.icegram .ig_embed_form.ig_center .ig_embed_form_container{
 }
 div.icegram .ig_embed_form.ig_inline .ig_embed_form_container{
     display: inline-block;
-    margin: 0 1%;
+    margin: 1% 1% 0 1%;
     padding: 0 1%;
     vertical-align: bottom;
 }
@@ -250,6 +250,7 @@ div.icegram .ig_embed_form input[type="button"]{
     line-height: 1em;
     font-size: 1em;
     margin: .2em .2em .2em .5em!important;
+    width: auto;
 }
 
 div.icegram .ig_embed_form .ig_detected_bot_fields{

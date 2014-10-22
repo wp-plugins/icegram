@@ -123,9 +123,15 @@ jQuery(function() {
 		return terms;
 	});
 	
+	jQuery('.cancel_parse_form').live('click', function(event) {
+		tb_remove();
+		jQuery(this).closest('form').get(0).reset();
+		return false;
+	});
+
 	jQuery('.parse_form').live('click', function(event) {
 			var that = this;
-			var parent_node = jQuery(that).parent().parent();
+			var parent_node = jQuery(that).closest('form');
 			var form_layout = jQuery(parent_node).find('.embed_form_layouts input[type=radio]:checked').val();
 			var form_width = jQuery(parent_node).find('#embed_form_width option:selected').val();
 			var form_position = jQuery(parent_node).find('#embed_form_positions option:selected').val();
@@ -150,7 +156,6 @@ jQuery(function() {
 							.removeAttr('class')
 							.addClass('ig_embed_form')
 							.addClass(form_layout)
-							.addClass(form_layout)
 							.addClass(form_width)
 							.addClass(form_position)
 							.addClass('ig_clear')
@@ -160,16 +165,25 @@ jQuery(function() {
 			jQuery.each(form_tags, function(i, form_el){
 				var el_obj = jQuery(form_el);
 				var el_group = jQuery('<li class="ig_form_el_group"></li>');
-					el_obj.removeAttr('class');
+					el_obj.removeAttr('class').removeAttr('style');
+				// For now : we are hiding fields with tabindex -1
 				if(el_obj.attr('tabindex') == -1){
-					// el_obj.css('display', 'none');
 					el_obj.addClass('ig_detected_bot_fields');
 					el_count--;
 				}
 				if(el_obj.is('label')){
-					label_text = el_obj.not('input, select, textarea, button, br').text().trim();
+					label_text = el_obj.not('input, select, textarea, button, span, br').text().replace(/\s+/g, ' ');
 				}else if((el_obj.is('input') || el_obj.is('button') || el_obj.is('textarea')) && !el_obj.is('input[type=radio]') ) {
 					el_obj.removeAttr('id');
+					if(el_obj.is('button')){
+						var button_text = el_obj.not('br, span, div').text().trim() || '';
+						el_obj.remove();
+						el_obj = jQuery('<input type="submit">');
+						if(button_text){
+							el_obj.attr('value',button_text );
+						}
+					}
+
 					if(has_label){
 						el_obj.removeAttr('placeholder');
 						if(label_text){
@@ -231,16 +245,9 @@ jQuery(function() {
 			form_container.find('.ig_detected_bot_fields').parent().css('display', 'none');
 			form_object.append(form_container);
 			tb_remove();
-			window.send_to_editor(jQuery('<div/>').append(form_object).html());
 			// reset all fields of Embed form setting
-			// jQuery(document).find('form#embed_form').get(0).reset();
-			jQuery(parent_node).find('textarea#form_data').val('');
-			jQuery(parent_node).find('.embed_form_layouts input[type=radio]:first').attr('checked', 'checked');
-			jQuery(parent_node).find('.use_cta_check input[type=checkbox]').attr('checked', 'checked');
-			jQuery(parent_node).find('.has_label_check input[type=checkbox]').attr('checked', 'checked');
-			// jQuery(parent_node).find('#embed_form_width option:first').attr('selected', 'selected')
-			// jQuery(parent_node).find('#embed_form_positions option:first').attr('selected', 'selected')
-
+			jQuery(that).closest('form').get(0).reset();
+			window.send_to_editor(jQuery('<div/>').append(form_object).html());
 			return false;
 		});
 	
@@ -278,12 +285,12 @@ jQuery(function() {
 				hide_empty_campaign_message();
 				jQuery('.message-setting-fields').trigger('change');
 				jQuery(".tips, .help_tip").tipTip({'attribute' : 'data-tip'});
-
-      //       	quicktags({id : 'edit'+response.id});
+				QTags._buttonsInit();
+            	//quicktags({id : 'edit'+response.id});
       //       	 tinyMCE.init({
 				  //   skin : 'edit'+response.id
 				  // });
-      //       	tinymce.init(tinyMCEPreInit.mceInit['edit'+response.id]);
+            	//tinymce.init(tinyMCEPreInit.mceInit['edit'+response.id]);
 
 			}
 		});

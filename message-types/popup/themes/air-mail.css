@@ -42,7 +42,7 @@
  div.popup.air-mail input[type="submit"],
  div.popup.air-mail input[type="button"] {
     background: hsl(6, 78%, 57%) !important;
-    width: 50%;
+    width: 50% !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -55,9 +55,6 @@
     margin: 0 auto;
     padding: 16px 0 13px;
 }
- div.popup.air-mail input[type="submit"]{
-    width: auto;
- }
 
 .popup.air-mail .ig_button:hover,
 div.popup.air-mail input[type="submit"]:hover,

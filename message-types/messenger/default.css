@@ -57,17 +57,17 @@
     border-bottom: none;    
 }
 
-.messenger .ig_message_body {
+.messenger .ig_message {
     text-align: left;
     word-wrap: break-word;
     display: inline-block;
 }
 
-.messenger .ig_message_body p {
+.messenger .ig_message p {
     margin-bottom: 0.25em;
 }
 
-.messenger  .ig_no_icon.ig_message_body {
+.messenger  .ig_no_icon.ig_message {
     width: 91%;
 }
 
@@ -133,5 +133,11 @@
     border-top : none;
 }
 
-
+.messenger .ig_close {
+    background: no-repeat url(../messenger/images/clear-header.png) 0 -195px;
+    right: 10px;
+    top: 20px;
+    width: 21px;
+    height: 13px;
+}
 

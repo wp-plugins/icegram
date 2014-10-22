@@ -36,17 +36,21 @@
 		var self = this;
 		if (this.message_data.length > 0) {
 			jQuery.each( this.message_data, function ( i, v ) {
-				var m = null;
-				var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
-				if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
-					m = new window['Icegram_Message_Type_' + classname_suffix]( v );
-				} else {
-					m = new Icegram_Message_Type( v );
+				try {
+					var m = null;
+					var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
+					if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
+						m = new window['Icegram_Message_Type_' + classname_suffix]( v );
+					} else {
+						m = new Icegram_Message_Type( v );
+					}
+					self.messages.push( m );
+					self.map_id_to_index['_'+v['id'] ] = i;
+					self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
+					self.map_type_to_index[ v['type'] ].push(i);
+				} catch( e ) {
+
 				}
-				self.messages.push( m );
-				self.map_id_to_index['_'+v['id'] ] = i;
-				self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
-				self.map_type_to_index[ v['type'] ].push(i);
 			});
 		}
 
@@ -179,7 +183,10 @@
 		var html = this.render_template();
 
 		// Add html to DOM, Setup dom_id, el etc.
-		jQuery(this.root_container).append(html);
+		try {
+			jQuery(this.root_container).append(html);
+		} catch ( e ) {}
+		
 		this.dom_id = 'icegram_message_'+this.data.id;
 		this.el = jQuery('#'+this.dom_id);
 		this.set_position();
@@ -194,7 +201,7 @@
             this.el.find('.ig_headline').hide();
         }
         if(this.data.icon == undefined || this.data.icon == '') {
-            this.el.find('.ig_icon').hide();
+            this.el.find('.ig_icon').remove();
         }
         if(this.data.message == undefined || this.data.message == '') {
             this.el.find('.ig_message').hide();
@@ -204,11 +211,7 @@
         		var form_content = jQuery(form_el).html();
 	        	form_el = jQuery(form_el).empty();
 	        	jQuery(form_el).replaceWith(form_content);
-	        	if(this.data.type == 'messenger'){
-		        	this.el.find('.ig_message_body').html(form_el.append(this.el.find('.ig_message_body').html()));
-				}else{
-		        	this.el.find('.ig_message').html(form_el.append(this.el.find('.ig_message').html()));
-				}
+		        this.el.find('.ig_message').html(form_el.append(this.el.find('.ig_message').html()));
 	        	var prev_tag = this.el.find('.ig_embed_form_container').prev();
 	        	var next_tag = this.el.find('.ig_embed_form_container').next();
 	        	// var allowed_tags = ['P', 'DIV', 'SPAN']; // dont need this, no working !
@@ -240,11 +243,10 @@
 
     	if(this.data.label == undefined || this.data.label == '') {
             this.el.find('.ig_button').hide();
-        }else if (this.data.bg_color != undefined && this.data.bg_color != '') {
+        }
+        if (this.data.bg_color != undefined && this.data.bg_color != '') {
         	var hsl_color = window.icegram.get_complementary_color(this.data.bg_color);
-            this.el.find('.ig_button').css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
-            this.el.find('.ig_embed_form input[type="submit"]').css('background', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
-
+            this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" ).css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
         }
     	// Hint clickability for buttons / ctas
     	if (typeof(this.data.link) === 'string' && this.data.link != '') {

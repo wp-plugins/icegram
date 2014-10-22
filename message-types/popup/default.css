@@ -50,6 +50,7 @@
     cursor: pointer;
     display: block;
     border-bottom : none;
+    background-image: none;
 }
 
 .popup .ig_button:hover,

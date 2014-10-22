@@ -614,8 +614,15 @@ CSS for landing page and Help and Support
 	border: 1px solid #CCC;
 }
 
+#embed_form {
+	width: 600px !important;
+	height: 495px !important;
+	margin: 0em !important; 
+}
 
-#embed_form #popup_container {
-	width: 500px;
-	height: 560px;
+#embed_form input[value="ig_vertical"]{
+	margin-left: 3%;
+}
+#embed_form select{
+	width:30%;
 }

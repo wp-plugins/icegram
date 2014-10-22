@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -63,8 +63,10 @@ Icegram campaigns and messages can be shown anywhere in WordPress using shortcod
 Icegram is an open platform. The core is already powerful, but you can do even more with free and premium addons.
 
 * Analytics - track impressions, click throughs and conversions with a free addon
+* Themes Pack 1 - additional 17 themes as a free bonus
 * Exit Intent, Scroll Position, Time Delay, JavaScript, Another Message... Show and Hide messages based on user behavior
 * Geo Targeting - based on visitor's location - continent, country, city, region or IP address
+* CTA Actions - Open link, in new window, submit form, AJAX submission, show another message, hide this message... New actions for CTA buttons
 * Additional message types - Overlay, Inline, Sidebars, Ribbons, Stickies, Badges...
 
 = Ok, there is even more =
@@ -143,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.6 = 
+Improvements in optin form embedding, bug fixes and more. Required update.
+
 = 1.5 = 
 Easy optin / subscription form parser and many other enhancements. Required update.
 
@@ -166,6 +171,14 @@ Initial Release
 
 
 == Changelog ==
+= 1.6 =
+* Fix: Empty image tag causing display issues in Opera / IE
+* Update: Form embed functionality improvements
+* NEW: "Themes Pack 1" addon - 17 free themes as a bonus - available from Icegram.com
+* Fix: Toast message compatibility with Behavior Triggers
+* Update: JS and CSS URLs include version numbers now - better for caching
+* Fix: Other minor fixes
+
 = 1.5 =
 * NEW: "Embed Form" option for easy integration with optin / mailing list / subscription form / CRM services
 * NEW: Retargeting Rule: Do not show again for X number of days
@@ -222,4 +235,3 @@ Initial Release
 
 = 1.0 =
 * Initial Release
-
