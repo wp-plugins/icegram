@@ -12,6 +12,7 @@ abstract class Icegram_Message_Type {
 	var $basedir;
 	var $baseurl;
 	var $settings;
+	var $version;
 
 	function __construct( $basedir = '', $baseurl = '' ) {
 		$class_name = get_class($this);
@@ -45,13 +46,10 @@ abstract class Icegram_Message_Type {
 
 		// Load themes
 		$theme_files = (array) glob( $this->basedir . '/themes/*.css' );
-		// Allow other plugins to add themes
-		$theme_files = apply_filters( 'icegram_message_type_themes_' + $this->type,  $theme_files );
-
+			
 		if( empty( $theme_files ) ) {
 			$theme_files[] = $this->basedir . '/default.css';
 		}
-
 		$themes = array();
 		if( !empty( $theme_files ) ) {
 			foreach ( $theme_files as $file ) {
@@ -60,13 +58,14 @@ abstract class Icegram_Message_Type {
 					$themes[ $theme ] = array( 
 												'name' 		=> ucwords( str_replace( "-", ' ', $theme ) ),
 												'type' 		=> $theme,
-												'basedir' 	=> $this->basedir . '/themes/',
-												'baseurl'	=> $this->baseurl . '/themes/'							
+												'basedir' 	=> $this->basedir . 'themes/',
+												'baseurl'	=> $this->baseurl . 'themes/'						
 												);
 				}
 			}
 		}
-
+		// Allow other plugins to add themes
+		$themes = apply_filters( 'icegram_message_type_themes',  $themes ,$this->type);
 		$this->define_settings();
 
 		$params = array( 
@@ -75,6 +74,7 @@ abstract class Icegram_Message_Type {
 				'basedir' 	=> $this->basedir,
 				'baseurl' 	=> $this->baseurl,
 				'themes'  	=> $themes,
+				'version'	=> $this->version,
 				'settings' 	=> $this->settings
 				);
 
@@ -96,7 +96,8 @@ abstract class Icegram_Message_Type {
 						    'icon' 			=> array( 'type' => 'text' ),
 						    'bg_color' 		=> array( 'type' => 'color' ),
 						    'text_color' 	=> array( 'type' => 'color' ),
-						    'position' 		=> array( 'type' => 'position' )
+						    'position' 		=> array( 'type' => 'position' ),
+						    'embed_form'    => array( 'type' => 'form' )
 						    );
 
 	}

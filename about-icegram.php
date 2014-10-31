@@ -268,7 +268,7 @@ if ( !wp_script_is( 'thickbox' ) ) {
                                 <p><?php _e("You can use custom CSS/JS inline in your message HTML. You can also use your theme's custom JS / CSS feature to add your changes.", "icegram"); ?></p>
 
                                 <h4><?php _e("Optin Forms / Mailing service integration...", "icegram"); ?></h4>
-                                <p><?php _e("You can embed any optin / subscription form to your Icegram messages using HTML code. You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service.", "icegram"); ?></p>
+                                <p><?php _e("You can embed any optin / subscription form to your Icegram messages using 'Embed Form' button above text editor. Paste in form HTML code and let Icegram clean it up! You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service.", "icegram"); ?></p>
 
                                 <h4><?php _e("How many messages should I show on a page?", "icegram"); ?></h4>
                                 <p><?php _e("While Icegram provides you lots of different message types and ability to add multiple messages to a campaign, we discourage you to go overboard. We've observed two messages on a page work well, but YMMV!", "icegram"); ?></p>
