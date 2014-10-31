@@ -54,10 +54,9 @@
     width: 50px;
 }
 
-.action_bar.air-mail .ig_data {
-    max-width: 75%;
-    display: inline-block;
-    float: left;
+.action_bar.air-mail .ig_button{
+    float: right;
+    margin-right: 1em !important; 
 }
 
 .action_bar.air-mail input[type="submit"], 
@@ -91,8 +90,14 @@
 .action_bar.air-mail .ig_button:active{
 }
 
+.action_bar.air-mail .ig_data {
+    max-width: 75%;
+    display: inline-block;
+    float: left;
+}
+
 .action_bar.air-mail .ig_close {
-    background: url(../../images/chosen-sprite.png) no-repeat -43px 0;
+    background: url(../images/chosen-sprite.png) no-repeat -43px 0;
     height: 10px;
     width: 10px;
     -moz-box-sizing: content-box;

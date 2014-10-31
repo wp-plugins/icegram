@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,9 +12,9 @@ Popup windows, floating action bars, messengers, toast notifications and more. C
 
 == Description ==
 
-**The Ultimate Plugin To Capture Leads And Connect With Your Audience**
+The Ultimate Plugin To Capture Leads And Connect With Your Audience
 
-Decrease bounce rates, increase engagement and grab your visitors' attention with this unique marketing plugin.
+**Decrease bounce rates, increase engagement and grab your visitors' attention with this unique marketing plugin.**
 
 Most similar plugins are paid and still offer a lot less. Icegram is full featured, easy to use, and still free!
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.7 = 
+Improvements in styling, form embeds and retargeting. 
+
 = 1.6 = 
 Improvements in optin form embedding, bug fixes and more. Required update.
 
@@ -171,6 +174,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.7 =
+* Update: Styling changes to action bar CTA button for alignment
+* Update: Hello Bar styling updates to better handle forms
+* Fix: Hidden field related issue while embeding subscription forms
+* Fix: Retargeting not working correctly in certain cases
+* Fix: Theme thumbnails missing on messages list
+
 = 1.6 =
 * Fix: Empty image tag causing display issues in Opera / IE
 * Update: Form embed functionality improvements

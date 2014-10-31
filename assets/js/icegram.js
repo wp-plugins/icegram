@@ -60,7 +60,7 @@
 				window.icegram.submit_tracking_data();
 			}
 		} );
-		setTimeout( function() { 
+		setInterval( function() { 
 			if (typeof(window.icegram.submit_tracking_data) === 'function') { 
 				window.icegram.submit_tracking_data();
 			} } , 5 * 1000 );
@@ -137,14 +137,16 @@
 				async: false,
 				data: {
 					action: 'icegram_event_track',
-					event_data: this.tracking_data
+					event_data: jQuery.extend(true, {}, this.tracking_data) 
 				},
 				success: function(data, status, xhr) {
-					window.icegram.tracking_data = [];
 				}
 			});
+			this.tracking_data = [];
 		}
 	}
+
+
 
 
 	/**

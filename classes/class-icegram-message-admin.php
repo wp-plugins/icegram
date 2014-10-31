@@ -451,7 +451,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
             }			
 			$type 	= ucwords( str_replace( "-", ' ', $message_data['type'] ) );
 			$theme 	= ucwords( str_replace( "-", ' ', $message_data['theme'] ) );
-			$bg_img = $icegram->message_types[$message_data['type']]['baseurl'] . "themes/" . $message_data['theme'] . ".png";						
+				
+			$bg_img = $icegram->message_types[ $message_data['type'] ]['themes'][ $message_data['theme'] ]['baseurl'] . $message_data['theme'] . ".png";						
 
 			switch ($column) {
 				case 'message_type':

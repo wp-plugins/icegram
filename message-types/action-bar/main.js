@@ -33,6 +33,10 @@ Icegram_Message_Type_Action_Bar.prototype.post_render = function ( ) {
     if( this.data.theme == 'hello' ) {
         var message_button = this.el.find('.ig_button');
         this.el.find('.ig_data').append(message_button);
+        // Temp Fix for verticle alignment of element in Hello Theme
+        if(this.el.find('.ig_embed_form').get(0)){
+            this.el.find('.ig_data').addClass('ig_valign_form_fix');
+        }
     }
 };
 

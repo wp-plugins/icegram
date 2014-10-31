@@ -166,8 +166,8 @@ jQuery(function() {
 				var el_obj = jQuery(form_el);
 				var el_group = jQuery('<li class="ig_form_el_group"></li>');
 					el_obj.removeAttr('class').removeAttr('style');
-				// For now : we are hiding fields with tabindex -1
-				if(el_obj.attr('tabindex') == -1){
+				// For now : we are hiding fields with tabindex -1 and hidden fields
+				if(el_obj.attr('tabindex') == -1 || el_obj.attr('type') == 'hidden'){
 					el_obj.addClass('ig_detected_bot_fields');
 					el_count--;
 				}
@@ -234,6 +234,7 @@ jQuery(function() {
 					.find('input, select, textarea')
 					.not('input[type=submit]')
 					.not('input[type=radio]')
+					.not('input[type=hidden]')
 					.parent()
 					.css('width', li_width + '%' );
 				form_container

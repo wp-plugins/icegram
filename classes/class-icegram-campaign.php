@@ -116,6 +116,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 		
 		function _is_valid_page( $campaign_valid, $campaign, $options ) {
 			$page_id = Icegram::get_current_page_id();
+			
 			if( !$campaign_valid || !empty($options['skip_page_check']) ) {
 				return $campaign_valid;
 			}

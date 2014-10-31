@@ -58,8 +58,8 @@ abstract class Icegram_Message_Type {
 					$themes[ $theme ] = array( 
 												'name' 		=> ucwords( str_replace( "-", ' ', $theme ) ),
 												'type' 		=> $theme,
-												'basedir' 	=> $this->basedir . '/themes/',
-												'baseurl'	=> $this->baseurl . '/themes/'						
+												'basedir' 	=> $this->basedir . 'themes/',
+												'baseurl'	=> $this->baseurl . 'themes/'						
 												);
 				}
 			}
