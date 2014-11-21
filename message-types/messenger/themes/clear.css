@@ -77,14 +77,14 @@
     padding: 6px 6px 0;
 }
 
-.messenger.clear .ig_message_body {
+.messenger.clear .ig_message {
     color: #3E454C;
     line-height: 1.28em;
     width: 180px;
     margin-left: .5em;
 }
 
-.messenger.clear .ig_no_icon.ig_message_body {
+.messenger.clear .ig_no_icon.ig_message {
     width: 97%;
 }
 

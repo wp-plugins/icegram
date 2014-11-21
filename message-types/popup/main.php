@@ -9,7 +9,7 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 	var $popup_default_delay_time; 
 	function __construct() {
 		parent::__construct( dirname( __FILE__ ), plugins_url( '/', __FILE__ ) );		
-
+		
 		$this->popup_default_delay_time = 3;
 		add_filter( 'icegram_messages_to_show', array( $this, 'arrange_proper_delay_time' ) );
 		add_filter( 'icegram_message_type_params_popup', array( $this, 'set_admin_style' ) );		
