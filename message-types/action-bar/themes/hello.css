@@ -97,11 +97,13 @@
 
 .action_bar.hello .ig_valign_form_fix{
     position: relative;
-    bottom: .5em;   
+    bottom: .5em;
+    margin-right: 4%;
 }
 .action_bar.hello .ig_valign_form_fix .ig_button{
     margin: 10px 0 0 10px;
 }
+
 /***** End ****/
 
 .action_bar.hello .ig_arrow_block.border {

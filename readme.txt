@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,7 +83,7 @@ There is no end to Icegram's awesomeness!!
 * Automatic Updates
 * Professional Support
 
-= Leave Us a Review Please =
+= Help Fellow WordPressers by Writing a Review =
 
 If you like Icegram, please leave a five star review on WordPress. That helps fellow website owners assess Icegram easily and benefit from it!
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.7.1 =
+Dismiss admin notice provision, retargeting compatibility with caches and bug fixes.
+
 = 1.7 = 
 Improvements in styling, form embeds and retargeting. 
 
@@ -174,6 +177,12 @@ Initial Release
 
 
 == Changelog ==
+= 1.7.1 =
+* Update: Dismiss button for admin notice about bonus themes and addon
+* Fix: Admin settings CSS changes, for compatibility with some themes
+* Fix: Hello Bar close button not clickable
+* Fix: Retargeting not working with some cache systems
+
 = 1.7 =
 * Update: Styling changes to action bar CTA button for alignment
 * Update: Hello Bar styling updates to better handle forms

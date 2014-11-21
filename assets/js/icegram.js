@@ -29,7 +29,6 @@
 
 		// Add container div for Icegram
 		jQuery('body').append('<div id="icegram_messages_container"></div>');
-
 		// Loop over message data and create messages & maps
 		var i = 0;
 		this.messages = [];
@@ -37,6 +36,11 @@
 		if (this.message_data.length > 0) {
 			jQuery.each( this.message_data, function ( i, v ) {
 				try {
+					//check cookies in js 
+					if(jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
+						return;
+					} 
+					
 					var m = null;
 					var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
 					if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
@@ -48,8 +52,8 @@
 					self.map_id_to_index['_'+v['id'] ] = i;
 					self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
 					self.map_type_to_index[ v['type'] ].push(i);
+				
 				} catch( e ) {
-
 				}
 			});
 		}
@@ -140,6 +144,8 @@
 					event_data: jQuery.extend(true, {}, this.tracking_data) 
 				},
 				success: function(data, status, xhr) {
+				},
+				error: function(data, status, xhr) {
 				}
 			});
 			this.tracking_data = [];
@@ -160,7 +166,6 @@
 		this.data = data;
 		this.type = data.type;
 		this.data.delay_time = parseInt(this.data.delay_time);
-
 		this.set_template( this.get_template_default() );
 		this.init();
 	}
@@ -471,6 +476,8 @@
 	        };
 	    })();
 	}
+// jQuery Cookies
+(function(e){if(typeof define==="function"&&define.amd){define(["jquery"],e)}else if(typeof exports==="object"){e(require("jquery"))}else{e(jQuery)}})(function(e){function n(e){return u.raw?e:encodeURIComponent(e)}function r(e){return u.raw?e:decodeURIComponent(e)}function i(e){return n(u.json?JSON.stringify(e):String(e))}function s(e){if(e.indexOf('"')===0){e=e.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\")}try{e=decodeURIComponent(e.replace(t," "));return u.json?JSON.parse(e):e}catch(n){}}function o(t,n){var r=u.raw?t:s(t);return e.isFunction(n)?n(r):r}var t=/\+/g;var u=e.cookie=function(t,s,a){if(s!==undefined&&!e.isFunction(s)){a=e.extend({},u.defaults,a);if(typeof a.expires==="number"){var f=a.expires,l=a.expires=new Date;l.setTime(+l+f*864e5)}return document.cookie=[n(t),"=",i(s),a.expires?"; expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; domain="+a.domain:"",a.secure?"; secure":""].join("")}var c=t?undefined:{};var h=document.cookie?document.cookie.split("; "):[];for(var p=0,d=h.length;p<d;p++){var v=h[p].split("=");var m=r(v.shift());var g=v.join("=");if(t&&t===m){c=o(g,s);break}if(!t&&(g=o(g))!==undefined){c[m]=g}}return c};u.defaults={};e.removeCookie=function(t,n){if(e.cookie(t)===undefined){return false}e.cookie(t,"",e.extend({},n,{expires:-1}));return!e.cookie(t)}});
 
 // This is called onReady
 jQuery(function() {
