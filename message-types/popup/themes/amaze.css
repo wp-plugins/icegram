@@ -28,8 +28,10 @@
     right: -15px;
 }
 
-.popup.amaze .ig_button, .popup.amaze input[type="submit"], .popup.amaze input[type="button"] {
-    background: hsl(145, 63%, 49%);
+.popup.amaze .ig_button, 
+.popup.amaze input[type="submit"], 
+.popup.amaze input[type="button"] {
+    background: hsl(145, 63%, 49%) !important;
     color: hsl(0, 100%, 100%);
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     font-size: 1.3em;
@@ -51,7 +53,10 @@
     padding: 0.3em 1em;
 }
 
-.popup.amaze .ig_button:active, .popup.amaze input[type="submit"]:active, .popup.amaze input[type="button"]:active {
+.popup.amaze .ig_button:active, 
+.popup.amaze input[type="submit"]:active, 
+.popup.amaze input[type="button"]:active {
+    border-top: none;
     position: relative;
     top: 3px;
     -moz-box-shadow: inset 0 -3px 1px #2ECC70, inset 0 0 3px #2ECC70;
@@ -61,7 +66,7 @@
 
 .popup.amaze #TB_ajaxContent {
     border: .3em solid #444444;
-    background-image: url(../../images/popup-amaze-bg.jpg);
+    background-image: url(../images/popup-amaze-bg.jpg);
 }
 
 .popup.amaze#TB_window {

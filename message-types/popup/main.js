@@ -14,9 +14,6 @@
                        '<div class="ig_data">'+
                             '<div class="ig_headline">{{=headline}}</div>'+
                             '<div class="ig_content">'+
-                                '<div class="ig_image">'+
-                                    '<img class="ig_icon" src="{{=icon}}"/>'+
-                                '</div>'+
                                 '<div class="ig_message">{{=message}}</div>'+
                             '</div>'+
                         '</div>'+
