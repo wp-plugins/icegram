@@ -1,5 +1,6 @@
 jQuery(function() {
-
+	var src = window.location.href;
+	var home_url = src.slice(0,src.indexOf('wp-admin'));
 	function display_message_themes(this_data) {
 		var message_type 	= jQuery(this_data).find('.message_type option:selected').val();
 		var message_theme 	= jQuery(this_data).find('.message_row.'+message_type).find('.message_theme').val();
@@ -287,16 +288,29 @@ jQuery(function() {
 				jQuery('.message-setting-fields').trigger('change');
 				jQuery(".tips, .help_tip").tipTip({'attribute' : 'data-tip'});
 				QTags._buttonsInit();
-            	//quicktags({id : 'edit'+response.id});
-      //       	 tinyMCE.init({
-				  //   skin : 'edit'+response.id
-				  // });
-            	//tinymce.init(tinyMCEPreInit.mceInit['edit'+response.id]);
-
 			}
 		});
 	});
+    //add local url
+	jQuery('#add_local_url_row').live('click', function(e) {
+		e.preventDefault();
+		var row = add_url_row();
+		if(jQuery('.local_url').find('.url_input_field').length){
+			jQuery(row).insertAfter(jQuery('.local_url').find('.url_input_field').last().parent('span'));
+		}else{
+			jQuery(row).insertBefore(jQuery('.local_url').find('#add_local_url_row_label'));
+			
+		}
+
+	});
+	jQuery('.delete-url').live('click', function(e) {
+		jQuery(this).parent().remove();
+	});
 	
+	function add_url_row(){
+		var row = '<span><label class="options_header"><span id="valid-field"> </span></label> <input  type="text" class="url_input_field" data-option="local_url"  name="campaign_target_rules[local_urls][]" value="'+home_url+'*"/><span class="delete-url"></span></span>';
+		return row;
+	}
 	function hide_empty_campaign_message() {
 		if( jQuery('.message-row').length == 0 ) {
 			jQuery('.empty_campaign').show();
@@ -366,6 +380,9 @@ jQuery(function() {
 			jQuery('#exclude_page_id_chosen').find('input').trigger('click');
 		}
 	});
+	jQuery('input#where_local_url').on('change', function() {
+		jQuery('.local_url').slideToggle();
+	});
 
 	jQuery('.date-picker').datepicker({
 		dateFormat: 'yy-mm-dd',
@@ -375,5 +392,17 @@ jQuery(function() {
 		changeMonth: true,
 		changeYear: true,
 		showButtonPanel: true
+	});
+	
+	jQuery('input.url_input_field').live('focusout', function() {
+        var url = this;
+		jQuery(url).parent().find('span#valid-field').removeClass('error');	
+		if(jQuery(url).data("option") !== 'undefine' && jQuery(url).data("option") == 'local_url' && jQuery(url).val() != '*'){
+			var url_val = url.value;
+			if(url_val.indexOf(home_url) < 0){
+				jQuery(url).val(home_url + url_val);	
+				return;	
+			}
+		}
 	});
 });

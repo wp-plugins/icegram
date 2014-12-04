@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.7.1
+ * Version: 1.8
  * Author: Icegram
  * Author URI: http://www.icegram.com/
  *
@@ -33,7 +33,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.7.1";
+        $this->version = "1.8";
         $this->shortcode_instances = array();
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
         $this->plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -344,6 +344,21 @@ class Icegram {
                             }
                         }
                         break;
+                    case 'clicked':
+                    if (is_array($event['params']) && !empty($event['params']['message_id'])) {
+                        $messages_clicked[] = $event['params']['message_id'];
+                        if(!empty($event['params']['expiry_time_clicked'])){
+                            if($event['params']['expiry_time_clicked'] =='today'){
+                                $event['params']['expiry_time_clicked'] = strtotime('+1 day', mktime(0, 0, 0));
+                            }else if($event['params']['expiry_time_clicked'] == 'current_session'){
+                                $event['params']['expiry_time_clicked'] = 0;
+                            }else{
+                                $event['params']['expiry_time_clicked'] = strtotime($event['params']['expiry_time_clicked']);
+                            }
+                           setcookie('icegram_messages_clicked_'.$event['params']['message_id'],true , $event['params']['expiry_time_clicked'] , '/' );    
+                        }
+                    }
+                    break;
                     
                     default:
                         break;
@@ -536,6 +551,15 @@ class Icegram {
                 unset( $messages[$key] );
                 continue;
             }
+             if( !empty( $message_data['id'] ) &&
+                empty( $_GET['campaign_preview_id'] ) &&
+                !empty($_COOKIE['icegram_messages_clicked_'.$message_data['id']])  &&
+                !empty( $message_data['retargeting_clicked'] ) &&
+                $message_data['retargeting_clicked'] == 'yes' 
+            ) {
+                unset( $messages[$key] );
+                continue;
+            }
 
             // Avoid showing the same message twice
             if (in_array($message_data['id'], $messages_to_show_ids)) {
@@ -595,8 +619,7 @@ class Icegram {
             wp_enqueue_script( 'icegram_js' );
             wp_localize_script( 'icegram_js', 'icegram_data', $icegram );
         }
-
-
+        
         // Load JS and default CSS
         $types_shown = array_unique($types_shown);
             
@@ -811,6 +834,10 @@ class Icegram {
                     $rule_value = $campaign->get_rule_value('retargeting');
                     $message_data['retargeting']   = !empty( $rule_value['retargeting'] ) ? $rule_value['retargeting'] : '';
                     $message_data['expiry_time']   = !empty( $rule_value['retargeting'] ) ? $rule_value['expiry_time'] : '';
+                    $rule_value_retargeting_clicked = $campaign->get_rule_value('retargeting_clicked');
+                    $message_data['retargeting_clicked']   = !empty( $rule_value_retargeting_clicked['retargeting_clicked'] ) ? $rule_value_retargeting_clicked['retargeting_clicked'] : '';
+                    $message_data['expiry_time_clicked']   = !empty( $rule_value_retargeting_clicked['retargeting_clicked'] ) ? $rule_value_retargeting_clicked['expiry_time_clicked'] : '';
+                    
                 }
             }
             $valid_messages[$id] = $message_data;
@@ -837,6 +864,7 @@ class Icegram {
         $valid_campaigns = array();
         foreach ( (array) $campaign_ids as $campaign_id ) {
             $campaign = new Icegram_Campaign( $campaign_id );
+              
             if ( $campaign->is_valid( array('skip_page_check' =>  $skip_page_check) ) ) {
                 $valid_campaigns[$campaign_id] = $campaign;
             } else {
@@ -847,9 +875,9 @@ class Icegram {
     }
 
     function append_to_valid_campaigns_sql( $sql_params = array(), $options = array() ) {
-
         // Page check conditions
         $pid = Icegram::get_current_page_id();
+
         $sql = " AND ( 
                 pm.meta_key = 'icegram_campaign_target_rules' AND (
                 ( pm.meta_value LIKE '%%%s%%' ) 
@@ -859,17 +887,19 @@ class Icegram {
         $sql_params[] = 's:10:"other_page";s:3:"yes";';
         $sql_params[] = 's:7:"page_id";a:';
         $sql_params[] = serialize( (string) $pid );
-
+        //local url
+        $sql .= " OR ( pm.meta_value LIKE '%%%s%%' )";
+        $sql_params[] = 's:9:"local_url";s:3:"yes";';
+       
         if (is_home() || is_front_page()) {
-            $sql .= " OR ( pm.meta_value LIKE '%%%s%%' ) 
-                    ";
+            $sql .= " OR ( pm.meta_value LIKE '%%%s%%' )";
             $sql_params[] = 's:8:"homepage";s:3:"yes";';
         }
         $sql .=" ) )"; 
+
         $sql_params[0] .= $sql;        
-
+          
         //s:9:"logged_in";s:3:"all";
-
         return $sql_params;
     }
 
@@ -1228,6 +1258,19 @@ class Icegram {
 
     static function get_current_page_id() {
         return self::$current_page_id;
+    }
+    static function get_current_page_url() {
+        $pageURL = 'http';
+        if( isset($_SERVER["HTTPS"]) ) {
+            if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
     }
 
     function wpml_get_parent_id( $id ) {

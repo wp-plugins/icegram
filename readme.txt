@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.7.1
+Stable tag: 1.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8 =
+Target campaigns to any page with wildcard URL support in "Where" conditions and CTA Click based retargeting.
+
 = 1.7.1 =
 Dismiss admin notice provision, retargeting compatibility with caches and bug fixes.
 
@@ -177,6 +180,11 @@ Initial Release
 
 
 == Changelog ==
+= 1.8 =
+* NEW: Target campaigns to any page with wildcard URL support in "Where" conditions
+* NEW: CTA Click based retargeting to hide message in a campaign after being clicked
+* NEW: Message shwon retargeting can now hide message forever - after shown once
+
 = 1.7.1 =
 * Update: Dismiss button for admin notice about bonus themes and addon
 * Fix: Admin settings CSS changes, for compatibility with some themes

@@ -7,7 +7,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 	class Icegram_Campaign_Admin {
 
 		var $default_target_rules;
-
+		var $site_url;
 		function __construct() {
 
 			add_action( 'add_meta_boxes', array( &$this, 'add_campaigns_metaboxes' ), 0 );
@@ -18,6 +18,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 	        add_action( 'wp_ajax_save_campaign_preview', array( &$this, 'save_campaign_preview' ) );
 	        add_action( 'icegram_campaign_target_rules', array( &$this, 'icegram_add_campaign_target_rules' ), 10, 2 );
 
+	        $this->site_url = site_url().'/';
+			
 			$this->default_target_rules = apply_filters( 'icegram_campaign_default_rules',
 														array ( 'homepage' 	=> 'yes',
 															    'when' 		=> 'always',
@@ -144,6 +146,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<label for="where_sitewide">
 						<input type="checkbox" name="campaign_target_rules[sitewide]" id="where_sitewide" value="yes" <?php ( !empty( $campaign_target_rules['sitewide'] ) ) ? checked( $campaign_target_rules['sitewide'], 'yes' ) : ''; ?> />
 						<?php _e( 'Sitewide', 'icegram' ); ?>
+						<span class="campaign_shortcode light">
+						<span class="shortcode_description admin_field_icon light"></span>
+							<?php echo sprintf(__( 'Additionally you can insert <br /><code>[%s]</code> wherever you want to run this campaign.', 'icegram' ), 'icegram campaigns="' .$campaign_id . '"' ); ?>
+						</span>
 					</label>
 				</p>
 				<p class="form-field" <?php echo ( !empty( $campaign_target_rules['sitewide'] ) && $campaign_target_rules['sitewide'] == 'yes' ) ? '' : 'style="display: none;"'; ?>>
@@ -189,11 +195,32 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					?>
 				</p>
 				<p class="form-field">
-					<label class="campaign_shortcode">
-						<span class="shortcode_description admin_field_icon"></span>
-						<?php echo sprintf(__( 'Additionally you can insert <code>[%s]</code> wherever you want to run this campaign.', 'icegram' ), 'icegram campaigns="' .$campaign_id . '"' ); ?>
+					<label class="options_header">&nbsp;</label>
+					<label for="where_local_url">
+						<input type="checkbox" name="campaign_target_rules[local_url]" id="where_local_url" value="yes" <?php ( !empty( $campaign_target_rules['local_url'] ) ) ? checked( $campaign_target_rules['local_url'], 'yes' ) : ''; ?> />
+						<?php _e( 'Specific URLs on this site', 'icegram' ); ?>
 					</label>
 				</p>
+				<p class="form-field local_url" <?php echo ( !empty( $campaign_target_rules['local_url'] ) && $campaign_target_rules['local_url'] == 'yes' ) ? '' : 'style="display: none;"'; ?>>
+					<?php 
+					if(!empty($campaign_target_rules['local_urls'])){
+						foreach ($campaign_target_rules['local_urls'] as $url) {?>
+							<span><label class="options_header"><span id="valid-field"> </span></label>
+							<input type="text" data-option="local_url"  class="url_input_field" name="campaign_target_rules[local_urls][]" value="<?php echo $this->site_url.$url ;?>"/><span class="delete-url"></span></span>
+					<?php	
+						}
+					}else{ ?>
+						<span><label class="options_header"><span id="valid-field"> </span></label>
+						<input type="text" data-option="local_url" class="url_input_field" name="campaign_target_rules[local_urls][]" value="<?php echo $this->site_url.'*' ;?>"/><span class="delete-url"></span></span>
+					<?php }
+					?>
+					<label class="options_header " id="add_local_url_row_label">&nbsp;</label><span id="add-url-icon"> </span><a  class="campaign_add_url" id="add_local_url_row" href="#"><?php _e( ' Add another', 'icegram' ); ?></a>
+				</p>
+				
+				<?php
+					do_action( 'icegram_after_campaign_where_rule', $campaign_id, $campaign_target_rules );
+				?>
+				
 			</div>
 			<div class="options_group" id="campaign_target_rules_when">
 				<p class="form-field">
@@ -287,14 +314,25 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					</label>
 				</p>
 			</div>
-			<?php $expiry_options = array(  'current_session' => __('Current Session' ,'icegram'),
+			<?php 	$expiry_options_for_shown = array(  'current_session' => __('Current Session' ,'icegram'),
+											'+50 years' => __('Never' ,'icegram'),
 											'today' => __('Today' ,'icegram'),
 											'+1 week' => __('One week' ,'icegram') ,
-											'+2 week' => __('Two week' ,'icegram'),
+											'+2 week' => __('Two weeks' ,'icegram'),
 											'+1 month' => __('One Month ' ,'icegram'),
 											'+3 months' => __('Three Months ' ,'icegram') ,
 											'+1 year' => __('One year' ,'icegram') ,
 											'+2 years' => __('Two Years' ,'icegram')); 
+					$expiry_options_for_clicked = array(  '+50 years' => __('Never' ,'icegram'),
+												'current_session' => __('Current Session' ,'icegram'),
+												'today' => __('Today' ,'icegram'),
+												'+1 week' => __('One week' ,'icegram') ,
+												'+2 week' => __('Two weeks' ,'icegram'),
+												'+1 month' => __('One Month ' ,'icegram'),
+												'+3 months' => __('Three Months ' ,'icegram') ,
+												'+1 year' => __('One year' ,'icegram') ,
+												'+2 years' => __('Two Years' ,'icegram')); 
+
 											?>
 			<div class="options_group" id="campaign_target_rules_retrageting">
 				<p class="form-field">
@@ -303,9 +341,24 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<input type="checkbox" name="campaign_target_rules[retargeting]" id="retargeting" value="yes" <?php ( !empty( $campaign_target_rules['retargeting'] ) ) ? checked( $campaign_target_rules['retargeting'], 'yes' ) : ''; ?> />
 						<?php _e( 'Once shown, do NOT show a message again for', 'icegram' ); ?>
 						<select name="campaign_target_rules[expiry_time]">
-							<?php foreach($expiry_options as $key => $option){
+							<?php foreach($expiry_options_for_shown as $key => $option){
 									?>
 									<option value="<?php echo $key; ?>" <?php selected( $campaign_target_rules['expiry_time'], $key ); ?>><?php echo $option; ?></option>
+							<?php
+								  }
+							?>
+						</select>
+					</label>
+				</p>
+				<p class="form-field">
+					<label class="options_header">&nbsp;</label>
+					<label for="retargeting_clicked">
+						<input type="checkbox" name="campaign_target_rules[retargeting_clicked]" id="retargeting_clicked" value="yes" <?php ( !empty( $campaign_target_rules['retargeting_clicked'] ) ) ? checked( $campaign_target_rules['retargeting_clicked'], 'yes' ) : ''; ?> />
+						<?php _e( 'Once CTA is clicked, do NOT show a message again for', 'icegram' ); ?>
+						<select name="campaign_target_rules[expiry_time_clicked]">
+							<?php foreach($expiry_options_for_clicked as $key => $option){
+									?>
+									<option value="<?php echo $key; ?>" <?php selected( $campaign_target_rules['expiry_time_clicked'], $key ); ?>><?php echo $option; ?></option>
 							<?php
 								  }
 							?>
@@ -459,9 +512,25 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			if ( empty( $_POST['icegram_campaign_meta_nonce'] ) || ! wp_verify_nonce( $_POST['icegram_campaign_meta_nonce'], 'icegram_campaign_save_data' ) ) return;
 			if (! current_user_can( 'edit_post', $post_id )) return;
 			if ($post->post_type != 'ig_campaign') return;
-
+			
 			$campaign_target_rules = apply_filters( 'icegram_update_campaign_rules', $_POST['campaign_target_rules'], $post_id );
-
+			
+			if(!empty($campaign_target_rules) && !empty($campaign_target_rules['local_urls'])){
+   				foreach ($campaign_target_rules['local_urls'] as $key => $url) {
+   					if( !empty( $url ) ){
+   						if( $url == '*'){
+   							$campaign_target_rules['local_urls'][$key] = $url;		
+   						}else{   							
+   					    	$url = str_replace($this->site_url, '', $url);
+   					    	$campaign_target_rules['local_urls'][$key] = $url;
+   					    }				
+   					} else {
+   						unset($campaign_target_rules['local_urls'][$key]);
+   					}
+   				}
+   				
+   			}
+   			
 			if ( isset( $_POST['page_id'] ) ) {
 				$campaign_target_rules['page_id'] = $_POST['page_id'];
 				update_post_meta( $post_id, 'icegram_campaign_target_pages', $_POST['page_id'] );

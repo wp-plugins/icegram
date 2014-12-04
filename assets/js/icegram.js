@@ -40,6 +40,9 @@
 					if(jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
 						return;
 					} 
+					if(jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
+						return;
+					} 
 					
 					var m = null;
 					var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
@@ -345,7 +348,7 @@
 	Icegram_Message_Type.prototype.track = function ( e, params ) {
 		if (typeof( window.icegram.track ) === 'function' ) {
 			params = params || {};
-			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id ,expiry_time:this.data.expiry_time} );
+			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id ,expiry_time:this.data.expiry_time ,expiry_time_clicked:this.data.expiry_time_clicked} );
 			window.icegram.track( e, params);
 		}
 	};

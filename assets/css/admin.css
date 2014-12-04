@@ -130,9 +130,28 @@ th.message_header {
 	content: "\f348";
 }
 
+.shortcode_description.light{
+	content: "\f348";
+	color: #777;
+}
+
 .campaign_shortcode {
 	display: block;
 	margin-left: 30%;
+	color:#777;
+}
+
+.campaign_shortcode.light {
+	float: right;
+	width: 34%;
+	margin-left: 0px !important;
+	border: 1px dashed #cccccc;
+	padding: 5px;
+}
+
+.campaign_shortcode.light code{
+	color: #777;
+	
 }
 
 label[for=device_mobile] {
@@ -636,3 +655,38 @@ CSS for landing page and Help and Support
 	display: block;
 	margin: 1em 0;
 }
+
+.campaign_target_rules_panel .form-field .delete-url:before{
+	font-family: dashicons;
+	content: "\f182";
+	cursor: pointer;
+}
+.campaign_target_rules_panel .form-field .url_input_field{
+	width:65% !important;
+}
+
+
+.campaign_target_rules_panel #valid-field{
+	margin-left: 92%;
+}
+
+.campaign_target_rules_panel #valid-field.error{
+	font-family: dashicons;
+	font-size: 1.5em;
+	color: #ff0000;
+	vertical-align: middle;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	cursor: help;
+}
+
+.campaign_target_rules_panel #valid-field.error:after{
+	content: "\f223";
+}
+
+.campaign_target_rules_panel #add-url-icon:after{
+	font-family: dashicons;
+	content: "\f132";
+	vertical-align: middle;
+}
+
