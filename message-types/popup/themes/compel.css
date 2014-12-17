@@ -1,4 +1,4 @@
-.popup.compel.ig_container {
+.ig_popup.compel.ig_container {
     background: hsl(0, 0%, 100%);
     position: relative;
     color: hsl(0, 100%, 100%);
@@ -7,7 +7,7 @@
     padding: 1.5em 0 1em 0;
 }
 
-.popup.compel .ig_headline {
+.ig_popup.compel .ig_headline {
     color: hsl(204, 70%, 53%);
     font-size: 2em;
     text-shadow: 0 1px 0 hsl(204, 79%, 36%);
@@ -15,19 +15,19 @@
     text-align: center;
 }
 
-.popup.compel .ig_image {
+.ig_popup.compel .ig_image {
     float: left;
     padding-right: 1em;
 }
 
-.popup.compel .ig_message {
+.ig_popup.compel .ig_message {
     color: hsl(0, 0%, 44%);
     font-size: 1.25em;
     font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
     margin-bottom: .5em;
 }
 
-.popup.compel .ig_close {
+.ig_popup.compel .ig_close {
     background: url(../images/chosen-sprite.png) no-repeat -43px 0;
     height: 10px;
     width: 10px;
@@ -40,13 +40,15 @@
     zoom: 1.5;
 }
 
-.popup.compel .ig_button, .popup.compel input[type="submit"], .popup.compel input[type="button"] {
-    background: hsl(6, 78%, 57%);
-    width: 50%;
+.ig_popup.compel .ig_button, 
+.ig_popup.compel input[type="submit"], 
+.ig_popup.compel input[type="button"] {
+    background: hsl(6, 78%, 57%) !important;
+    width: 50% !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    border-bottom: 3px solid hsl(6, 63%, 46%);
+    border-bottom: 3px solid hsl(6, 63%, 46%) !important;
     font-size: 16px;
     color: hsl(0, 0%, 100%);
     text-transform: uppercase;
@@ -56,15 +58,23 @@
     padding: 16px 0 13px;
 }
 
-.popup.compel .ig_button:hover, .popup.compel input[type="submit"]:hover, .popup.compel input[type="button"]:hover {
+.ig_popup.compel .ig_button:hover, 
+.ig_popup.compel input[type="submit"]:hover, 
+.ig_popup.compel input[type="button"]:hover {
     margin-top: -3px;
-    border-bottom: 6px solid #c0392b;
+    border-bottom: 6px solid #c0392b !important;
+}
+.ig_popup.compel .ig_button:active,
+div.ig_popup.compel input[type="submit"]:active,
+div.ig_popup.compel input[type="button"]:active{
+    border-top: none;
 }
 
-.popup.compel #TB_ajaxContent {
+
+.ig_popup.compel #TB_ajaxContent {
 }
 
-.popup.compel#TB_window {
+.ig_popup.compel#TB_window {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;

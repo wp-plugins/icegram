@@ -20,7 +20,7 @@
                     '<div class="ig_header2_image"></div>' +
                     '<div class="ig_body">' +
                         '<img class="ig_icon" src="{{=icon}}"/>' +
-                        '<div class="ig_message_body">{{=message}}</div>' +
+                        '<div class="ig_message">{{=message}}</div>' +
                         '<div class="ig_separator"></div>' +
                     '</div>' +
                     '<div class="ig_footer">' +
@@ -36,7 +36,7 @@
         // No avatar...
         if (this.data.icon == '') {
             this.el.find('.ig_icon').remove();
-            this.el.find('.ig_message_body').addClass('ig_no_icon');
+            this.el.find('.ig_message').addClass('ig_no_icon');
         }
     };
 
@@ -44,10 +44,12 @@
         switch(this.data.position) {
             case "20":
                 this.el.css( { 'left': 5, 'bottom': 0} );
+                this.el.addClass('left');
                 break;
             case "22":
             default: 
                 this.el.css( {'left': jQuery(window).width() - this.el.outerWidth() - 5, 'bottom': 0} );
+                this.el.addClass('right');
                 break;
         }
 

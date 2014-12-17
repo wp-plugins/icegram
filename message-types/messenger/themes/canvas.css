@@ -43,13 +43,13 @@
 
 }
 
-.messenger.canvas .ig_message_body {
+.messenger.canvas .ig_message {
     color: #444;
     line-height: 1.2em;
     display: inline;
 }
 
-.messenger.canvas .ig_no_icon.ig_message_body {
+.messenger.canvas .ig_no_icon.ig_message {
     width: 98%;
 }
 

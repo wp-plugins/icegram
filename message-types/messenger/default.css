@@ -57,17 +57,17 @@
     border-bottom: none;    
 }
 
-.messenger .ig_message_body {
+.messenger .ig_message {
     text-align: left;
     word-wrap: break-word;
     display: inline-block;
 }
 
-.messenger .ig_message_body p {
+.messenger .ig_message p {
     margin-bottom: 0.25em;
 }
 
-.messenger  .ig_no_icon.ig_message_body {
+.messenger  .ig_no_icon.ig_message {
     width: 91%;
 }
 
@@ -109,3 +109,35 @@
     font-size: 10px;
     position: relative;
 }
+.messenger .ig_embed_form.ig_vertical.ig_quarter .ig_embed_form_container,
+.messenger .ig_embed_form.ig_horizontal.ig_quarter .ig_embed_form_container{
+    width: 50%!important;
+}
+
+.messenger .ig_embed_form.ig_vertical.ig_half li,
+.messenger .ig_embed_form.ig_vertical.ig_quarter li,
+.messenger .ig_embed_form.ig_horizontal.ig_half li,
+.messenger .ig_embed_form.ig_horizontal.ig_quarter li{
+    min-width: 96% !important;
+}
+
+.messenger .ig_button, 
+.messenger input[type="submit"], 
+.messenger input[type="button"] {
+    border-bottom : none;
+    cursor: pointer;
+}
+.messenger .ig_button:active, 
+.messenger input[type="submit"]:active, 
+.messenger input[type="button"]:active {
+    border-top : none;
+}
+
+.messenger .ig_close {
+    background: no-repeat url(../messenger/images/clear-header.png) 0 -195px;
+    right: 10px;
+    top: 20px;
+    width: 21px;
+    height: 13px;
+}
+
