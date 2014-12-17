@@ -5,11 +5,14 @@
 	 **/
 	function Icegram( ) { 
 		var data, defaults, message_data, messages, map_id_to_index, map_type_to_index, 
-			timer, message_template_cache;
+			timer, message_template_cache, mode;
 		var tracking_data, powered_by;
 	}
 
 	Icegram.prototype.init = function ( data ) {
+		if (data == undefined) {
+			return;
+		}
 		// Pre-init - can allow others to modify message data
 		jQuery( window ).trigger( 'preinit.icegram', [ data ] );
 
@@ -20,6 +23,7 @@
 		this.message_template_cache = {};
 		this.map_id_to_index = {};
 		this.map_type_to_index = {};
+		this.mode = (window.ig_mode == undefined) ? 'local' : window.ig_mode;
 		this.powered_by = { link: 'http://www.icegram.com/?utm_source=inapp&utm_campaign=poweredby&utm_medium=' };
 		//this.timer = setInterval( this.timer_tick, 1000 );
 
@@ -138,19 +142,26 @@
 	}
 	Icegram.prototype.submit_tracking_data = function ( ev, params ) {
 		if (this.tracking_data.length > 0) {
-			jQuery.ajax({
+			var params = {
 				method: 'POST',
 				url: this.data.ajax_url,
 				async: false,
 				data: {
 					action: 'icegram_event_track',
-					event_data: jQuery.extend(true, {}, this.tracking_data) 
+					event_data: JSON.parse(JSON.stringify(this.tracking_data)),
+					ig_remote_url: (this.mode == 'remote') ? window.location.href : undefined,
 				},
 				success: function(data, status, xhr) {
 				},
 				error: function(data, status, xhr) {
 				}
-			});
+			};
+			if (this.mode == 'remote') {
+				params['xhrFields'] = { withCredentials: true };
+				params['crossDomain'] = true;
+				params['async'] = true;
+			}
+			jQuery.ajax(params);
 			this.tracking_data = [];
 		}
 	}
@@ -359,7 +370,6 @@
 
 	// Click and other event handlers
 	Icegram_Message_Type.prototype.toggle = function ( options ) {
-		
 		if ( this.is_visible() ) {
 			this.hide( options );
 		} else {

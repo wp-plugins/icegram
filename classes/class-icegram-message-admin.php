@@ -211,7 +211,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 							<?php } ?>					
 						</select>
 					</p>
-				<?php }	?>
+				<?php }	
+					// action add for interstitial message setting
+					do_action( 'icegram_after_message_theme_settings', $message_id, $message_data );
+				?>
 				<p class="message_row <?php echo implode( ' ', $settings['headline'] )?>">
 					<label for="message_headline" class="message_label">
 						<strong><?php _e( 'Headline', 'icegram' ); ?></strong>

@@ -1,7 +1,7 @@
-.popup.inspire.ig_container {
+.ig_popup.inspire.ig_container {
     padding: 1em 0 .5em 0;
 }
-.popup.inspire .ig_headline {
+.ig_popup.inspire .ig_headline {
     color: #222;
     text-align: center;
     margin-bottom: 1em;
@@ -9,15 +9,15 @@
     font-size: 2.5em;
 }
 
-.popup.inspire .ig_content {
+.ig_popup.inspire .ig_content {
     background-color: transparent !important;
 }
 
-.popup.inspire .ig_image {
+.ig_popup.inspire .ig_image {
     float: left;
 }
 
-.popup.inspire .ig_message {
+.ig_popup.inspire .ig_message {
     -webkit-font-smoothing: antialiased;
     text-shadow: 0 1px hsl(0, 100%, 100%);
     color: #333;
@@ -27,14 +27,14 @@
     text-align: justify;
 }
 
-.popup.inspire .ig_close {
+.ig_popup.inspire .ig_close {
     top: -15px;
     right: -15px;
 }
 
-.popup.inspire .ig_button, 
-.popup.inspire input[type="submit"], 
-.popup.inspire input[type="button"] {
+.ig_popup.inspire .ig_button, 
+.ig_popup.inspire input[type="submit"], 
+.ig_popup.inspire input[type="button"] {
     vertical-align: middle;
     background-color: hsl(79, 93%, 35%) !important;
     background: hsl(79, 93%, 35%) !important;
@@ -53,16 +53,16 @@
     padding: 0.5em;
     line-height: 1.2em;
 }
-.popup.inspire .ig_button:active,
-.popup.inspire input[type="submit"]:active,
-.popup.inspire input[type="button"]:active{
+.ig_popup.inspire .ig_button:active,
+.ig_popup.inspire input[type="submit"]:active,
+.ig_popup.inspire input[type="button"]:active{
     border-top: none;
 }
 
 
-.popup.inspire #TB_ajaxContent {
+.ig_popup.inspire #TB_ajaxContent {
 }
 
-.popup.inspire#TB_window {
+.ig_popup.inspire#TB_window {
     background: hsl(0, 100%, 100%);
 }

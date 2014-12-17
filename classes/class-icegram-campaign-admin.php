@@ -147,8 +147,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<input type="checkbox" name="campaign_target_rules[sitewide]" id="where_sitewide" value="yes" <?php ( !empty( $campaign_target_rules['sitewide'] ) ) ? checked( $campaign_target_rules['sitewide'], 'yes' ) : ''; ?> />
 						<?php _e( 'Sitewide', 'icegram' ); ?>
 						<span class="campaign_shortcode light">
-						<span class="shortcode_description admin_field_icon light"></span>
-							<?php echo sprintf(__( 'Additionally you can insert <br /><code>[%s]</code> wherever you want to run this campaign.', 'icegram' ), 'icegram campaigns="' .$campaign_id . '"' ); ?>
+							<?php echo sprintf(__( 'Additionally you can insert <code>[%s]</code> wherever you want to run this campaign.', 'icegram' ), 'icegram campaigns="' .$campaign_id . '"' ); ?>
 						</span>
 					</label>
 				</p>
@@ -574,7 +573,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					} elseif( isset( $message_data['position']['ig_default'] ) ) {
 						$message_data['position'] = $message_data['position']['ig_default'];
 					}
-
+					//save message data when campaign is save
+					$message_data = apply_filters( 'icegram_update_message_data', $message_data, $message_id );
 					update_post_meta( $message_id, 'icegram_message_data', $message_data );
 					update_post_meta( $message_id, 'icegram_message_preview_data', $message_data );
 					wp_update_post( array ( 'ID' 			=> $message_id,

@@ -21,8 +21,8 @@ abstract class Icegram_Message_Type {
 			$class_name = str_replace($base, '', $class_name);
 			$this->type = str_replace( '_', '-', strtolower($class_name) );
 			$this->name = ucwords( str_replace( "-", ' ', $this->type ) );
-			$this->basedir = $basedir;
-			$this->baseurl = $baseurl;
+			$this->basedir = trailingslashit($basedir);
+			$this->baseurl = trailingslashit($baseurl);
 
 			add_filter('icegram_message_types', array( $this, 'init') );
 		}

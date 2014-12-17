@@ -1,8 +1,8 @@
-.popup.convert.ig_container {
+.ig_popup.convert.ig_container {
     padding: 1em;
 }
 
-.popup.convert .ig_headline {
+.ig_popup.convert .ig_headline {
     font-size: 2.5em;
     color: hsl(0, 1%, 28%);
     letter-spacing: 0;
@@ -10,25 +10,25 @@
     margin-bottom: 1em;
 }
 
-.popup.convert .ig_image {
+.ig_popup.convert .ig_image {
     float: right;
 }
 
-.popup.convert .ig_message {
+.ig_popup.convert .ig_message {
     font-size: 1.5em;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     color: hsl(0, 1%, 28%);
     vertical-align: baseline;
 }
 
-.popup.convert .ig_close {
+.ig_popup.convert .ig_close {
     top: -15px;
     right: -15px;
 }
 
-.popup.convert .ig_button, 
-.popup.convert input[type="submit"], 
-.popup.convert input[type="button"] {
+.ig_popup.convert .ig_button, 
+.ig_popup.convert input[type="submit"], 
+.ig_popup.convert input[type="button"] {
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
@@ -51,9 +51,9 @@
     clear: both;
 }
 
-.popup.convert .ig_button, 
-.popup.convertinput[type="submit"]:active,
-.popup.convert input[type="button"]:active{
+.ig_popup.convert .ig_button, 
+.ig_popup.convertinput[type="submit"]:active,
+.ig_popup.convert input[type="button"]:active{
     border-top: .3em solid hsl(0, 6%, 71%) !important;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
@@ -61,10 +61,10 @@
 
 }
 
-.popup.convert #TB_ajaxContent {
+.ig_popup.convert #TB_ajaxContent {
 }
 
-.popup.convert#TB_window {
+.ig_popup.convert#TB_window {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;

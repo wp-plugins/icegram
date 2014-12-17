@@ -120,7 +120,6 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 		
 		function _is_valid_page( $campaign_valid, $campaign, $options ) {
 			$page_id = Icegram::get_current_page_id();
-			$current_page_url =  Icegram::get_current_page_url();
 			if( !$campaign_valid || !empty($options['skip_page_check']) ) {
 				return $campaign_valid;
 			}
@@ -141,6 +140,11 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			}
 			if ( (!empty( $campaign->rules_summary['where']['local_url'] ) && $campaign->rules_summary['where']['local_url'] == 'yes' ))  {
 				$current_page_url =  Icegram::get_current_page_url();
+				// TODO::change this check with remote mode 
+				//return if call made from remote url
+				if(!empty($_POST['ig_remote_url'])){
+					return;
+				}
 				foreach ($campaign->rules['local_urls'] as $local_url_pattern) {
 					$result = $this->is_valid_url($local_url_pattern , $current_page_url);
 					if($result){
@@ -153,10 +157,10 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			return false;
 		}
 
-		static function is_valid_url($pattern ,$current_page_url){
+		static function is_valid_url($pattern, $current_page_url){
 			$pattern = preg_quote($pattern,'/');
 			if( strpos($pattern, '*') !== false ){
-			   $pattern = str_replace('\*', '[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\/%=~_|]', $pattern);    //remaining to add characters like -,_ etc
+			   $pattern = str_replace('\*', '[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*', $pattern);
 			}
 			
 			$result  = (bool) preg_match('/'.$pattern.'$/i', $current_page_url);

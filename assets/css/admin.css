@@ -137,16 +137,17 @@ th.message_header {
 
 .campaign_shortcode {
 	display: block;
-	margin-left: 30%;
+	width: 45%;
 	color:#777;
 }
 
 .campaign_shortcode.light {
-	float: right;
-	width: 34%;
-	margin-left: 0px !important;
+	margin-left: 50%;
 	border: 1px dashed #cccccc;
-	padding: 5px;
+	padding-left: 0.6%;
+	padding-right: 0.2%;
+	position: absolute;
+	margin-top: -1.5em;
 }
 
 .campaign_shortcode.light code{

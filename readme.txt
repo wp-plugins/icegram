@@ -1,10 +1,10 @@
 === Icegram ===
-Contributors: storeapps, nareshvachhani, niravmehta, ratnakardubey, putler
+Contributors: storeapps, niravmehta, ratnakardubey, putler
 Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.1 = 
+Recommended upgrade. Many improvements.
+
 = 1.8 =
 Target campaigns to any page with wildcard URL support in "Where" conditions and CTA Click based retargeting.
 
@@ -180,6 +183,12 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.1 =
+* NEW: Support for Icegram Remote - now run your campaigns on other sites - even non WordPress sites
+* Update: Better wildcard matching in Where targeting rules for URLs
+* Update: Compatibility with Avada theme
+* Update: Misc UI and performance enhancements
+
 = 1.8 =
 * NEW: Target campaigns to any page with wildcard URL support in "Where" conditions
 * NEW: CTA Click based retargeting to hide message in a campaign after being clicked

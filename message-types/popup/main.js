@@ -9,7 +9,7 @@
 
     Icegram_Message_Type_Popup.prototype.get_template_default = function () {
         return  '<div id="popup_main_{{=id}}" data={{=id}}>'+
-                    '<div class="icegram popup ig_container {{=theme}}" id="icegram_message_{{=id}}" data={{=id}}>'+
+                    '<div class="icegram ig_popup ig_container {{=theme}}" id="icegram_message_{{=id}}" data={{=id}}>'+
                        '<div class="ig_close" id="popup_box_close_{{=id}}"></div>'+
                        '<div class="ig_data">'+
                             '<div class="ig_headline">{{=headline}}</div>'+
@@ -26,7 +26,7 @@
         var self = this;
         var popup_delay = 0;
         if( jQuery('body').find('#TB_window').length ) { 
-            var current_popup_id = jQuery('#TB_window').find('.popup').attr('data');
+            var current_popup_id = jQuery('#TB_window').find('.ig_popup').attr('data');
             if (typeof(current_popup_id) != 'undefined') {
                 var current_popup = window.icegram.get_message_by_id(current_popup_id);
                 if (typeof('current_popup') != 'Icegram_Message_Type_Popup') {
@@ -39,11 +39,11 @@
             var popup_width = (jQuery(window).width() * 60) / 100;
             self.el.show();
             tb_show('Popup', "#TB_inline?width="+popup_width+"&modal=true&inlineId=popup_main_" + self.data.id, true);
-            self.el = jQuery('#TB_window .popup');
+            self.el = jQuery('#TB_window .ig_popup');
             self.el.on('click', {self: self}, self.on_click);
             var max_height = jQuery(window).height()-jQuery('#TB_window').height() + 150;
             self.el.find('.ig_data').css('max-height', max_height);
-            jQuery('#TB_window').addClass(self.data.theme).addClass(self.data.type);
+            jQuery('#TB_window').addClass(self.data.theme).addClass('ig_popup');
             silent !== true && self.track( 'shown' );
         }, popup_delay);
     };
