@@ -1,4 +1,4 @@
-.popup.air-mail.ig_container {
+.ig_popup.air-mail.ig_container {
     position: relative;
     color: hsl(0, 100%, 100%);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -6,7 +6,7 @@
     padding: 1em 0 0;
 }
 
-.popup.air-mail .ig_headline {
+.ig_popup.air-mail .ig_headline {
     margin-bottom: .5em;
     font-size: 2.5em;
     text-align: center;
@@ -14,18 +14,18 @@
     text-shadow: 0 1px 0 #FFF;
 }
 
-.popup.air-mail .ig_image {
+.ig_popup.air-mail .ig_image {
     float: right;
 }
 
-.popup.air-mail .ig_message {
+.ig_popup.air-mail .ig_message {
     color: hsl(0, 0%, 44%);
     margin-bottom: 1em;
     padding: 0 1em;
     font-size: 1.2em;
 }
 
-.popup.air-mail .ig_close {
+.ig_popup.air-mail .ig_close {
     background: url(../images/chosen-sprite.png) no-repeat -43px 0;
     height: 10px;
     width: 10px;
@@ -38,13 +38,15 @@
     zoom: 1.5;
 }
 
-.popup.air-mail .ig_button, div.popup.air-mail input[type="submit"], div.popup.air-mail input[type="button"] {
-    background: hsl(6, 78%, 57%);
-    width: 50%;
+.ig_popup.air-mail .ig_button,
+ div.ig_popup.air-mail input[type="submit"],
+ div.ig_popup.air-mail input[type="button"] {
+    background: hsl(6, 78%, 57%) !important;
+    width: 50% !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    border-bottom: 3px solid hsl(6, 63%, 46%);
+    border-bottom: 3px solid hsl(6, 63%, 46%) !important;
     font-size: 16px;
     color: hsl(0, 0%, 100%);
     text-transform: uppercase;
@@ -54,12 +56,20 @@
     padding: 16px 0 13px;
 }
 
-.popup.air-mail .ig_button:hover, div.popup.air-mail input[type="submit"]:hover, div.popup.air-mail input[type="button"]:hover {
+.ig_popup.air-mail .ig_button:hover,
+div.ig_popup.air-mail input[type="submit"]:hover,
+div.ig_popup.air-mail input[type="button"]:hover {
     margin-top: -3px;
-    border-bottom: 6px solid #c0392b;
+    border-bottom: 6px solid #c0392b !important;
 }
 
-.popup.air-mail #TB_ajaxContent {
+.ig_popup.air-mail .ig_button:active,
+div.ig_popup.air-mail input[type="submit"]:active,
+div.ig_popup.air-mail input[type="button"]:active{
+    border-top: none;
+}
+
+.ig_popup.air-mail #TB_ajaxContent {
     position: relative;
     display: block;
     background: #F2F2F2;
@@ -71,7 +81,7 @@
     background-image: linear-gradient(bottom, #e5e5e5 0%, #f7f7f7 100%);
 }
 
-.popup.air-mail#TB_window {
+.ig_popup.air-mail#TB_window {
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
@@ -82,7 +92,7 @@
     border: 0;
 }
 
-.popup.air-mail#TB_window:before {
+.ig_popup.air-mail#TB_window:before {
     position: absolute;
     top: 0;
     left: 0;

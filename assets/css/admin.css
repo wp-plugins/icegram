@@ -85,7 +85,7 @@ th.message_header {
 }
 
 .message-row .seconds-text {
-	width: 40px;
+	width: 40px !important;
 	text-align: center;
 }
 
@@ -130,9 +130,29 @@ th.message_header {
 	content: "\f348";
 }
 
+.shortcode_description.light{
+	content: "\f348";
+	color: #777;
+}
+
 .campaign_shortcode {
 	display: block;
-	margin-left: 30%;
+	width: 45%;
+	color:#777;
+}
+
+.campaign_shortcode.light {
+	margin-left: 50%;
+	border: 1px dashed #cccccc;
+	padding-left: 0.6%;
+	padding-right: 0.2%;
+	position: absolute;
+	margin-top: -1.5em;
+}
+
+.campaign_shortcode.light code{
+	color: #777;
+	
 }
 
 label[for=device_mobile] {
@@ -224,7 +244,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .message_header_label {
 	color: #fff;
 	text-align: center;
-	font-size: 0.7em;
+	font-size: 0.7em !important;
+	margin: 0 !important;
 	padding: 3px 5px;
 	cursor: auto;
 	text-transform: uppercase;
@@ -241,15 +262,18 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	display: inline-block;
 }
 
+.message_image_button .image-buttons-icon{
+	margin: 4px 2px;
+}
 .message_image_button .image-buttons-icon:before {
 	content: "\f128";
 }
 
-.message_headline_button {
+.message_headline_button, .message_image_button {
 	vertical-align: top !important;
 }
-.headline-buttons-icon {
-	margin: 5px 0;
+.message_headline_button .headline-buttons-icon {
+	margin: 5px 2px;
 }
 
 .message_headline_button .headline-buttons-icon:before {
@@ -613,3 +637,57 @@ CSS for landing page and Help and Support
 	background-color: #FCF0AD;
 	border: 1px solid #CCC;
 }
+
+#embed_form {
+	width: 600px !important;
+	height: 495px !important;
+	margin: 0em !important; 
+}
+
+#embed_form input[value="ig_vertical"]{
+	margin-left: 3%;
+}
+#embed_form select{
+	width:30%;
+}
+
+/** Fix to keep the message setting row indepenent of other themes **/ 
+.campaign_target_rules_panel .messages_list_table p.inline{
+	display: block;
+	margin: 1em 0;
+}
+
+.campaign_target_rules_panel .form-field .delete-url:before{
+	font-family: dashicons;
+	content: "\f182";
+	cursor: pointer;
+}
+.campaign_target_rules_panel .form-field .url_input_field{
+	width:65% !important;
+}
+
+
+.campaign_target_rules_panel #valid-field{
+	margin-left: 92%;
+}
+
+.campaign_target_rules_panel #valid-field.error{
+	font-family: dashicons;
+	font-size: 1.5em;
+	color: #ff0000;
+	vertical-align: middle;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	cursor: help;
+}
+
+.campaign_target_rules_panel #valid-field.error:after{
+	content: "\f223";
+}
+
+.campaign_target_rules_panel #add-url-icon:after{
+	font-family: dashicons;
+	content: "\f132";
+	vertical-align: middle;
+}
+

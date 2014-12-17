@@ -1,32 +1,32 @@
-.popup.ig_container {
+.ig_popup.ig_container {
     opacity: 1;
     display: block;
     z-index: 100000;
 }
 
-.popup.ig_container, .popup.ig_container .ig_content {
+.ig_popup.ig_container, .ig_popup.ig_container .ig_content {
     background-color: transparent !important;
 }
 
-.popup .ig_headline {
+.ig_popup .ig_headline {
     text-decoration: none;
     font-weight: 800;
     line-height: 1em;
 }
 
-.popup .ig_data {
+.ig_popup .ig_data {
     overflow-y: auto;
 }
 
-.popup .ig_image {
+.ig_popup .ig_image {
     margin: 0 1em;
 }
 
-.popup .ig_message {
+.ig_popup .ig_message {
     line-height: 1.2em;
 }
 
-.popup .ig_close {
+.ig_popup .ig_close {
     background-image: url(../popup/images/popup-close.png);
     background-repeat: no-repeat;
     background-position: left bottom;
@@ -40,26 +40,36 @@
     box-sizing: content-box;
 }
 
-.popup .ig_close:hover {
+.ig_popup .ig_close:hover {
     background-position: left top;    
 }
 
-.popup .ig_button, .popup input[type="submit"], .popup input[type="button"] {
+.ig_popup .ig_button, 
+.ig_popup input[type="submit"], 
+.ig_popup input[type="button"] {
     cursor: pointer;
     display: block;
+    border-bottom : none;
+    background-image: none;
 }
 
-.popup .ig_button:hover, .popup input[type="submit"]:hover, .popup input[type="button"]:hover {
+.ig_popup .ig_button:hover,
+.ig_popup input[type="submit"]:hover,
+.ig_popup input[type="button"]:hover {
 
 }
+.ig_popup .ig_button:active,
+div.ig_popup input[type="submit"]:active,
+div.ig_popup input[type="button"]:active{
+}
 
-.popup #TB_ajaxContent {
+.ig_popup #TB_ajaxContent {
     overflow: hidden;
     height: auto !important;
     width: auto !important;
 }
 
-.popup#TB_window {
+.ig_popup#TB_window {
     height: auto !important;
 }
 
@@ -71,6 +81,6 @@
     padding: 0.1em;
 }
 
-div.icegram .popup input[type="submit"], div.icegram .popup input[type="button"] {
+div.icegram .ig_popup input[type="submit"], div.icegram .ig_popup input[type="button"] {
     font-size: 100%;
 }
