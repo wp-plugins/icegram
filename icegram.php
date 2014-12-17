@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.1
+ * Version: 1.8.2
  * Author: Icegram
  * Author URI: http://www.icegram.com/
  *
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.1";
+        $this->version = "1.8.2";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -777,8 +777,8 @@ class Icegram {
     }
 
     function get_valid_messages( $message_ids = array(), $campaign_ids = array(), $preview_mode = false, $skip_others = false) {
-
-        list($message_ids, $campaign_ids, $preview_mode, $skip_others) = apply_filters('icegram_get_valid_messages_params', $message_ids, $campaign_ids, $preview_mode, $skip_others);
+        
+        list($message_ids, $campaign_ids, $preview_mode, $skip_others) = apply_filters('icegram_get_valid_messages_params', array( $message_ids, $campaign_ids, $preview_mode, $skip_others));
 
         $valid_messages = $valid_campaigns = $message_campaign_map = array();
         
