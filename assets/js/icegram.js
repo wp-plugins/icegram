@@ -5,11 +5,14 @@
 	 **/
 	function Icegram( ) { 
 		var data, defaults, message_data, messages, map_id_to_index, map_type_to_index, 
-			timer, message_template_cache;
+			timer, message_template_cache, mode;
 		var tracking_data, powered_by;
 	}
 
 	Icegram.prototype.init = function ( data ) {
+		if (data == undefined) {
+			return;
+		}
 		// Pre-init - can allow others to modify message data
 		jQuery( window ).trigger( 'preinit.icegram', [ data ] );
 
@@ -20,6 +23,7 @@
 		this.message_template_cache = {};
 		this.map_id_to_index = {};
 		this.map_type_to_index = {};
+		this.mode = (window.ig_mode == undefined) ? 'local' : window.ig_mode;
 		this.powered_by = { link: 'http://www.icegram.com/?utm_source=inapp&utm_campaign=poweredby&utm_medium=' };
 		//this.timer = setInterval( this.timer_tick, 1000 );
 
@@ -29,24 +33,35 @@
 
 		// Add container div for Icegram
 		jQuery('body').append('<div id="icegram_messages_container"></div>');
-
 		// Loop over message data and create messages & maps
 		var i = 0;
 		this.messages = [];
 		var self = this;
 		if (this.message_data.length > 0) {
 			jQuery.each( this.message_data, function ( i, v ) {
-				var m = null;
-				var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
-				if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
-					m = new window['Icegram_Message_Type_' + classname_suffix]( v );
-				} else {
-					m = new Icegram_Message_Type( v );
+				try {
+					//check cookies in js 
+					if(v['retargeing'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
+						return;
+					} 
+					if(v['retargeing_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
+						return;
+					} 
+					
+					var m = null;
+					var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
+					if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
+						m = new window['Icegram_Message_Type_' + classname_suffix]( v );
+					} else {
+						m = new Icegram_Message_Type( v );
+					}
+					self.messages.push( m );
+					self.map_id_to_index['_'+v['id'] ] = i;
+					self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
+					self.map_type_to_index[ v['type'] ].push(i);
+				
+				} catch( e ) {
 				}
-				self.messages.push( m );
-				self.map_id_to_index['_'+v['id'] ] = i;
-				self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
-				self.map_type_to_index[ v['type'] ].push(i);
 			});
 		}
 
@@ -56,7 +71,7 @@
 				window.icegram.submit_tracking_data();
 			}
 		} );
-		setTimeout( function() { 
+		setInterval( function() { 
 			if (typeof(window.icegram.submit_tracking_data) === 'function') { 
 				window.icegram.submit_tracking_data();
 			} } , 5 * 1000 );
@@ -127,20 +142,31 @@
 	}
 	Icegram.prototype.submit_tracking_data = function ( ev, params ) {
 		if (this.tracking_data.length > 0) {
-			jQuery.ajax({
+			var params = {
 				method: 'POST',
 				url: this.data.ajax_url,
 				async: false,
 				data: {
 					action: 'icegram_event_track',
-					event_data: this.tracking_data
+					event_data: JSON.parse(JSON.stringify(this.tracking_data)),
+					ig_remote_url: (this.mode == 'remote') ? window.location.href : undefined,
 				},
 				success: function(data, status, xhr) {
-					window.icegram.tracking_data = [];
+				},
+				error: function(data, status, xhr) {
 				}
-			});
+			};
+			if (this.mode == 'remote') {
+				params['xhrFields'] = { withCredentials: true };
+				params['crossDomain'] = true;
+				params['async'] = true;
+			}
+			jQuery.ajax(params);
+			this.tracking_data = [];
 		}
 	}
+
+
 
 
 	/**
@@ -154,7 +180,6 @@
 		this.data = data;
 		this.type = data.type;
 		this.data.delay_time = parseInt(this.data.delay_time);
-
 		this.set_template( this.get_template_default() );
 		this.init();
 	}
@@ -179,10 +204,12 @@
 		var html = this.render_template();
 
 		// Add html to DOM, Setup dom_id, el etc.
-		jQuery(this.root_container).append(html);
+		try {
+			jQuery(this.root_container).append(html);
+		} catch ( e ) {}
+		
 		this.dom_id = 'icegram_message_'+this.data.id;
 		this.el = jQuery('#'+this.dom_id);
-
 		this.set_position();
 
 		var pb = window.icegram.get_powered_by( this.type );
@@ -195,10 +222,30 @@
             this.el.find('.ig_headline').hide();
         }
         if(this.data.icon == undefined || this.data.icon == '') {
-            this.el.find('.ig_icon').hide();
+            this.el.find('.ig_icon').remove();
         }
         if(this.data.message == undefined || this.data.message == '') {
             this.el.find('.ig_message').hide();
+        }else{
+        	var form_el = this.el.find('.ig_embed_form').get(0);
+        	if(form_el){
+        		var form_content = jQuery(form_el).html();
+	        	form_el = jQuery(form_el).empty();
+	        	jQuery(form_el).replaceWith(form_content);
+		        this.el.find('.ig_message').html(form_el.append(this.el.find('.ig_message').html()));
+	        	var prev_tag = this.el.find('.ig_embed_form_container').prev();
+	        	var next_tag = this.el.find('.ig_embed_form_container').next();
+	        	// var allowed_tags = ['P', 'DIV', 'SPAN']; // dont need this, no working !
+	        	// if(form_el.hasClass('ig_inline') && prev_tag.get(0) && jQuery.inArray(prev_tag.get(0).tagName, allowed_tags) != -1){
+	        	if(form_el.hasClass('ig_inline') && prev_tag.get(0)){
+		        	this.el.find('.ig_embed_form_container')
+		        		.appendTo(prev_tag);
+	        		if(next_tag.get(0) && next_tag.get(0).tagName == prev_tag.get(0).tagName){
+	        			prev_tag.append(next_tag.html());
+	        			next_tag.remove();
+	        		}
+	        	}
+        	}
         }
         if(this.data.label == undefined || this.data.label == '') {
             this.el.find('.ig_button').hide();
@@ -217,9 +264,10 @@
 
     	if(this.data.label == undefined || this.data.label == '') {
             this.el.find('.ig_button').hide();
-        }else if (this.data.bg_color != undefined && this.data.bg_color != '') {
+        }
+        if (this.data.bg_color != undefined && this.data.bg_color != '') {
         	var hsl_color = window.icegram.get_complementary_color(this.data.bg_color);
-            this.el.find('.ig_button').css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
+            this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" ).css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
         }
     	// Hint clickability for buttons / ctas
     	if (typeof(this.data.link) === 'string' && this.data.link != '') {
@@ -311,7 +359,7 @@
 	Icegram_Message_Type.prototype.track = function ( e, params ) {
 		if (typeof( window.icegram.track ) === 'function' ) {
 			params = params || {};
-			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id } );
+			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id ,expiry_time:this.data.expiry_time ,expiry_time_clicked:this.data.expiry_time_clicked} );
 			window.icegram.track( e, params);
 		}
 	};
@@ -322,7 +370,6 @@
 
 	// Click and other event handlers
 	Icegram_Message_Type.prototype.toggle = function ( options ) {
-		
 		if ( this.is_visible() ) {
 			this.hide( options );
 		} else {
@@ -337,11 +384,11 @@
 			e.data.self.hide();
 			return;
 		}
+		var form = jQuery(e.target).closest('.icegram').find('form').first();
 		// Clicking on ig_button or any other link with a class ig_cta will trigger cta click
-		if(jQuery(e.target).filter('.ig_button, .ig_cta').length || jQuery(e.target).parents('.ig_button, .ig_cta').length){
+		if(jQuery(e.target).filter('.ig_button, .ig_cta ,:submit').length || jQuery(e.target).parents('.ig_button, .ig_cta ').length && !(form.find('ig_button').length > 0 || form.find('input[type=button]').length > 0 || form.find('input[type=submit]').length > 0 )){
             e.data.self.on_cta_click( e );
         }
-		
 	};
 	Icegram_Message_Type.prototype.on_resize = function ( e ) {
 
@@ -350,15 +397,14 @@
 	Icegram_Message_Type.prototype.on_cta_click = function ( e ) {
 		e.data = e.data || { self: this };
 		e.data.self.track( 'clicked' );
-		typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '' ? window.location.href = e.data.self.data.link : e.data.self.hide();
-	};
-
-	Icegram_Message_Type.prototype.on_cta_click_no_hide = function ( e ) {
-	        e.data = e.data || { self: this };
-	        e.data.self.track( 'clicked' );
-	        if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
-	          window.location.href = e.data.self.data.link;
-	        }
+		if(jQuery(e.target).closest('.icegram').find('form').length ){
+			var form = jQuery(e.target).closest('.icegram').find('form').first();
+			jQuery(form).submit();
+		}else if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
+	        window.location.href = e.data.self.data.link;
+	    }else if(e.data.self.data.hide !== false){
+	    	e.data.self.hide()
+	    }
 	};
 
 
@@ -443,6 +489,8 @@
 	        };
 	    })();
 	}
+// jQuery Cookies
+(function(e){if(typeof define==="function"&&define.amd){define(["jquery"],e)}else if(typeof exports==="object"){e(require("jquery"))}else{e(jQuery)}})(function(e){function n(e){return u.raw?e:encodeURIComponent(e)}function r(e){return u.raw?e:decodeURIComponent(e)}function i(e){return n(u.json?JSON.stringify(e):String(e))}function s(e){if(e.indexOf('"')===0){e=e.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\")}try{e=decodeURIComponent(e.replace(t," "));return u.json?JSON.parse(e):e}catch(n){}}function o(t,n){var r=u.raw?t:s(t);return e.isFunction(n)?n(r):r}var t=/\+/g;var u=e.cookie=function(t,s,a){if(s!==undefined&&!e.isFunction(s)){a=e.extend({},u.defaults,a);if(typeof a.expires==="number"){var f=a.expires,l=a.expires=new Date;l.setTime(+l+f*864e5)}return document.cookie=[n(t),"=",i(s),a.expires?"; expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; domain="+a.domain:"",a.secure?"; secure":""].join("")}var c=t?undefined:{};var h=document.cookie?document.cookie.split("; "):[];for(var p=0,d=h.length;p<d;p++){var v=h[p].split("=");var m=r(v.shift());var g=v.join("=");if(t&&t===m){c=o(g,s);break}if(!t&&(g=o(g))!==undefined){c[m]=g}}return c};u.defaults={};e.removeCookie=function(t,n){if(e.cookie(t)===undefined){return false}e.cookie(t,"",e.extend({},n,{expires:-1}));return!e.cookie(t)}});
 
 // This is called onReady
 jQuery(function() {
