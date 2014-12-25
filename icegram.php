@@ -3,8 +3,8 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.2
- * Author: Icegram
+ * Version: 1.8.3
+ * Author: icegram
  * Author URI: http://www.icegram.com/
  *
  * Copyright (c) 2014 Icegram
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.2";
+        $this->version = "1.8.3";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -555,7 +555,7 @@ class Icegram {
                 unset( $messages[$key] );
                 continue;
             }
-             if( !empty( $message_data['id'] ) &&
+            if( !empty( $message_data['id'] ) &&
                 empty( $_GET['campaign_preview_id'] ) &&
                 !empty($_COOKIE['icegram_messages_clicked_'.$message_data['id']])  &&
                 !empty( $message_data['retargeting_clicked'] ) &&
@@ -627,7 +627,6 @@ class Icegram {
 
         wp_register_script( 'icegram_js', $this->plugin_url . '/assets/js/icegram.js', array ( 'jquery' ), $this->version, true);
         wp_enqueue_style( 'icegram_css', $this->plugin_url . '/assets/css/frontend.css', array(), $this->version );
-        wp_enqueue_style( 'dashicons' );
 
         if( !wp_script_is( 'icegram_js' ) ) {
             wp_enqueue_script( 'icegram_js' );
@@ -1378,6 +1377,44 @@ class Icegram {
         }
 
         return $pee;
+    }
+
+    static function duplicate( $original_id ){
+        // Get access to the database
+        global $wpdb;
+        // Get the post as an array
+        $duplicate = get_post( $original_id, 'ARRAY_A' );
+        // Modify some of the elements
+        $duplicate['post_title'] = $duplicate['post_title'].' '.__('Copy', 'icegram');
+        $duplicate['post_status'] = 'draft';
+        // Set the post date
+        $timestamp = current_time('timestamp',0);
+        
+        $duplicate['post_date'] = date('Y-m-d H:i:s', $timestamp);
+
+        // Remove some of the keys
+        unset( $duplicate['ID'] );
+        unset( $duplicate['guid'] );
+        unset( $duplicate['comment_count'] );
+
+        // Insert the post into the database
+        $duplicate_id = wp_insert_post( $duplicate );
+        
+        // Duplicate all taxonomies/terms
+        $taxonomies = get_object_taxonomies( $duplicate['post_type'] );
+        foreach( $taxonomies as $taxonomy ) {
+            $terms = wp_get_post_terms( $original_id, $taxonomy, array('fields' => 'names') );
+            wp_set_object_terms( $duplicate_id, $terms, $taxonomy );
+        }
+
+        // Duplicate all custom fields
+        $custom_fields = get_post_custom( $original_id );
+        foreach ( $custom_fields as $key => $value ) {
+            add_post_meta( $duplicate_id, $key, maybe_unserialize($value[0]) );
+        }
+        $location = admin_url( 'post.php?post='.$duplicate_id.'&action=edit');
+        header('Location:'.$location);
+        exit;
     }
 
 }

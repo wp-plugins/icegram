@@ -41,10 +41,10 @@
 			jQuery.each( this.message_data, function ( i, v ) {
 				try {
 					//check cookies in js 
-					if(jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
+					if(v['retargeing'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
 						return;
 					} 
-					if(jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
+					if(v['retargeing_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
 						return;
 					} 
 					

@@ -68,7 +68,7 @@
     font-size: 20px;
     cursor: pointer;
     line-height: 0;
-    padding: 8px;
+    padding: 4px !important;
     float: right;
 }
 
@@ -87,33 +87,29 @@
     filter: alpha(opacity=90);
     opacity: 0.9;
 }
-
-.action_bar .ig_arrow_block span {
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.action_bar .ig_arrow:after {
-    font-family: dashicons;
-    content: "\f346";
-}
-
-.action_bar .top .ig_arrow_block.open {
-    padding: 5px;
-    margin-right: 5px;
-    margin-top: 8px;
-    background-color: transparent !important;
-}
-
-.action_bar .bottom .ig_arrow_block.open {
-    padding: 5px;
-    margin-right: 5px;
-}
-
 .action_bar .rotate {
     transform:rotate(180deg);
-    -ms-transform:rotate(180deg); /* IE 9 */
-    -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+    -ms-transform:rotate(180deg); 
+    -webkit-transform:rotate(180deg); 
+}
+.action_bar .ig_arrow_block span{
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px;
+    overflow: hidden;
+}
+.action_bar.top .ig_arrow_block span , .action_bar.bottom .ig_arrow_block span {
+    background-image: url(../../assets/images/arrows-sprite.png);
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 28px;
+}
+
+.action_bar.top .ig_arrow_block span { 
+    background-position: -2px -5px;
+}
+.action_bar.bottom .ig_arrow_block span {
+    background-position: -4px -5px;
 }
 
 div.icegram .action_bar form {

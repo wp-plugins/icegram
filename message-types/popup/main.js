@@ -40,6 +40,10 @@
             self.el.show();
             tb_show('Popup', "#TB_inline?width="+popup_width+"&modal=true&inlineId=popup_main_" + self.data.id, true);
             self.el = jQuery('#TB_window .ig_popup');
+            // bind click event of overlay to hide
+            jQuery('#TB_overlay').bind('click',function(){
+                self.hide();
+            });
             self.el.on('click', {self: self}, self.on_click);
             var max_height = jQuery(window).height()-jQuery('#TB_window').height() + 150;
             self.el.find('.ig_data').css('max-height', max_height);

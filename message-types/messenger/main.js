@@ -9,7 +9,7 @@
     Icegram_Message_Type_Messenger.prototype.constructor = Icegram_Message_Type_Messenger;
 
     Icegram_Message_Type_Messenger.prototype.get_template_default = function () {
-        return '<div class="icegram messenger {{=theme}} {{=animation}} ig_container ig_cta" data="{{=id}}" id="icegram_message_{{=id}}">' +
+        return '<div class="icegram ig_messenger {{=theme}} {{=animation}} ig_container ig_cta" data="{{=id}}" id="icegram_message_{{=id}}">' +
                 '<div class="ig_content">' +
                     '<div class="ig_header">' +
                         '<div class="ig_header_image"></div>' +

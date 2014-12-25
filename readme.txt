@@ -1,10 +1,10 @@
 === Icegram ===
-Contributors: storeapps, niravmehta, ratnakardubey, putler
+Contributors: storeapps, niravmehta, putler, icegram
 Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
-Tested up to: 4.0
-Stable tag: 1.8.2
+Tested up to: 4.1
+Stable tag: 1.8.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.3 = 
+Campaign and message duplicate feture added. Plus some other improvements.
+
 = 1.8.2 = 
 Bug fix release for preview not working.
 
@@ -186,6 +189,12 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.3 =
+* NEW: Duplicate a Campaign and Message easily now - click 'duplicate' in the list view!
+* Update: Using an image instead of dashicons for action bar arrows
+* Update: Renamed "messenger" css class to "ig_messenger" to avoid potential overlaps
+* Update: Clicking outside the popup (on the dark overlay) will close the popup
+
 = 1.8.2 =
 * Fix: Preview not working correctly
 

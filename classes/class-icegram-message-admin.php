@@ -24,6 +24,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
             add_action( 'media_buttons', array(&$this, 'embed_form_button'), 11, 1);
             add_action( 'admin_footer',  array(&$this, 'embed_form_popup_content') );
 
+            //duplicate message
+	        add_filter( 'post_row_actions', array(&$this , 'add_message_action'), 10, 2 );
+	        add_action('admin_init', array(&$this ,'duplicate_message') ,10, 1);
+
 		}
 		public static  function getInstance(){
 		   static $ig_message_admin = null;
@@ -587,6 +591,18 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					__( '21 Secret ____ that will ____... NOW!', 'icegram' )
 				) );
 			return $available_headlines;
+		}
+
+		function add_message_action( $actions, $post ){
+			if ($post->post_type != 'ig_message') return $actions;
+		    $actions['duplicate_message'] = '<a class="ig-duplicate-message"  href="post.php?message_id='.$post->ID.'&action=duplicate-message" >'.__('Duplicate' ,'icegram').'</a>';
+			return $actions;
+		}
+
+		function duplicate_message(){
+			if($_REQUEST['action'] == 'duplicate-message' && !empty($_REQUEST['message_id'])){
+				Icegram::duplicate( $_REQUEST['message_id'] );
+			}
 		}
 	}
 }

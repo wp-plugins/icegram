@@ -1,10 +1,10 @@
-.messenger.canvas.ig_container {
+.ig_messenger.canvas.ig_container {
     max-height: 80%;
     max-width: 400px;
     font-family: inherit;
 }
 
-.messenger.canvas .ig_content {
+.ig_messenger.canvas .ig_content {
     border: 1px solid #BFBFBF;
     margin: 10px;
     padding: 10px;
@@ -14,19 +14,19 @@
     background-color: #FFF !important;
 }
 
-.messenger.canvas .ig_header {
+.ig_messenger.canvas .ig_header {
 
 }
 
-.messenger.canvas .ig_header_image {
+.ig_messenger.canvas .ig_header_image {
     display: none;
 }
 
-.messenger.canvas .ig_header_text {
+.ig_messenger.canvas .ig_header_text {
     line-height: 1.2em;
 }
 
-.messenger.canvas .ig_headline {
+.ig_messenger.canvas .ig_headline {
     margin: -.35em 35px inherit inherit;
     display: inline-block;
     font-size: 1.5em;
@@ -35,37 +35,37 @@
     line-height: 1.5em;
 }
 
-.messenger.canvas .ig_header2_image {
+.ig_messenger.canvas .ig_header2_image {
     display: none;
 }
 
-.messenger.canvas .ig_body {
+.ig_messenger.canvas .ig_body {
 
 }
 
-.messenger.canvas .ig_message {
+.ig_messenger.canvas .ig_message {
     color: #444;
     line-height: 1.2em;
     display: inline;
 }
 
-.messenger.canvas .ig_no_icon.ig_message {
+.ig_messenger.canvas .ig_no_icon.ig_message {
     width: 98%;
 }
 
-.messenger.canvas .ig_separator {
+.ig_messenger.canvas .ig_separator {
     display: none;
 }
 
-.messenger.canvas .ig_footer {
+.ig_messenger.canvas .ig_footer {
 
 }
 
-.messenger.canvas .ig_footer_image {
+.ig_messenger.canvas .ig_footer_image {
     display: none;
 }
 
-.messenger.canvas .ig_close {
+.ig_messenger.canvas .ig_close {
     background: no-repeat url(../images/clear-header.png) 0 -195px;
     right: 10px;
     top: 20px;
@@ -73,11 +73,11 @@
     height: 13px;
 }
 
-.messenger.canvas .powered_by {
+.ig_messenger.canvas .powered_by {
     margin: -0.5em 10px 0.5em 10px;
 }
 
-.messenger.canvas .ig_icon {
+.ig_messenger.canvas .ig_icon {
     float: right;
     border-radius: 5%;
     max-width: 400px;

@@ -100,6 +100,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
             this.el.animate({
                 marginTop: 0
             }, 300);
+            //action bar
             break;
     }
     silent !== true && this.track( 'shown' );

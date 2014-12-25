@@ -17,7 +17,9 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			add_filter( 'wp_default_editor', create_function('', 'return "html";') );
 	        add_action( 'wp_ajax_save_campaign_preview', array( &$this, 'save_campaign_preview' ) );
 	        add_action( 'icegram_campaign_target_rules', array( &$this, 'icegram_add_campaign_target_rules' ), 10, 2 );
-
+	       	//duplicate campaign
+	        add_filter( 'post_row_actions', array(&$this , 'add_campaign_action'), 10, 2 );
+	        add_action('admin_init', array(&$this ,'duplicate_campaign') ,10, 1);
 	        $this->site_url = site_url().'/';
 			
 			$this->default_target_rules = apply_filters( 'icegram_campaign_default_rules',
@@ -629,6 +631,20 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			}
 			die();
 
+		}
+
+		function add_campaign_action( $actions, $post ){
+			if ($post->post_type != 'ig_campaign') return $actions;
+			
+			// Create a nonce & add an action
+		    $actions['duplicate_campaign'] = '<a class="ig-duplicate-campaign"  href="post.php?campaign_id='.$post->ID.'&action=duplicate-campaign" >'.__('Duplicate' ,'icegram').'</a>';
+			return $actions;
+		}
+
+		function duplicate_campaign(){
+			if($_REQUEST['action'] == 'duplicate-campaign' && !empty($_REQUEST['campaign_id'])){
+				Icegram::duplicate( $_REQUEST['campaign_id'] );
+			}
 		}
 	}
 }

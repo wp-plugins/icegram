@@ -1,13 +1,13 @@
-.messenger.talk.ig_container {
+.ig_messenger.talk.ig_container {
     width: 210px;
     height: 260px;
 }
 
-.messenger.talk .ig_content {
+.ig_messenger.talk .ig_content {
 
 }
 
-.messenger.talk .ig_header {
+.ig_messenger.talk .ig_header {
     height: 25px;
     -moz-box-shadow: inset 0 0 3px 0 #FFF;
     -webkit-box-shadow: inset 0 0 3px 0 #FFF;
@@ -23,7 +23,7 @@
     padding: 0;
 }
 
-.messenger.talk .ig_header_image {
+.ig_messenger.talk .ig_header_image {
     background-image: url(../images/talk-header-1.png);
     margin-top: 4px;
     position: relative;
@@ -34,7 +34,7 @@
     padding: 0;
 }
 
-.messenger.talk .ig_header_text {
+.ig_messenger.talk .ig_header_text {
     background: no-repeat url(../images/clear-header.png) 0 0;
     background-repeat: no-repeat;
     font-size: 12px;
@@ -50,7 +50,7 @@
     margin-left: 10px;
 }
 
-.messenger.talk .ig_headline {
+.ig_messenger.talk .ig_headline {
     margin-left: 17px;
     margin-right: 40px;
     line-height: 16px;
@@ -60,11 +60,11 @@
     text-overflow: ellipsis;
 }
 
-.messenger.talk .ig_header2_image {
+.ig_messenger.talk .ig_header2_image {
     background-image: url(../images/talk-header-2.png);
 }
 
-.messenger.talk .ig_body {
+.ig_messenger.talk .ig_body {
     background: #fff;
     height: 160px;
     -moz-box-shadow: inset 0 0 3px 0 #FFF;
@@ -81,17 +81,17 @@
     padding: 6px 6px 0;
 }
 
-.messenger.talk .ig_message {
+.ig_messenger.talk .ig_message {
     color: #3E454C;
     width: 142px;
     margin-left: 7px;
 }
 
-.messenger.talk .ig_no_icon.ig_message {
+.ig_messenger.talk .ig_no_icon.ig_message {
     width: 98%;
 }
 
-.messenger.talk .ig_separator {
+.ig_messenger.talk .ig_separator {
     border-bottom: 1px solid hsl(0, 0%, 98%);
     border-top: 1px solid #DFDFDF;
     -webkit-margin-before: 0.5em;
@@ -106,18 +106,18 @@
     -moz-margin-after: 0.5em;
 }
 
-.messenger.talk .ig_footer {
+.ig_messenger.talk .ig_footer {
     background-image: url(../images/talk-footer-1.png);
     height: 37px;
     border: 1px solid #BFBFBF;
     border-bottom: none;
 }
 
-.messenger.talk .ig_footer_image {
+.ig_messenger.talk .ig_footer_image {
     margin-top: .8px;
 }
 
-.messenger.talk .ig_close {
+.ig_messenger.talk .ig_close {
     background-image: url(../images/talk-close.png);
     right: -4px;
     top: 4.5px;
@@ -128,11 +128,11 @@
 }
 
 
-.messenger.talk .powered_by {
+.ig_messenger.talk .powered_by {
     top: -24px;
     left: 93px;
 }
 
-.messenger.talk .ig_icon {
+.ig_messenger.talk .ig_icon {
 
 }
