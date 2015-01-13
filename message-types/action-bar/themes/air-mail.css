@@ -54,13 +54,14 @@
     width: 50px;
 }
 
-.action_bar.air-mail .ig_data {
-    max-width: 75%;
-    display: inline-block;
-    float: left;
+.action_bar.air-mail .ig_button{
+    float: right;
+    margin-right: 1em !important; 
 }
 
-.action_bar.air-mail .ig_button, .action_bar.air-mail input[type="submit"], .action_bar.air-mail input[type="button"] {
+.action_bar.air-mail input[type="submit"], 
+.action_bar.air-mail input[type="button"],
+.action_bar.air-mail .ig_button{
     background: hsl(6, 78%, 57%) !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -77,16 +78,26 @@
 
 }
 
-.action_bar.air-mail .ig_button:hover, .action_bar.air-mail input[type="submit"]:hover, .action_bar.air-mail input[type="button"]:hover {
+.action_bar.air-mail input[type="submit"]:hover, 
+.action_bar.air-mail input[type="button"]:hover,
+.action_bar.air-mail .ig_button:hover{
      margin-top: -3px;
     border-bottom: 6px solid #c0392b;
 }
 
-.action_bar.air-mail .ig_button:active, .action_bar.air-mail input[type="submit"]:active, .action_bar.air-mail input[type="button"]:active {
+.action_bar.air-mail input[type="submit"]:active, 
+.action_bar.air-mail input[type="button"]:active,
+.action_bar.air-mail .ig_button:active{
+}
+
+.action_bar.air-mail .ig_data {
+    max-width: 75%;
+    display: inline-block;
+    float: left;
 }
 
 .action_bar.air-mail .ig_close {
-    background: url(../../images/chosen-sprite.png) no-repeat -43px 0;
+    background: url(../images/chosen-sprite.png) no-repeat -43px 0;
     height: 10px;
     width: 10px;
     -moz-box-sizing: content-box;

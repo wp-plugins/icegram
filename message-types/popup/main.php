@@ -9,9 +9,9 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 	var $popup_default_delay_time; 
 	function __construct() {
 		parent::__construct( dirname( __FILE__ ), plugins_url( '/', __FILE__ ) );		
-
+		
 		$this->popup_default_delay_time = 3;
-		add_filter( 'icegram_messages_to_show', array( $this, 'arrange_proper_delay_time' ) );
+		add_filter( 'icegram_data', array( $this, 'arrange_proper_delay_time' ) , 11);
 		add_filter( 'icegram_message_type_params_popup', array( $this, 'set_admin_style' ) );		
 	}
 
@@ -25,21 +25,20 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 				);
 	}
 
-	function arrange_proper_delay_time( $messages ) {
-
+	function arrange_proper_delay_time( $icegram_data ) {
 		$popup_delay_times = array();
-		foreach ($messages as $message_id => $message) {
+		foreach ($icegram_data['messages'] as $message_id => $message) {
 			
-			if( $message['type'] == 'popup' ) {
+			if( $message['type'] == 'popup' && $message['delay_time'] != -1) {
 				while( in_array( $message['delay_time'], $popup_delay_times ) ) {
 					$message['delay_time'] = $message['delay_time'] + $this->popup_default_delay_time;					
 				}
-				$messages[$message_id]['delay_time'] = $message['delay_time'];
+				$icegram_data['messages'][$message_id]['delay_time'] = $message['delay_time'];
 				$popup_delay_times[] = $message['delay_time'];
 			}
 
 		}
-		return $messages;
+		return $icegram_data;
 	}
 
 	function set_admin_style( $params ) {
