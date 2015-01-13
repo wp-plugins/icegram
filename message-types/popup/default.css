@@ -2,6 +2,7 @@
     opacity: 1;
     display: block;
     z-index: 100000;
+    margin: 1em;
 }
 
 .ig_popup.ig_container, .ig_popup.ig_container .ig_content {
@@ -11,11 +12,12 @@
 .ig_popup .ig_headline {
     text-decoration: none;
     font-weight: 800;
-    line-height: 1em;
+    font-size: 2em;
+    line-height: 1.2em;
 }
 
 .ig_popup .ig_data {
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .ig_popup .ig_image {
@@ -24,8 +26,12 @@
 
 .ig_popup .ig_message {
     line-height: 1.2em;
+    font-size: 1.2em;
 }
 
+.ig_popup .ig_message p{
+    margin-bottom: .9em;
+}
 .ig_popup .ig_close {
     background-image: url(../popup/images/popup-close.png);
     background-repeat: no-repeat;
@@ -63,17 +69,7 @@ div.ig_popup input[type="submit"]:active,
 div.ig_popup input[type="button"]:active{
 }
 
-.ig_popup #TB_ajaxContent {
-    overflow: hidden;
-    height: auto !important;
-    width: auto !important;
-}
-
-.ig_popup#TB_window {
-    height: auto !important;
-}
-
-.TB_overlayBG .powered_by {
+.mfp-wrap .powered_by {
     position: fixed;
     bottom: 1em;
     left: 1em;
@@ -83,4 +79,92 @@ div.ig_popup input[type="button"]:active{
 
 div.icegram .ig_popup input[type="submit"], div.icegram .ig_popup input[type="button"] {
     font-size: 100%;
+}
+
+.ig_popup.mfp-content {
+    width: 60% !important;
+    margin: 32px auto 20px auto !important;
+}
+
+@media only screen and (max-device-width: 319px) {
+    .ig_popup.mfp-content {
+        width: 90% !important;
+        top: 3% !important;
+        margin: 5px auto !important;
+        font-size: 8px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
+    .ig_popup.mfp-content {
+        width: 85% !important;
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 10px;
+
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+  @media only screen and (min-device-width: 360px) and (max-device-width: 413px) {
+    .ig_popup.mfp-content {
+        width: 85% !important;
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 12px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+ @media only screen and (min-device-width: 414px) and (max-device-width: 643px) {
+    .ig_popup.mfp-content {
+        width: 85% !important;  
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 13px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : portrait) {
+    .ig_popup.mfp-content {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 14px;
+    }
+  }
+ 
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : landscape) {
+    .ig_popup.mfp-content {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 11px;
+    }
+  }
+
+/* Small devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-device-width: 992px){
+    .ig_popup.mfp-content {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 14px;
+    }
 }

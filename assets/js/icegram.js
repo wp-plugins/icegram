@@ -41,10 +41,10 @@
 			jQuery.each( this.message_data, function ( i, v ) {
 				try {
 					//check cookies in js 
-					if(v['retargeing'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
+					if(v['retargeting'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
 						return;
 					} 
-					if(v['retargeing_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
+					if(v['retargeting_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
 						return;
 					} 
 					
@@ -227,8 +227,16 @@
         if(this.data.message == undefined || this.data.message == '') {
             this.el.find('.ig_message').hide();
         }else{
+
         	var form_el = this.el.find('.ig_embed_form').get(0);
         	if(form_el){
+	        	if(jQuery(window).width() < 644){
+	        		jQuery(form_el)
+	        					.removeClass('ig_horizontal ig_full ig_half ig_quarter')
+	        					.addClass('ig_vertical ig_full')
+	        					.find('.ig_form_el_group')
+	        					.css('width', 96 + '%');
+	        	}
         		var form_content = jQuery(form_el).html();
 	        	form_el = jQuery(form_el).empty();
 	        	jQuery(form_el).replaceWith(form_content);

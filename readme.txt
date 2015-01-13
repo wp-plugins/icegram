@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -145,6 +145,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.4 = 
+Popups are now responsive! Plus Visual Composer compatibility and other fixes.
+
 = 1.8.3 = 
 Campaign and message duplicate feture added. Plus some other improvements.
 
@@ -189,6 +192,11 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.4 =
+* New: Popup messages work beautifully on mobile / small devices now!
+* Fix: Timing problems with popups triggered via Behavior Trigger addon.
+* Fix: Visual Composer compatibility
+
 = 1.8.3 =
 * NEW: Duplicate a Campaign and Message easily now - click 'duplicate' in the list view!
 * Update: Using an image instead of dashicons for action bar arrows

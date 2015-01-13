@@ -103,38 +103,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 		function add_message_meta_boxes() {
 			global $icegram;
 			add_meta_box( 'message-settings', __( 'Message Settings', 'icegram' ), array ( &$this, 'message_form_fields' ), 'ig_message', 'normal', 'high' );
-
-			?>
-			<style type="text/css">
-			<?php
-			foreach ( $icegram->message_types as $message_type => $message ) {
-				
-				if( !empty( $message['admin_style'] ) ) {
-					$label_bg_color 		= $message['admin_style']['label_bg_color'];
-					$theme_header_height 	= $message['admin_style']['theme_header_height'];
-					$theme_header_bg_size	= ( $theme_header_height + 3 )."em";					
-					$thumbnail_width 		= $message['admin_style']['thumbnail_width'];
-					$thumbnail_height 		= $message['admin_style']['thumbnail_height'];
-					echo "	.message_header .$message_type { 
-								background-color: {$label_bg_color}; 
-							} 
-							.message_theme_{$message_type} + .chosen-container-single .chosen-single { 
-								height: {$theme_header_height} !important;
-							}
-							.message_theme_{$message_type} + .chosen-container-single .chosen-single span {
-								background-size: {$theme_header_bg_size} !important;
-								line-height: {$theme_header_height} !important;
-							} 
-							.message_theme_{$message_type} + .chosen-container .chosen-results li {
-								width: {$thumbnail_width} !important;
-								height: {$thumbnail_height} !important;
-							}";
-				}
-
-			}
-			?>
-			</style>
-			<?php
+			
 		}
 		
 		// Display all message settings fields
@@ -144,7 +113,37 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 
 			if( ( is_object( $post ) && $post->post_type != 'ig_message' ) )
 				return;
+			?>
+			<style type="text/css">
+				<?php
+					foreach ( $icegram->message_types as $message_type => $message ) {
+						
+						if( !empty( $message['admin_style'] ) ) {
+							$label_bg_color 		= $message['admin_style']['label_bg_color'];
+							$theme_header_height 	= $message['admin_style']['theme_header_height'];
+							$theme_header_bg_size	= ( $theme_header_height + 3 )."em";					
+							$thumbnail_width 		= $message['admin_style']['thumbnail_width'];
+							$thumbnail_height 		= $message['admin_style']['thumbnail_height'];
+							echo "	.message_header .$message_type { 
+										background-color: {$label_bg_color}; 
+									} 
+									.message_theme_{$message_type} + .chosen-container-single .chosen-single { 
+										height: {$theme_header_height} !important;
+									}
+									.message_theme_{$message_type} + .chosen-container-single .chosen-single span {
+										background-size: {$theme_header_bg_size} !important;
+										line-height: {$theme_header_height} !important;
+									} 
+									.message_theme_{$message_type} + .chosen-container .chosen-results li {
+										width: {$thumbnail_width} !important;
+										height: {$thumbnail_height} !important;
+									}";
+						}
 
+					}
+				?>
+			</style>
+			<?php
 			$message_id 		= !empty( $action['message_id'] ) ? $action['message_id'] : $post->ID;
 			$message_data 		= get_post_meta( $message_id, 'icegram_message_data', true );	
 			$message_headlines 	= $icegram->available_headlines;

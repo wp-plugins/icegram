@@ -24,121 +24,6 @@ div.icegram input[type="submit"], div.icegram input[type="button"], div.icegram 
 }
 */
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 90%;
-    }
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen 
-and (min-width : 321px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 85%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 70%;
-    }
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen 
-and (max-width : 320px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 90%;
-    }
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 40%;
-    }
-}
-
-/* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 40%;
-    }
-}
-
-/* iPads (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 40%;
-    }
-}
-
-/* Desktops and laptops ----------- */
-@media only screen 
-and (min-width : 1224px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 95%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 45%;
-    }
-}
-
-/* Large screens ----------- */
-@media only screen 
-and (min-width : 1824px) {
-    .bold .ig_container, .solid .ig_container {
-        width: 95%;
-        display: inline-block;;
-    }
-    .canvas.popup_box {
-        max-width: 45%;
-    }
-}
-
-/* iPhone 4 ----------- */
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-    .bold .ig_container, .solid .ig_container {
-        width: 80%;
-        display: inline-block;;
-    }
-        .canvas.popup_box {
-        max-width: 90%;
-    }
-}
-
 /************* Embeded Form CSS - Start************/
 div.icegram .ig_embed_form{
     text-align: left;
@@ -266,4 +151,29 @@ div.icegram .ig_clear:after {
     visibility: hidden;
     line-height: 0;
     height: 0;
+}
+
+
+@media only screen and (max-device-width: 319px) {
+    div.icegram .ig_embed_form.ig_left .ig_embed_form_container{
+        margin-bottom: .7em; 
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
+    div.icegram .ig_embed_form.ig_left .ig_embed_form_container{
+        margin-bottom: .7em; 
+    }
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 413px) {
+    div.icegram .ig_embed_form.ig_left .ig_embed_form_container{
+        margin-bottom: .7em; 
+    }
+}
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 643px) {
+    div.icegram .ig_embed_form.ig_left .ig_embed_form_container{
+        margin-bottom: .7em; 
+    }
 }

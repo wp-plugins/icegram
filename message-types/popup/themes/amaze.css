@@ -64,12 +64,12 @@
     box-shadow: inset 0 -3px 1px #2ECC70, inset 0 0 3px #2ECC70;
 }
 
-.ig_popup.amaze #TB_ajaxContent {
+.ig_popup.amaze.mfp-content {
     border: .3em solid #444444;
     background-image: url(../images/popup-amaze-bg.jpg);
 }
 
-.ig_popup.amaze#TB_window {
+.ig_popup.amaze.mfp-content {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -78,4 +78,73 @@
 .ig_popup.amaze .ig_content {
     margin: 1.5em 0 .5em 0;
     width: 100%;
+}
+
+@media only screen and (max-device-width: 319px) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 10px;
+    }
+    .ig_popup.amaze .ig_message{
+        margin: 0 1em;
+    }
+    .ig_popup.amaze .ig_button, .ig_popup.amaze input[type="submit"], .ig_popup.amaze input[type="button"]{
+        width: 90% !important;
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 12px;
+    }
+    .ig_popup.amaze .ig_message{
+        margin: 0 1em;
+    }
+    .ig_popup.amaze .ig_button, .ig_popup.amaze input[type="submit"], .ig_popup.amaze input[type="button"]{
+        width: 90% !important;
+    }
+  }
+
+  @media only screen and (min-device-width: 360px) and (max-device-width: 413px) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 14px;
+    }
+    .ig_popup.amaze .ig_message{
+        margin: 0 1em;
+    }
+    .ig_popup.amaze .ig_button, .ig_popup.amaze input[type="submit"], .ig_popup.amaze input[type="button"]{
+        width: 90% !important;
+    }
+      
+  }
+
+ @media only screen and (min-device-width: 414px) and (max-device-width: 643px) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 16px;
+    }
+     .ig_popup.amaze .ig_message{
+        margin: 0 1em;
+    }
+    .ig_popup.amaze .ig_button, .ig_popup.amaze input[type="submit"], .ig_popup.amaze input[type="button"]{
+        width: 90% !important;
+    }
+  }
+
+
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : portrait) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 18px;
+    }
+  }
+ 
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : landscape) {
+    .ig_popup.amaze.mfp-content {
+        font-size: 12px;
+    }
+  }
+
+/* Small devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-device-width: 992px){
+    .ig_popup.amaze.mfp-content {
+        font-size: 14px;
+    }
 }

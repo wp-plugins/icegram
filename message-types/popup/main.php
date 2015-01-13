@@ -29,7 +29,7 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 		$popup_delay_times = array();
 		foreach ($icegram_data['messages'] as $message_id => $message) {
 			
-			if( $message['type'] == 'popup' ) {
+			if( $message['type'] == 'popup' && $message['delay_time'] != -1) {
 				while( in_array( $message['delay_time'], $popup_delay_times ) ) {
 					$message['delay_time'] = $message['delay_time'] + $this->popup_default_delay_time;					
 				}

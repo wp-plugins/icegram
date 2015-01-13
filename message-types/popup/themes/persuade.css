@@ -1,10 +1,11 @@
 .ig_popup.persuade .ig_headline {
     letter-spacing: 0;
     color: hsl(0, 100%, 100%);
-    font-size: 3em;
+    font-size: 2.8em;
     text-align: center;
     -webkit-font-smoothing: antialiased;
-    margin: .25em auto;
+    margin: .2em auto;
+    line-height: 1em;
 }
 
 .ig_popup.persuade .ig_image {
@@ -13,9 +14,8 @@
 
 .ig_popup.persuade .ig_message {
     color: #FFF;
-    font-size: 1.75em;
+    font-size: 1.5em;
     font-weight: 300;
-    margin: .5em auto 1em;
     text-align: center;
     -webkit-font-smoothing: antialiased;
 }
@@ -35,6 +35,7 @@
     font-size: 2em;
     font-weight: 400;
     width: 60%;
+    border: none;
     -moz-border-radius: .6em;
     -webkit-border-radius: .6em;
     border-radius: .6em;
@@ -69,12 +70,8 @@
 .ig_popup.persuade input[type="button"]:active {
     border-top: none;
 }
-
-.ig_popup.persuade #TB_ajaxContent {
-    border: .6em dashed hsl(0, 100%, 100%);
-}
-
-.ig_popup.persuade#TB_window {
+.ig_popup.persuade.mfp-content {
+    border: .5em dashed hsl(0, 100%, 100%);
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;

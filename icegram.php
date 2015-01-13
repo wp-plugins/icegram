@@ -3,11 +3,11 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.3
+ * Version: 1.8.4
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
- * Copyright (c) 2014 Icegram
+ * Copyright (c) 2014-2015 Icegram
  * License: GPLv3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.3";
+        $this->version = "1.8.4";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -635,10 +635,12 @@ class Icegram {
         
         // Load JS and default CSS
         if (in_array('popup', $types_shown)) {
-            wp_enqueue_script( 'thickbox' );
-            wp_enqueue_style( 'thickbox' ); 
+            wp_register_script( 'magnific_popup_js', $this->plugin_url . '/assets/js/magnific-popup.js', array ( 'jquery' ), $this->version, true);
+            if( !wp_script_is( 'magnific_popup_js' ) ) {
+                wp_enqueue_script( 'magnific_popup_js' );
+            }
+            wp_enqueue_style( 'magnific_popup_css', $this->plugin_url . '/assets/css/magnific-popup.css', array(), $this->version );
         }
-
         foreach ($types_shown as $message_type) {
             $ver = ( !empty($this->message_types[$message_type]['version'])) ? $this->message_types[$message_type]['version'] : $this->version;
             wp_register_script( 'icegram_message_type_'.$message_type, $this->message_types[$message_type]['baseurl'] . "main.js" , array ( 'icegram_js' ), $ver, true );
@@ -687,6 +689,7 @@ class Icegram {
         if ( !wp_script_is( 'jquery-ui-datepicker' ) ) {
             wp_enqueue_script( 'jquery-ui-datepicker' );
         }
+
 
     }
 

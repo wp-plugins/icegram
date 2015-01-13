@@ -37,7 +37,7 @@
     font-size: 1.75em;
     color: hsl(0, 33%, 98%);
     border: .3em solid hsl(0, 6%, 71%) !important;
-    width: 50%;
+    width: 60%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
@@ -47,7 +47,7 @@
     -moz-box-sizing: content-box;
     box-sizing: content-box;
     margin: 0.1em auto;
-    padding: 0.1em 2em;
+    padding: 0.1em 1em;
     clear: both;
 }
 
@@ -61,12 +61,33 @@
 
 }
 
-.ig_popup.convert #TB_ajaxContent {
-}
-
-.ig_popup.convert#TB_window {
+.ig_popup.convert.mfp-content {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
     background: hsl(58, 100%, 90%);
 }
+@media only screen and (max-device-width: 319px) {
+    .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
+        width: 75% !important;
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
+    .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
+        width: 75% !important;
+    }
+  }
+
+  @media only screen and (min-device-width: 360px) and (max-device-width: 413px) {
+    .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
+        width: 75% !important;
+    }
+      
+  }
+
+ @media only screen and (min-device-width: 414px) and (max-device-width: 643px) {
+    .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
+        width: 75% !important;
+    }
+  }
