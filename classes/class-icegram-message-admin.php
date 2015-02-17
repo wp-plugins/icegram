@@ -8,8 +8,9 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 	class Icegram_Message_Admin {
 		
 		var $message_themes;
+		var $is_icegram_editor;
 
-		function __construct() {
+		private function __construct() {
 
 			add_action( 'add_meta_boxes', array( &$this, 'add_message_meta_boxes' ) );
 			add_action( 'wp_ajax_get_message_setting', array( &$this , 'message_form_fields' ) );
@@ -20,43 +21,92 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 	        add_filter( 'manage_edit-ig_message_columns', array( $this, 'edit_columns' ) );
 			add_action( 'manage_ig_message_posts_custom_column', array( $this, 'custom_columns' ), 2 );
 			add_filter( 'icegram_available_headlines', array( &$this, 'available_headlines' ) );
+            add_action( 'media_buttons', array(&$this, 'embed_form_button'), 11, 1);
+            add_action( 'admin_footer',  array(&$this, 'embed_form_popup_content') );
 
+            //duplicate message
+	        add_filter( 'post_row_actions', array(&$this , 'add_message_action'), 10, 2 );
+	        add_action('admin_init', array(&$this ,'duplicate_message') ,10, 1);
+
+		}
+		public static  function getInstance(){
+		   static $ig_message_admin = null;
+	        if (null === $ig_message_admin) {
+	            $ig_message_admin = new Icegram_Message_Admin();
+	        }
+	        return $ig_message_admin;
+		}
+
+		function embed_form_button($editor_id ){
+		   global $icegram ,  $post;
+		   if( !$this->is_icegram_editor && empty($_POST['message_id']) && !in_array($post->post_type , array('ig_message' , 'ig_campaign') ) ){
+    				echo "";
+		   }else{
+				foreach ( $icegram->message_types as $type => $value ) {
+					if(!empty($value['settings']['embed_form'])){
+						$message_types[] = $type;
+					}
+				}
+	      	 echo $out = '<a href="#popup_container"  class="'.implode( ' ', $message_types).' button" id="embed_form_but">'.__('Embed Form' , 'icegram' ).'</a>';
+		   }
+	    }
+
+	    function embed_form_popup_content(){
+	    	$screen = get_current_screen();   
+        	if ( !in_array( $screen->id, array( 'ig_campaign', 'ig_message' ), true ) ) return;
+			?>
+				<div id="popup_container" class="mfp-hide" >
+					<h3><?php _e('Add an optin / subscription form', 'icegram' ); ?>
+					<a id="embed_howto_link" target="_blank" href="http://www.icegram.com/icegram_form_integration/" ><?php _e('Need help?', 'icegram' ); ?></a>
+					</h3>
+					<form id="embed_form" action="#"> 
+					<p>
+		                <textarea rows="10" autocomplete="off" cols="65" name="form_data" id="form_data" value="" placeholder="<?php _e('Paste HTML code of your form here...', 'icegram' ); ?>"></textarea>
+					</p>
+					<p class="use_cta_check">
+			            <label><input type="checkbox" name="use_cta_to_submit" value="" checked> <?php _e('Use message\'s Call to Action button to submit this form' , 'icegram' ); ?></label> 
+					</p>
+					<p class="embed_form_layouts">
+						<label class="message_label"><strong><?php _e('Form Layout', 'icegram' ); ?></strong></label> 
+						<label><input type="radio" name="embed_form_layout" value="ig_horizontal" checked="checked" /> <?php _e('Horizontal', 'icegram' ); ?> </label>
+		                <label><input type="radio" name="embed_form_layout" value="ig_vertical"/> <?php _e('Vertical', 'icegram' ); ?> </label>
+					</p>
+					<p>
+						<label class="message_label"><strong><?php _e('Width', 'icegram' ); ?></strong></label> 
+						<select id="embed_form_width" name="embed_form_width">
+							<option value="ig_full" selected="selected"><?php _e('Full', 'icegram' ); ?></option>
+							<option value="ig_half"><?php _e('Half', 'icegram' ); ?></option>
+							<option value="ig_quarter"><?php _e('Quarter', 'icegram' ); ?></option>
+							<!-- <option value="ig_auto" selected="selected"><?php _e('Auto', 'icegram' ); ?></option> -->
+						</select>
+					</p>
+					<p>
+						<label class="message_label"><strong><?php _e('Position', 'icegram' ); ?></strong></label> 
+						<select id="embed_form_positions" name="embed_form_positions">
+							<option value="ig_left" selected="selected"><?php _e('Left', 'icegram' ); ?></option>
+							<option value="ig_right"><?php _e('Right', 'icegram' ); ?></option>
+							<option value="ig_center"><?php _e('Center', 'icegram' ); ?></option>
+							<option value="ig_inline"><?php _e('Inline', 'icegram' ); ?></option>
+						</select>
+					</p>
+					<p class="has_label_check">
+						<label class="message_label"><strong><?php _e('Keep Labels' , 'icegram' ); ?> </strong></label> 
+			            <label><input type="checkbox" name="has_label" value="" checked> <?php _e('Show them above the field.' , 'icegram' ); ?></label> 
+					</p>
+	                <p>
+	                    <input type="submit" name="submit" class="parse_form button-primary"  value="Insert Form"/>&nbsp;&nbsp;&nbsp;
+	                    <a class="button cancel_parse_form" style="color:#bbb;" href="#" ><?php _e('Cancel', 'icegram' ); ?></a>
+	                </p>
+					</form>
+				</div>
+			<?php
 		}
 
 		// Initialize message metabox		
 		function add_message_meta_boxes() {
 			global $icegram;
 			add_meta_box( 'message-settings', __( 'Message Settings', 'icegram' ), array ( &$this, 'message_form_fields' ), 'ig_message', 'normal', 'high' );
-
-			?>
-			<style type="text/css">
-			<?php
-			foreach ( $icegram->message_types as $message_type => $message ) {
-				if( !empty( $message['admin_style'] ) ) {
-					$label_bg_color 		= $message['admin_style']['label_bg_color'];
-					$theme_header_height 	= $message['admin_style']['theme_header_height'];
-					$theme_header_bg_size	= ( $theme_header_height + 3 )."em";					
-					$thumbnail_width 		= $message['admin_style']['thumbnail_width'];
-					$thumbnail_height 		= $message['admin_style']['thumbnail_height'];
-					echo "	.message_header .$message_type { 
-								background-color: {$label_bg_color}; 
-							} 
-							.message_theme_{$message_type} + .chosen-container-single .chosen-single { 
-								height: {$theme_header_height} !important;
-							}
-							.message_theme_{$message_type} + .chosen-container-single .chosen-single span {
-								background-size: {$theme_header_bg_size} !important;
-								line-height: {$theme_header_height} !important;
-							} 
-							.message_theme_{$message_type} + .chosen-container .chosen-results li {
-								width: {$thumbnail_width} !important;
-								height: {$thumbnail_height} !important;
-							}";
-				}
-			}
-			?>
-			</style>
-			<?php
+			
 		}
 		
 		// Display all message settings fields
@@ -66,13 +116,42 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 
 			if( ( is_object( $post ) && $post->post_type != 'ig_message' ) )
 				return;
+			?>
+			<style type="text/css">
+				<?php
+					foreach ( $icegram->message_types as $message_type => $message ) {
+						
+						if( !empty( $message['admin_style'] ) ) {
+							$label_bg_color 		= $message['admin_style']['label_bg_color'];
+							$theme_header_height 	= $message['admin_style']['theme_header_height'];
+							$theme_header_bg_size	= ( $theme_header_height + 3 )."em";					
+							$thumbnail_width 		= $message['admin_style']['thumbnail_width'];
+							$thumbnail_height 		= $message['admin_style']['thumbnail_height'];
+							echo "	.message_header .$message_type { 
+										background-color: {$label_bg_color}; 
+									} 
+									.message_theme_{$message_type} + .chosen-container-single .chosen-single { 
+										height: {$theme_header_height} !important;
+									}
+									.message_theme_{$message_type} + .chosen-container-single .chosen-single span {
+										background-size: {$theme_header_bg_size} !important;
+										line-height: {$theme_header_height} !important;
+									} 
+									.message_theme_{$message_type} + .chosen-container .chosen-results li {
+										width: {$thumbnail_width} !important;
+										height: {$thumbnail_height} !important;
+									}";
+						}
 
+					}
+				?>
+			</style>
+			<?php
 			$message_id 		= !empty( $action['message_id'] ) ? $action['message_id'] : $post->ID;
 			$message_data 		= get_post_meta( $message_id, 'icegram_message_data', true );	
 			$message_headlines 	= $icegram->available_headlines;
 			$settings 			= $this->message_settings_to_show();
 			$positions 			= $this->message_positions_to_show();
-
 			if ( $pagenow == 'post-new.php' ) {
 				$message_title_key = array_rand( $message_headlines );
 				$default_message_title = $message_headlines[$message_title_key];
@@ -113,11 +192,13 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						}
 				?>
 					<p class="message_row <?php echo $message['type']; ?>">
+										
 						<label for="message_theme_<?php echo $message['type'] ?>" class="message_label"><strong><?php _e( 'Theme', 'icegram' ); ?></strong></label> 
 						<select id="message_theme_<?php echo $message['type'] ?>" name="message_data[<?php echo $message_id; ?>][theme][<?php echo $message['type'] ?>]" class="icegram_chosen_page message_theme message_theme_<?php echo $message['type']; ?>">
 							<?php 
 							foreach ( $message['themes'] as $theme ) {
-								$bg_img = "background-image: url(" .  $message['baseurl'] . "themes/" . $theme['type'] . ".png)";
+									
+								$bg_img = "background-image: url(" .  $theme['baseurl'] . $theme['type'] . ".png)";
 								?>
 								<option style="<?php echo $bg_img; ?>" value="<?php echo esc_attr( $theme['type'] ) ?>" class="<?php echo esc_attr( $theme['type'] ) ?>" <?php echo ( !empty( $message_data['theme'] )  && esc_attr( $theme['type'] ) == $message_data['theme'] ) ? 'selected' : ''; ?>><?php echo esc_html( $theme['name'] ) ?></option>
 							<?php } ?>
@@ -136,7 +217,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 							<?php } ?>					
 						</select>
 					</p>
-				<?php }	?>
+				<?php }	
+					// action add for interstitial message setting
+					do_action( 'icegram_after_message_theme_settings', $message_id, $message_data );
+				?>
 				<p class="message_row <?php echo implode( ' ', $settings['headline'] )?>">
 					<label for="message_headline" class="message_label">
 						<strong><?php _e( 'Headline', 'icegram' ); ?></strong>
@@ -157,13 +241,20 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					</label>
 					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][label]" id="message_label" value="<?php if( isset( $message_data['label'] ) ) echo esc_attr( $message_data['label'] ); ?>" />
 				</p>
-				<p class="message_row <?php echo implode( ' ', $settings['link'] )?>">
-					<label for="message_link" class="message_label">
-						<strong><?php _e( 'Target Link', 'icegram' ); ?></strong>
-						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Enter destination URL here. Clicking will redirect to this link.', 'icegram' ); ?>"></span>
-					</label>
-					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][link]" id="message_link" value="<?php if( isset( $message_data['link'] ) ) echo esc_attr( $message_data['link'] ); ?>" />
-				</p>
+				<?php
+				$target_link_field = '<p class="message_row '.implode( ' ', $settings['link'] ).'">
+										<label for="message_link" class="message_label">
+											<strong>'.__('Target Link' ,'icegram').'</strong>
+											<span class="help_tip admin_field_icon" data-tip='.__("Enter destination URL here. Clicking will redirect to this link." ,'icegram').'></span>
+										</label>
+										<input type="text" class="message_field" name="message_data['.$message_id.'][link]" id="message_link" value="'.esc_attr( $message_data['link'] ) .'" />
+		              				</p>';
+
+				$icegram_message_target_link = apply_filters('icegram_message_field_link' , array( 'html' => $target_link_field ,'message_id' => $message_id ,'message_data' => $message_data) );
+				echo $icegram_message_target_link['html'];
+				?>
+				
+
 				<p class="message_row <?php echo implode( ' ', $settings['icon'] )?>">
 					<label for="upload_image" class="message_label">
 						<strong><?php _e( 'Icon / Avatar Image', 'icegram' ); ?></strong>
@@ -179,15 +270,19 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 				$default_bg_color 	= ( !empty( $icegram->message_types[$message_data['type']]['settings']['bg_color']['default'] ) ) ? $icegram->message_types[$message_data['type']]['settings']['bg_color']['default'] : '';
 				$text_color 		= ( !empty( $message_data['text_color'] ) ) ? $message_data['text_color'] : $default_text_color;
 				$bg_color 			= ( !empty( $message_data['bg_color'] ) ) ? $message_data['bg_color'] : $default_bg_color;
+				
+				$color_field_html = '<p class="message_row '.implode( ' ', $settings['bg_color']).'">
+										<label for="message_bg_color" class="message_label"><strong> '.__( 'Backgound Color', 'icegram' ).'</strong></label>
+										<input type="text" class="message_field color-field" name="message_data['.$message_id.'][bg_color]" id="message_bg_color" value="'.$bg_color.'" data-default-color="'.$default_bg_color.'" />
+									</p>
+									<p class="message_row '.implode( ' ', $settings['text_color'] ).'">
+										<label for="message_text_color" class="message_label"><strong>'.__( 'Text Color', 'icegram' ) .'</strong></label>
+										<input type="text" class="message_field color-field" name="message_data['.$message_id.'][text_color]" id="message_text_color" value="'.$text_color.'" data-default-color="'.$default_text_color.'" />
+									</p>';
+				$color_field = apply_filters('icegram_color_fields' , array( 'html' => $color_field_html ,'message_id' => $message_id ,'message_data' => $message_data) );
+				echo $color_field['html'];
+
 				?>
-				<p class="message_row <?php echo implode( ' ', $settings['bg_color'] )?>">
-					<label for="message_bg_color" class="message_label"><strong><?php _e( 'Backgound Color', 'icegram' ); ?></strong></label>
-					<input type="text" class="message_field color-field" name="message_data[<?php echo $message_id; ?>][bg_color]" id="message_bg_color" value="<?php echo $bg_color; ?>" data-default-color="<?php echo $default_bg_color; ?>" />
-				</p>
-				<p class="message_row <?php echo implode( ' ', $settings['text_color'] )?>">
-					<label for="message_text_color" class="message_label"><strong><?php _e( 'Text Color', 'icegram' ); ?></strong></label>
-					<input type="text" class="message_field color-field" name="message_data[<?php echo $message_id; ?>][text_color]" id="message_text_color" value="<?php echo $text_color; ?>" data-default-color="<?php echo $default_text_color; ?>" />
-				</p>
 				<?php
 					$editor_args = array(
 						'textarea_name' => 'message_data[' . $message_id . '][message]',
@@ -198,6 +293,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					);
 				?>
 				<p class="message_row <?php echo implode( ' ', $settings['message'] )?>">
+					<style type="text/css">.wp-editor-tools:after {display: inline-block !important; }</style>
 					<label for="message_body" class="message_body message_label"><strong><?php _e( 'Message Body', 'icegram' ); ?></strong></label>
 					<?php $message = ( !empty( $message_data['message'] ) ) ? $message_data['message'] : ''; ?>
 					<?php wp_editor( $message, 'edit'.$message_id, $editor_args ); ?>
@@ -252,15 +348,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 			<?php
 
 			if( !empty( $action['message_id'] ) ) {
-				
 				?></div>
 				<?php
-				if( !empty( $action['new_message_row'] ) && $action['new_message_row'] ) {
-					\_WP_Editors::enqueue_scripts();
-				    // print_footer_scripts();
-				    \_WP_Editors::editor_js();
-				}
-				
 			} else {
 				
 				?>
@@ -365,7 +454,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
             }			
 			$type 	= ucwords( str_replace( "-", ' ', $message_data['type'] ) );
 			$theme 	= ucwords( str_replace( "-", ' ', $message_data['theme'] ) );
-			$bg_img = $icegram->message_types[$message_data['type']]['baseurl'] . "themes/" . $message_data['theme'] . ".png";						
+				
+			$bg_img = $icegram->message_types[ $message_data['type'] ]['themes'][ $message_data['theme'] ]['baseurl'] . $message_data['theme'] . ".png";						
 
 			switch ($column) {
 				case 'message_type':
@@ -497,6 +587,18 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					__( '21 Secret ____ that will ____... NOW!', 'icegram' )
 				) );
 			return $available_headlines;
+		}
+
+		function add_message_action( $actions, $post ){
+			if ($post->post_type != 'ig_message') return $actions;
+		    $actions['duplicate_message'] = '<a class="ig-duplicate-message"  href="post.php?message_id='.$post->ID.'&action=duplicate-message" >'.__('Duplicate' ,'icegram').'</a>';
+			return $actions;
+		}
+
+		function duplicate_message(){
+			if($_REQUEST['action'] == 'duplicate-message' && !empty($_REQUEST['message_id'])){
+				Icegram::duplicate( $_REQUEST['message_id'] );
+			}
 		}
 	}
 }
