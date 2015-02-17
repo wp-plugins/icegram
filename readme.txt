@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -46,8 +46,15 @@ Determine where, when and how to show on-site marketing messages to visitors. Us
 * Embed subscription forms from **mailing list service of your choice**
 * Use short codes **other plugins** provide – embed forms, widgets, social sharing buttons, twitter feed…
 * Add **inline JavaScript or CSS** for customizations
-* Compatible with WPML for multilingual, translated messages
+* Target campaigns on different pages - with Wildcard URLs, page selection and more...
 * **Full HTML** editing capability for maximum control
+
+= Works with Multi Site, WPML and even non WordPress sites =
+Icegram and its addons are WordPress Multisite compatible. Each site becomes an independent Icegram installation.
+
+Icegram is also *WPML Compatible*. You can show multilingual messages in different languages as you wish.
+
+And, as a matter of fact you can show Icegram campaign and messages on non WordPress sites too! Use the premium Icegram Remote addon, and you can show Icegram campaigns anywhere.
 
 = Icegram is a Good Neighbour =
 Icegram works with most WordPress plugins and themes. It can integrate with all mailing list / newsletter / optin / CRM / form services that provide embeddable HTML form too. 
@@ -67,7 +74,8 @@ Icegram is an open platform. The core is already powerful, but you can do even m
 * Exit Intent, Scroll Position, Time Delay, JavaScript, Another Message... Show and Hide messages based on user behavior
 * Geo Targeting - based on visitor's location - continent, country, city, region or IP address
 * CTA Actions - Open link, in new window, submit form, AJAX submission, show another message, hide this message... New actions for CTA buttons
-* Additional message types - Overlay, Inline, Sidebars, Ribbons, Stickies, Badges...
+* Remote - Show Icegram messages on any site - WordPress or otherwise
+* Additional message types - Overlay, Inline, Sidebars, Interstitial, Ribbons, Stickies, Badges...
 
 = Ok, there is even more =
 There is no end to Icegram's awesomeness!!
@@ -145,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.5 = 
+Bug fix release for device targeting, preview before publish not working.
+
 = 1.8.4 = 
 Popups are now responsive! Plus Visual Composer compatibility and other fixes.
 
@@ -192,6 +203,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.5 =
+* New: Added a link to Form Embed Documentation for easy access
+* Fix: Default mode of content editor set to visual
+* Fix: Popup hiding behind header for some themes
+* Fix: Device targeting rule not working on newer devices
+* Fix: Preview working only after Publishing
+
 = 1.8.4 =
 * New: Popup messages work beautifully on mobile / small devices now!
 * Fix: Timing problems with popups triggered via Behavior Trigger addon.

@@ -16,7 +16,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1043;
+  /*z-index: 1043;*/
+  /*ICG-Hack:: Higher z-index to make it visible on top */
+  z-index: 999999;
   position: fixed;
   outline: none !important;
   -webkit-backface-visibility: hidden; }

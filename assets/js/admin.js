@@ -44,21 +44,21 @@ jQuery(function() {
 			display_message_themes(this_data[i]);
 		};
 
-		jQuery('.message-setting-fields').live('change', '.message_type', function() {
-			display_message_themes(this);
+		jQuery('#campaign_data').on('change', '.message_type', function(e) {
+			var t = jQuery(e.target).parents('.message-setting-fields');
+			display_message_themes(t);
 		});
 
-		jQuery('.message-setting-fields').live('change', '.message_theme', function() {
-			
-			var message_type 	= jQuery(this).find('.message_type').val();
-			var message_theme 	= jQuery(this).find('.message_row.'+message_type).find('.message_theme').val();
-			var message_thumb 	= jQuery(this).find('#message_theme_'+message_type).find('.'+message_theme).attr('style');
-
-			jQuery(this).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').attr('style',message_thumb);
+		jQuery('#campaign_data').on('change', '.message_theme', function(e) {
+			var t = jQuery(e.target).parents('.message-setting-fields');
+			var message_type 	= jQuery(t).find('.message_type').val();
+			var message_theme 	= jQuery(t).find('.message_row.'+message_type).find('.message_theme').val();
+			var message_thumb 	= jQuery(t).find('#message_theme_'+message_type).find('.'+message_theme).attr('style');
+			jQuery(t).find('.message_row.'+message_type).find('.message_theme').next().find('.chosen-single span').attr('style',message_thumb);
 
 		});
 
-		jQuery('.message_image_button').live('click', function(event) {
+	    jQuery('#campaign_data').on('click', '.message_image_button', function(event) {
 			var that = this;
 			window.send_to_editor = function(html) {
 				imgurl = jQuery('img', html).attr('src');
@@ -69,7 +69,7 @@ jQuery(function() {
 			return false;
 		});
 
-		jQuery('.message_headline_button').live('click', function() {
+		jQuery('#campaign_data').on('click','.message_headline_button', function() {
 			var headline_key = jQuery(this).prev().attr('data-headline');
 			var headline_max = icegram_writepanel_params.available_headlines.length;
 			var new_headline_key = get_random_int( headline_key, 0, headline_max );
@@ -90,20 +90,19 @@ jQuery(function() {
 		jQuery('#campaign_data .handlediv').hide();
 
 	});
-
-	jQuery('.message_delete').live( 'click', function() {
+	jQuery('#campaign_data').on('click','.message_delete', function() {
 		jQuery(this).parent().parent().next().remove();
 		jQuery(this).parent().parent().remove();
 		hide_empty_campaign_message();
 
 	});
 
-	jQuery('.message_edit').live( 'click', function() {
+	jQuery('#campaign_data').on( 'click', '.message_edit' ,function() {
 		jQuery(this).parent().parent().next().toggle();
 		jQuery(this).parent().parent().find('.message-title-text, .message-title-input').toggle();	
 	});
 
-	jQuery('.message-title-input').live( 'change', function() {
+	jQuery('#campaign_data').on( 'change', '.message-title-input',function() {
 		jQuery(this).prev().text(jQuery(this).val());
 	});
 
@@ -123,14 +122,28 @@ jQuery(function() {
 		});
 		return terms;
 	});
-	
-	jQuery('.cancel_parse_form').live('click', function(event) {
-		tb_remove();
+
+	jQuery(document).on('click', '#embed_form_but', function(event) {
+		jQuery.magnificPopup.open({ 
+	            items: {
+	            src: '#popup_container',
+	            type: 'inline'
+	            },
+	            modal : true
+			});
+
+	});
+	           
+	jQuery(document).on('click', '.cancel_parse_form', function(event) {
+		jQuery.magnificPopup.close({ items: {
+            src: '#popup_container',
+            type: 'inline'
+        }});
 		jQuery(this).closest('form').get(0).reset();
 		return false;
 	});
 
-	jQuery('.parse_form').live('click', function(event) {
+	jQuery(document).on('click', '.parse_form' ,function(event) {
 			var that = this;
 			var parent_node = jQuery(that).closest('form');
 			var form_layout = jQuery(parent_node).find('.embed_form_layouts input[type=radio]:checked').val();
@@ -246,7 +259,12 @@ jQuery(function() {
 			}
 			form_container.find('.ig_detected_bot_fields').parent().css('display', 'none');
 			form_object.append(form_container);
-			tb_remove();
+
+			//closing a popup
+			jQuery.magnificPopup.close({ items: {
+	            src: '#popup_container',
+	            type: 'inline'
+	        }});
 			// reset all fields of Embed form setting
 			jQuery(that).closest('form').get(0).reset();
 			window.send_to_editor(jQuery('<div/>').append(form_object).html());
@@ -254,10 +272,15 @@ jQuery(function() {
 		});
 	
 
-	var message_rows = jQuery('.message-row').length;
-	jQuery('.ajax_chosen_select_messages').chosen().on('change', function() {
+	//var message_rows = jQuery(this).parent().siblings('.campaign_target_rules_panel').find('.message-row').length;
+	jQuery('.ajax_chosen_select_messages').chosen();
+	jQuery('#campaign_data').on('change', '.ajax_chosen_select_messages' , function() {
+		var newSettings = jQuery.extend( {}, tinyMCEPreInit.mceInit[ 'content' ] );
+		var newQTS = jQuery.extend( {}, tinyMCEPreInit.qtInit[ 'content' ] );
+		var parent_campaign_box = jQuery(this).parent().siblings('.campaign_target_rules_panel');
+		var message_rows = jQuery(parent_campaign_box).find('.message-row').length;
 		var message_id = jQuery(this).val();
-		if( message_id == '' ) {			
+		if( message_id == '' ) {
 			jQuery(".ajax_chosen_select_messages").val('').trigger("chosen:updated");
 			return;
 		}
@@ -277,7 +300,8 @@ jQuery(function() {
 			success: function(response) {
 
 				message_rows++;
-				jQuery('.messages-list .messages_list_table tbody').append(response.main);
+				//jQuery('.messages-list .messages_list_table tbody').append(response.main);
+				jQuery(parent_campaign_box).find('.messages-list .messages_list_table tbody').append(response.main);
 				jQuery('.color-field').wpColorPicker();
 				display_message_themes(jQuery('#'+response.id));				
 				jQuery(".ajax_chosen_select_messages").val('').trigger("chosen:updated");
@@ -287,12 +311,40 @@ jQuery(function() {
 				hide_empty_campaign_message();
 				jQuery('.message-setting-fields').trigger('change');
 				jQuery(".tips, .help_tip").tipTip({'attribute' : 'data-tip'});
+				// text editor issue fix
+				if ( typeof( tinyMCEPreInit.mceInit[ 'edit'+response.id ] ) === 'undefined' ) {
+					for ( _prop in newSettings ) {
+						if ( 'string' === typeof( newSettings[_prop] ) ) {
+							if(_prop !== 'content_css'){
+								newSettings[_prop] = newSettings[_prop].replace( new RegExp( 'content', 'g' ), 'edit'+response.id );
+							}
+						}
+					}
+					tinyMCEPreInit.mceInit[ 'edit'+response.id ] = newSettings;
+				}
+				if ( typeof( tinyMCEPreInit.qtInit[ 'edit'+response.id ] ) === 'undefined' ) {
+					for ( _prop in newQTS ) {
+						if ( 'string' === typeof( newQTS[_prop] ) ) {
+							if(_prop !== 'content_css'){
+								newQTS[_prop] = newQTS[_prop].replace( new RegExp( 'content', 'g' ), 'edit'+response.id );
+							}
+						}
+					}
+					tinyMCEPreInit.qtInit[ 'edit'+response.id ] = newQTS;
+				}
+				tinyMCE.init({ id : tinyMCEPreInit.mceInit[ 'edit'+response.id ]});
+            	quicktags({id : 'edit'+response.id});
 				QTags._buttonsInit();
+				if(jQuery('#wp-edit'+response.id+'-wrap').hasClass('tmce-active')){
+					jQuery('#edit'+response.id+'-tmce').click();
+				}else{
+					jQuery('#edit'+response.id+'-html').click();
+				}
 			}
 		});
 	});
     //add local url
-	jQuery('#add_local_url_row').live('click', function(e) {
+	jQuery('#campaign_target_rules').on('click', '#add_local_url_row' ,function(e) {
 		e.preventDefault();
 		var row = add_url_row();
 		if(jQuery('.local_url').find('.url_input_field').length){
@@ -303,7 +355,7 @@ jQuery(function() {
 		}
 
 	});
-	jQuery('.delete-url').live('click', function(e) {
+	jQuery('#campaign_target_rules').on('click', '.delete-url',function(e) {
 		jQuery(this).parent().remove();
 	});
 	
@@ -319,7 +371,7 @@ jQuery(function() {
 		}
 	}
 
-	jQuery('select.ajax_chosen_select_messages').next('div').find('div.chosen-drop').live('click', function() {
+	jQuery('select.ajax_chosen_select_messages').next('div').on('click', 'div.chosen-drop' ,function() {
 		jQuery(this).closest('h3.hndle').trigger('click');
 	});
 
@@ -328,7 +380,8 @@ jQuery(function() {
 		
 		if( jQuery('.message-row').length == 0 )
 			return;
-
+		// trigger event for saving visual content
+		tinyMCE.triggerSave();
 		// Change action
 		params = jQuery("#post").serializeArray();
 		params.push( {name: 'action', value: 'save_campaign_preview' });
@@ -394,7 +447,7 @@ jQuery(function() {
 		showButtonPanel: true
 	});
 	
-	jQuery('input.url_input_field').live('focusout', function() {
+	jQuery('#campaign_target_rules').on('focusout','input.url_input_field',function() {
         var url = this;
 		jQuery(url).parent().find('span#valid-field').removeClass('error');	
 		if(jQuery(url).data("option") !== 'undefine' && jQuery(url).data("option") == 'local_url' && jQuery(url).val() != '*'){

@@ -40,13 +40,16 @@
 		if (this.message_data.length > 0) {
 			jQuery.each( this.message_data, function ( i, v ) {
 				try {
-					//check cookies in js 
-					if(v['retargeting'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
-						return;
-					} 
-					if(v['retargeting_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
-						return;
-					} 
+					// dont check cookies in preview mode
+					if(window.location.href.indexOf("campaign_preview_id") == -1){
+						//check cookies in js 
+						if(v['retargeting'] == 'yes' && jQuery.cookie('icegram_messages_shown_'+v['id']) == 1){
+							return;
+						} 
+						if(v['retargeting_clicked'] == 'yes' && jQuery.cookie('icegram_messages_clicked_'+v['id']) == 1){
+							return;
+						} 
+					}
 					
 					var m = null;
 					var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
@@ -141,7 +144,7 @@
 		}
 	}
 	Icegram.prototype.submit_tracking_data = function ( ev, params ) {
-		if (this.tracking_data.length > 0) {
+		if (this.tracking_data.length > 0 && window.location.href.indexOf("campaign_preview_id") == -1) {
 			var params = {
 				method: 'POST',
 				url: this.data.ajax_url,

@@ -47,18 +47,21 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						$message_types[] = $type;
 					}
 				}
-	      	 echo $out = '<a href="#TB_inline?width=500&height=520&inlineId=popup_container" data-editor="'.$editor_id.'" class="'.implode( ' ', $message_types).' thickbox button" id="embed_form_but" title="'.__('Add an optin / subscription form' , 'icegram' ).'">'.__('Embed Form' , 'icegram' ).'</a>';
+	      	 echo $out = '<a href="#popup_container"  class="'.implode( ' ', $message_types).' button" id="embed_form_but">'.__('Embed Form' , 'icegram' ).'</a>';
 		   }
 	    }
 
 	    function embed_form_popup_content(){
+	    	$screen = get_current_screen();   
+        	if ( !in_array( $screen->id, array( 'ig_campaign', 'ig_message' ), true ) ) return;
 			?>
-				<div id="popup_container" style="display:none;">
-
+				<div id="popup_container" class="mfp-hide" >
+					<h3><?php _e('Add an optin / subscription form', 'icegram' ); ?>
+					<a id="embed_howto_link" target="_blank" href="http://www.icegram.com/icegram_form_integration/" ><?php _e('Need help?', 'icegram' ); ?></a>
+					</h3>
 					<form id="embed_form" action="#"> 
-					<!-- <h3 ><?php _e('Add an optin / subscription form', 'icegram' ); ?></h3> -->
 					<p>
-		                <textarea rows="10" autocomplete="off" cols="65" name="form_data"  style="width:90%" id="form_data" value="" placeholder="<?php _e('Paste HTML code of your form here...', 'icegram' ); ?>"></textarea>
+		                <textarea rows="10" autocomplete="off" cols="65" name="form_data" id="form_data" value="" placeholder="<?php _e('Paste HTML code of your form here...', 'icegram' ); ?>"></textarea>
 					</p>
 					<p class="use_cta_check">
 			            <label><input type="checkbox" name="use_cta_to_submit" value="" checked> <?php _e('Use message\'s Call to Action button to submit this form' , 'icegram' ); ?></label> 
@@ -290,6 +293,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					);
 				?>
 				<p class="message_row <?php echo implode( ' ', $settings['message'] )?>">
+					<style type="text/css">.wp-editor-tools:after {display: inline-block !important; }</style>
 					<label for="message_body" class="message_body message_label"><strong><?php _e( 'Message Body', 'icegram' ); ?></strong></label>
 					<?php $message = ( !empty( $message_data['message'] ) ) ? $message_data['message'] : ''; ?>
 					<?php wp_editor( $message, 'edit'.$message_id, $editor_args ); ?>
@@ -344,15 +348,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 			<?php
 
 			if( !empty( $action['message_id'] ) ) {
-				
 				?></div>
 				<?php
-				if( !empty( $action['new_message_row'] ) && $action['new_message_row'] ) {
-					\_WP_Editors::enqueue_scripts();
-				    // print_footer_scripts();
-				    \_WP_Editors::editor_js();
-				}
-				
 			} else {
 				
 				?>

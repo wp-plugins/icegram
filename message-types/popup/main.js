@@ -32,8 +32,7 @@
             },
             showCloseBtn :false
         });
-        jQuery('.mfp-content').removeClass().addClass('mfp-content');
-        jQuery('.mfp-content').addClass(self.data.theme).addClass('ig_popup');
+        jQuery('.mfp-content').removeClass().addClass('mfp-content ig_popup ' + self.data.theme);
         silent !== true && this.track( 'shown' );
     };
     

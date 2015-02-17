@@ -14,9 +14,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			add_action( 'save_post', array( &$this, 'save_campaign_settings' ), 10, 2 );
 			add_action( 'wp_ajax_icegram_json_search_messages', array( &$this, 'icegram_json_search_messages' ) );
 			add_action( 'wp_ajax_get_message_action_row', array( &$this, 'get_message_action_row' ) );		
-			add_filter( 'wp_default_editor', create_function('', 'return "html";') );
+		    //add_filter( 'wp_default_editor', create_function('', 'return "html";') );
 	        add_action( 'wp_ajax_save_campaign_preview', array( &$this, 'save_campaign_preview' ) );
 	        add_action( 'icegram_campaign_target_rules', array( &$this, 'icegram_add_campaign_target_rules' ), 10, 2 );
+	        add_filter('icegram_campaign_messages' ,array( &$this, 'get_icegram_campaign_messages' ) ,10,2 );
 	       	//duplicate campaign
 	        add_filter( 'post_row_actions', array(&$this , 'add_campaign_action'), 10, 2 );
 	        add_action('admin_init', array(&$this ,'duplicate_campaign') ,10, 1);
@@ -32,6 +33,13 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 														        )
 														);
 
+		}
+		public static  function getInstance(){
+		   static $ig_campaign_admin = null;
+	        if (null === $ig_campaign_admin) {
+	            $ig_campaign_admin = new Icegram_Campaign_Admin();
+	        }
+	        return $ig_campaign_admin;
 		}
 
 		// Initialize campaign metabox
@@ -69,7 +77,9 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 							?>
 							<tbody>
 								<?php 
-									$messages = get_post_meta( $post->ID, 'messages', true );
+								    $messages = array();
+									$messages = apply_filters('icegram_campaign_messages' , $messages ,$post->ID);
+									$icegram_message_meta_key = apply_filters('icegram_message_meta_key' , 'messages');
 									if ( !empty( $messages ) ) {
 										foreach ( $messages as $row => $message ) {
 											$message_title = get_the_title( $message['id'] );
@@ -86,8 +96,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 													<input type="text" class="message-title-input" name="message_data[<?php echo $message['id']; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'icegram' ); ?>" style="display: none;">
 												</td>
 												<td class="message_seconds">
-													<input type="hidden" name="messages[<?php echo $row; ?>][id]" value="<?php echo $message['id']; ?>" />
-													<input type="number" class="seconds-text" name="messages[<?php echo $row; ?>][time]" min="-1" value="<?php echo ( !empty( $message['time'] ) ) ? $message['time'] : 0; ?>" size="3" />
+													<input type="hidden" name="<?php echo $icegram_message_meta_key .'['.$row; ?>][id]" value="<?php echo $message['id']; ?>" />
+													<input type="number" class="seconds-text" name="<?php echo $icegram_message_meta_key .'['.$row; ?>][time]" min="-1" value="<?php echo ( !empty( $message['time'] ) ) ? $message['time'] : 0; ?>" size="3" />
 													<?php _e( ' sec', 'icegram' )?>
 												</td>
 												<td class="action_links">
@@ -119,6 +129,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			<?php
 		}
 
+		function get_icegram_campaign_messages($messages , $campaign_id){
+			$messages = get_post_meta($campaign_id , 'messages' ,true);
+			return $messages;
+		}
 		// Campaign targeting rules metabox
 		function campaign_target_rules_content() {
 			global $post;
@@ -471,6 +485,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			}
 			
 			ob_start();
+			$icegram_message_meta_key = apply_filters('icegram_message_meta_key' , 'messages');
 			?>
 			<tr class="form-field message-row" value="<?php echo $message_id; ?>">
 				<td class="message_header">
@@ -481,8 +496,8 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<input type="text" class="message-title-input" name="message_data[<?php echo $message_id; ?>][post_title]" value="<?php echo $message_title; ?>" placeholder="<?php echo __( 'Give this message a name for your own reference', 'icegram' ); ?>">
 				</td>
 				<td class="message_seconds">
-					<input type="hidden" name="messages[<?php echo $_POST['row']; ?>][id]" value="<?php echo $message_id; ?>" />
-					<input type="number" class="seconds-text" name="messages[<?php echo $_POST['row']; ?>][time]" min="0" value="0" size="3" /><?php _e( ' sec', 'icegram' )?>
+					<input type="hidden" name="<?php echo  $icegram_message_meta_key .'['.$_POST['row']; ?>][id]" value="<?php echo $message_id; ?>" />
+					<input type="number" class="seconds-text" name="<?php echo  $icegram_message_meta_key .'['.$_POST['row']; ?>][time]" min="0" value="0" size="3" /><?php _e( ' sec', 'icegram' )?>
 				</td>
 				<td class="action_links">
 					<span class="actions message_edit" title="<?php _e( 'Edit Message', 'icegram' ); ?>" ></span> 
@@ -596,7 +611,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			if ( !current_user_can( 'edit_post', $_POST['post_ID'] ) ) die();
 
 			if( !empty( $_POST['messages'] ) ) {
-
+				
 				update_post_meta( $_POST['post_ID'], 'campaign_preview', $_POST['messages'] ) ;
 
 				foreach ( (array) $_POST['message_data'] as $message_id => $message_data ) {

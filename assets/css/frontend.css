@@ -89,7 +89,7 @@ div.icegram .ig_embed_form.ig_vertical input{
     margin-right: 4%;
 }
 
-div.icegram .ig_embed_form.ig_horizontal li{
+div.icegram .ig_embed_form.ig_horizontal .ig_embed_form_container li{
     display: inline-block;
     min-width: 24%;
 }

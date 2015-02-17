@@ -68,7 +68,6 @@
         width: 90% !important;
     }
 }
-
 @media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
     .ig_popup.inspire .ig_button, .ig_popup.inspire input[type="submit"], .ig_popup.inspire input[type="button"]{
         width: 90% !important;

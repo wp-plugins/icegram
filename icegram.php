@@ -3,11 +3,11 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.4
+ * Version: 1.8.5
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
- * Copyright (c) 2014-2015 Icegram
+ * Copyright (c) 2014-15 Icegram
  * License: GPLv3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.4";
+        $this->version = "1.8.5";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -42,7 +42,7 @@ class Icegram {
         $this->include_classes();
 
         if( is_admin() && current_user_can( 'manage_options' ) ) {
-            new Icegram_Campaign_Admin();
+            $ig_campaign_admin = Icegram_Campaign_Admin::getInstance();
             $ig_message_admin = Icegram_Message_Admin::getInstance();
             add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_styles_and_scripts' ) );
             add_action( 'admin_print_styles', array( &$this, 'remove_preview_button' ) );        
@@ -671,7 +671,10 @@ class Icegram {
         wp_enqueue_script( 'icegram_writepanel' );
         wp_enqueue_script( 'icegram_ajax-chosen' );
         wp_enqueue_script( 'icegram_tiptip' );
-        wp_enqueue_script( 'thickbox' );
+        wp_register_script( 'magnific_popup_js', $this->plugin_url . '/assets/js/magnific-popup.js', array ( 'jquery' ), $this->version, true);
+        if( !wp_script_is( 'magnific_popup_js' ) ) {
+            wp_enqueue_script( 'magnific_popup_js' );
+        }
         
         $icegram_writepanel_params  = array ( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'search_message_nonce' => wp_create_nonce( "search-messages" ) );
         $this->available_headlines  = apply_filters( 'icegram_available_headlines', array() );
@@ -679,69 +682,28 @@ class Icegram {
         
         wp_localize_script( 'icegram_writepanel', 'icegram_writepanel_params', $icegram_writepanel_params );
         
-        wp_enqueue_style( 'thickbox' );
         wp_enqueue_style( 'dashicons' );
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_style( 'icegram_admin_styles', $this->plugin_url . '/assets/css/admin.css', array(), $this->version  );
         wp_enqueue_style( 'icegram_jquery-ui-style', $this->plugin_url . '/assets/css/jquery-ui.min.css', array(), $this->version );
         wp_enqueue_style( 'icegram_chosen_styles', $this->plugin_url . '/assets/css/chosen.min.css', array(), $this->version );
+        wp_enqueue_style( 'magnific_popup_css', $this->plugin_url . '/assets/css/magnific-popup.css', array(), $this->version );
 
         if ( !wp_script_is( 'jquery-ui-datepicker' ) ) {
             wp_enqueue_script( 'jquery-ui-datepicker' );
         }
 
-
     }
 
     public static function get_platform() {
-        $platform = '';
-        $user_agent = trim(strtolower($_SERVER['HTTP_USER_AGENT']));
-        $pattern = '/(android\s\d|blackberry|ip(hone|ad|od)|iemobile|webos|palm|symbian|kindle|windows|win64|wow64|macintosh|intel\smac\sos\sx|ppx\smac\sos\sx|googlebot|googlebot-mobile)/';
-        if ( preg_match( $pattern, $user_agent, $matches ) ) {
-            $platform = $matches[0];
+        $mobile_detect = new Mobile_Detect();
+        $mobile_detect->setUserAgent();
+        if($mobile_detect->isMobile()){
+            return ($mobile_detect->isTablet()) ? 'tablet' : 'mobile';
+        }else if($mobile_detect->isTablet()){
+            return 'tablet';
         }
-        
-        switch ( $platform ) {
-            
-            /* phones / smartphones */
-            case 'android 1':
-            case 'android 2':
-            case 'blackberry':
-            case 'iphone':
-            case 'ipod':
-            case 'iemobile':
-            case 'webos':
-            case 'palm':
-            case 'symbian':
-            case 'googlebot-mobile':
-                $platform = 'mobile';
-                break;
-            
-            /* tablets */
-            case 'android 3':
-            case 'android 4':
-            case 'ipad':
-            case 'kindle':
-                $platform = 'tablet';
-                break;
-            
-            /* desktops / laptops */
-            case 'windows':
-            case 'win64':
-            case 'wow64':
-            case 'macintosh':
-            case 'ppx mac os x':
-            case 'intel mac os x':
-            case 'googlebot':
-                $platform = 'laptop';
-                break;
-            
-            /* in case nothing else matches */
-            default:
-                $platform = 'laptop';
-                break;
-        }
-        return $platform;
+        return 'laptop';
     }
 
     function get_message_data( $message_ids = array(), $preview = false ) {
@@ -788,7 +750,7 @@ class Icegram {
         $message_ids        = array_filter(array_unique( (array) $message_ids));
 
         if ( !empty( $campaign_ids ) ) {
-            $valid_campaigns = $this->get_valid_campaigns( $campaign_ids, true );
+            $valid_campaigns = $this->get_valid_campaigns( $campaign_ids, true ,true);
         }
         // When skip_others is true, we won't load campaigns / messages from db
         if (!$skip_others && !$preview_mode) {
@@ -862,7 +824,7 @@ class Icegram {
         return $valid_messages;
     }
 
-    function get_valid_campaigns( $campaign_ids = array(), $skip_page_check = false ) {
+    function get_valid_campaigns( $campaign_ids = array(), $skip_page_check = false ,$preview_mode = false) {
         global $wpdb;
 
         if ( empty( $campaign_ids ) ) {
@@ -879,8 +841,7 @@ class Icegram {
         $valid_campaigns = array();
         foreach ( (array) $campaign_ids as $campaign_id ) {
             $campaign = new Icegram_Campaign( $campaign_id );
-              
-            if ( $campaign->is_valid( array('skip_page_check' =>  $skip_page_check) ) ) {
+            if ( $preview_mode || $campaign->is_valid( array('skip_page_check' =>  $skip_page_check) ) ) {
                 $valid_campaigns[$campaign_id] = $campaign;
             } else {
                 // Campgain is invalid!
@@ -1233,18 +1194,16 @@ class Icegram {
 
     function remove_preview_button() {
         global $post_type;
-
         if( $post_type == 'ig_message' || $post_type == 'ig_campaign' ) {
-
             ?>
-            <style>
-                #preview-action { display:none; }
-            </style>
+                <style type="text/css">
+                    #message.updated.below-h2{ display: none; }
+                    #preview-action { display:none; }
+                </style>
             <?php
-
         }
-
     }
+
 
     function remove_row_actions( $actions, $post ) {
 
@@ -1429,6 +1388,7 @@ function initialize_icegram() {
     load_plugin_textdomain( 'icegram', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' ); 
 
     $icegram = new Icegram();
+    do_action('icegram_loaded');
 }
 
 add_action( 'plugins_loaded', 'initialize_icegram' );

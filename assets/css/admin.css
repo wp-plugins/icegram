@@ -263,7 +263,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .message_image_button .image-buttons-icon{
-	margin: 4px 2px;
+	margin: 0 2px;
 }
 .message_image_button .image-buttons-icon:before {
 	content: "\f128";
@@ -273,7 +273,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	vertical-align: top !important;
 }
 .message_headline_button .headline-buttons-icon {
-	margin: 5px 2px;
+	margin: 2px;
 }
 
 .message_headline_button .headline-buttons-icon:before {
@@ -638,18 +638,26 @@ CSS for landing page and Help and Support
 	border: 1px solid #CCC;
 }
 
-#embed_form {
-	width: 600px !important;
-	height: 495px !important;
-	margin: 0em !important; 
+/** Embed Form CSS - Start**/
+#popup_container {
+	width: 550px;
+	background-color: #FFF;
+	margin: 0 auto;
+	padding: .5em 1em 1em 1em;
 }
-
-#embed_form input[value="ig_vertical"]{
+#popup_container input[value="ig_vertical"]{
 	margin-left: 3%;
 }
-#embed_form select{
+#popup_container select{
 	width:30%;
 }
+#popup_container #embed_howto_link {
+	float: right;
+	font-size: .8em;
+	font-weight: normal;
+}
+/** Embed Form CSS - End**/
+
 
 /** Fix to keep the message setting row indepenent of other themes **/ 
 .campaign_target_rules_panel .messages_list_table p.inline{
@@ -690,4 +698,3 @@ CSS for landing page and Help and Support
 	content: "\f132";
 	vertical-align: middle;
 }
-
