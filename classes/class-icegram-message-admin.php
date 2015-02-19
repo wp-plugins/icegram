@@ -247,7 +247,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 											<strong>'.__('Target Link' ,'icegram').'</strong>
 											<span class="help_tip admin_field_icon" data-tip='.__("Enter destination URL here. Clicking will redirect to this link." ,'icegram').'></span>
 										</label>
-										<input type="text" class="message_field" name="message_data['.$message_id.'][link]" id="message_link" value="'.esc_attr( $message_data['link'] ) .'" />
+										<input type="text" class="message_field" name="message_data['.$message_id.'][link]" 
+										id="message_link" value="'.esc_attr( ( isset($message_data['link']) ? $message_data['link'] : '') ) .'" />
 		              				</p>';
 
 				$icegram_message_target_link = apply_filters('icegram_message_field_link' , array( 'html' => $target_link_field ,'message_id' => $message_id ,'message_data' => $message_data) );
@@ -298,6 +299,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					<?php $message = ( !empty( $message_data['message'] ) ) ? $message_data['message'] : ''; ?>
 					<?php wp_editor( $message, 'edit'.$message_id, $editor_args ); ?>
 				</p>
+				<?php 
+					// action add for design studio
+					do_action( 'icegram_after_message_body', $message_id, $message_data );
+				?>
 				<p class="message_row position <?php echo implode( ' ', $settings['position'] )?>">
 					<label for="message_position" class="message_label"><strong><?php _e( 'Position', 'icegram' ); ?></strong></label>
 					<span class="message_field location-selector message_label">
@@ -596,7 +601,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 		}
 
 		function duplicate_message(){
-			if($_REQUEST['action'] == 'duplicate-message' && !empty($_REQUEST['message_id'])){
+			if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'duplicate-message' && !empty($_REQUEST['message_id'])){
 				Icegram::duplicate( $_REQUEST['message_id'] );
 			}
 		}

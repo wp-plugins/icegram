@@ -14,7 +14,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			add_action( 'save_post', array( &$this, 'save_campaign_settings' ), 10, 2 );
 			add_action( 'wp_ajax_icegram_json_search_messages', array( &$this, 'icegram_json_search_messages' ) );
 			add_action( 'wp_ajax_get_message_action_row', array( &$this, 'get_message_action_row' ) );		
-		    //add_filter( 'wp_default_editor', create_function('', 'return "html";') );
+		    // add_filter( 'wp_default_editor', create_function('', 'return "html";') );
 	        add_action( 'wp_ajax_save_campaign_preview', array( &$this, 'save_campaign_preview' ) );
 	        add_action( 'icegram_campaign_target_rules', array( &$this, 'icegram_add_campaign_target_rules' ), 10, 2 );
 	        add_filter('icegram_campaign_messages' ,array( &$this, 'get_icegram_campaign_messages' ) ,10,2 );
@@ -657,7 +657,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 		}
 
 		function duplicate_campaign(){
-			if($_REQUEST['action'] == 'duplicate-campaign' && !empty($_REQUEST['campaign_id'])){
+			if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'duplicate-campaign' && !empty($_REQUEST['campaign_id'])){
 				Icegram::duplicate( $_REQUEST['campaign_id'] );
 			}
 		}

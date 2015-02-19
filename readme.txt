@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -153,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.6 = 
+Fix for "white screen" errors, updated device detection, more readable call to action button colors
+
 = 1.8.5 = 
 Bug fix release for device targeting, preview before publish not working.
 
@@ -203,6 +206,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.6 =
+* Fix: "Blank / White Screen of death" / Fatal error - Cannot redeclare class Mobile_Detect
+* Fix: Warning for undefined index
+* Update: Mobile Detect Library updated to version 2.8.11
+* Update: Improvmetns in complementary colors for call to action button and button text 
+* Update: Action Bar's Bold theme - reduced shadown on button text
+
 = 1.8.5 =
 * New: Added a link to Form Embed Documentation for easy access
 * Fix: Default mode of content editor set to visual

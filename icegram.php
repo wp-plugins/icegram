@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.5
+ * Version: 1.8.6
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.5";
+        $this->version = "1.8.6";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -696,7 +696,7 @@ class Icegram {
     }
 
     public static function get_platform() {
-        $mobile_detect = new Mobile_Detect();
+        $mobile_detect = new Ig_Mobile_Detect();
         $mobile_detect->setUserAgent();
         if($mobile_detect->isMobile()){
             return ($mobile_detect->isTablet()) ? 'tablet' : 'mobile';
@@ -729,10 +729,13 @@ class Icegram {
                 $message_data_query .= " AND post_id IN ( " . implode( ',', $message_ids ) . " )";
                 $message_data_results = $wpdb->get_results( $message_data_query, 'ARRAY_A' );
                 foreach ( $message_data_results as $message_data_result ) {
-                    $message_data[$message_data_result['post_id']] = maybe_unserialize( $message_data_result['meta_value'] );
-                    // For WPML compatibility
-                    if (!empty( $original_message_id_map[ $message_data_result['post_id'] ])) {
-                           $message_data[$message_data_result['post_id']]['original_message_id'] = $original_message_id_map[ $message_data_result['post_id'] ]; 
+                    $data = maybe_unserialize( $message_data_result['meta_value'] );
+                    if (!empty($data)) {
+                        $message_data[$message_data_result['post_id']] = $data;
+                        // For WPML compatibility
+                        if (!empty( $original_message_id_map[ $message_data_result['post_id'] ])) {
+                               $message_data[$message_data_result['post_id']]['original_message_id'] = $original_message_id_map[ $message_data_result['post_id'] ]; 
+                        }
                     }
                 }
             } 
@@ -788,6 +791,11 @@ class Icegram {
         $valid_messages     = $this->get_message_data( $message_ids, $preview_mode );
 
         foreach ($valid_messages as $id => $message_data) {
+            // Remove message if required fields are missing
+            if (empty($message_data) || empty($message_data['type'])) {
+                unset( $valid_messages[$id] );
+                continue;
+            }
 			// Remove message if message type is uninstalled
             $class_name = 'Icegram_Message_Type_' . str_replace(' ', '_', ucwords(str_replace('-', ' ', $message_data['type'])));
             if( !class_exists( $class_name ) ) {

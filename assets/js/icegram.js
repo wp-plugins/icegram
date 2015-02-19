@@ -277,8 +277,9 @@
             this.el.find('.ig_button').hide();
         }
         if (this.data.bg_color != undefined && this.data.bg_color != '') {
-        	var hsl_color = window.icegram.get_complementary_color(this.data.bg_color);
-            this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" ).css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
+        	var hsl_colors = window.icegram.get_complementary_color(this.data.bg_color, 2);
+            this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" ).css('background-color', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" );
+            this.el.find('.ig_button, form input[type="submit"]').css('color', "hsl(" + hsl_colors[1].h + "," + hsl_colors[1].s + "%," + hsl_colors[1].l + "%)" );
         }
     	// Hint clickability for buttons / ctas
     	if (typeof(this.data.link) === 'string' && this.data.link != '') {
@@ -428,18 +429,21 @@
     	});
 	}
 
-	Icegram.prototype.get_complementary_color = function (hex) {
-
+	Icegram.prototype.get_complementary_color = function (hex, num) {
+		num = num || 1;
+		var H, S, L, brightness;
+		// Convert RGB to HSL
 	    hex = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i , function(m, r, g, b) {
 	        return r + r + g + g + b + b;
 	    });
 
 	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 	    if(result){
+	    	
 	        var r = parseInt(result[1], 16);
 	        var g = parseInt(result[2], 16);
 	        var b = parseInt(result[3], 16);
-			var brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
+			brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
 			r /= 255;
 	        g /= 255;
 	        b /= 255;
@@ -447,9 +451,9 @@
 		    var maxColor = Math.max(r, g, b);
 		    var minColor = Math.min(r, g, b);
 		    //Calculate L:
-		    var L = (maxColor + minColor) / 2 ;
-		    var S = 0;
-		    var H = 0;
+		    L = (maxColor + minColor) / 2 ;
+		    S = 0;
+		    H = 0;
 		    if(maxColor != minColor){
 		        //Calculate S:
 		        S = (L < 0.5) ? (maxColor - minColor) / (maxColor + minColor) : (maxColor - minColor) / (2.0 - maxColor - minColor) ;
@@ -469,17 +473,46 @@
 		    if(H<0){
 		        H += 360;
 		    }
-			if(brightness > 130){
-				S -= 15;
-				L -= 25;
-			}else{
-				S += 15;
-				L += 25;
+		}
+
+		// Now change HSL to vary color
+		var colors = [];
+	    
+	    // Increase or reduce saturation / light
+		if(brightness > 146){
+			L = Math.max( L-25, 0);
+			S = Math.min( S-15, 100);
+		}else{
+			L = Math.min( L+25, 100);
+			S = Math.min( S+15, 100);
+		}
+		
+		for(var i=0; i < num; i=i+2) {
+
+			// First create background color
+		    H += 45;
+		    if (H > 360) {
+		    	H -= 180; 
+		    }
+	
+			colors.push({h: H, s: S, l: L});
+
+			// Now, create foreground color if needed
+			if (i+1 < num) {
+				var fg = {};
+				if(L > 50){
+					fg = {h: H, s: 20, l: 20 };
+				}else{
+					colors.push({h: H, s: 20, l: 90 });
+				}
+				colors.push(fg);
 			}
-			
-		    return {h: H, s: S, l: L};
-	    } // result if
-	    return null;
+		}
+		
+		if (colors.length > 0) {
+			return (num == 1) ? colors[0] : colors.slice(0, num);
+		}
+		return null;
 	}
 
 	if (typeof Object.create != 'function') {
