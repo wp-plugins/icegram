@@ -18,9 +18,10 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 	function define_settings() {
 		parent::define_settings();
 		$this->settings['theme']['default']	= 'persuade';
+		$this->settings['bg_color']['default']		= '#EF504D';
+		$this->settings['text_color']['default']	= '#FFFFFF';
+
 		unset ( $this->settings['position'],
-				$this->settings['text_color'],
-				$this->settings['bg_color'],
 				$this->settings['icon']
 				);
 	}

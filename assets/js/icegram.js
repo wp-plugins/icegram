@@ -146,7 +146,7 @@
 	Icegram.prototype.submit_tracking_data = function ( ev, params ) {
 		if (this.tracking_data.length > 0 && window.location.href.indexOf("campaign_preview_id") == -1) {
 			var params = {
-				method: 'POST',
+				type: 'POST',
 				url: this.data.ajax_url,
 				async: false,
 				data: {
@@ -265,12 +265,12 @@
         // Apply colors if available
         if (this.data.text_color != undefined && this.data.text_color != '') {
         	this.el.css('color', this.data.text_color);
-        	this.el.find('.ig_content').css('color', this.data.text_color);
+        	this.el.find('.ig_container').css('color', this.data.text_color);
         }
 
         if (this.data.bg_color != undefined && this.data.bg_color != '') {
         	this.el.css('background-color', this.data.bg_color);
-        	this.el.find('.ig_content').css('background-color', this.data.bg_color);
+        	this.el.find('.ig_container').css('background-color', this.data.bg_color);
     	}
 
     	if(this.data.label == undefined || this.data.label == '') {
@@ -278,8 +278,10 @@
         }
         if (this.data.bg_color != undefined && this.data.bg_color != '') {
         	var hsl_colors = window.icegram.get_complementary_color(this.data.bg_color, 2);
-            this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" ).css('background-color', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" );
+            // this.el.find('.ig_button, form input[type="submit"]').css('background', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" ).css('background-color', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" );
+            this.el.find('.ig_button, form input[type="submit"]').css('background-color', "hsl(" + hsl_colors[0].h + "," + hsl_colors[0].s + "%," + hsl_colors[0].l + "%)" );
             this.el.find('.ig_button, form input[type="submit"]').css('color', "hsl(" + hsl_colors[1].h + "," + hsl_colors[1].s + "%," + hsl_colors[1].l + "%)" );
+            this.el.find('.ig_button, form input[type="submit"]').css('border-color', "hsl(" + hsl_colors[0].h + "," + (hsl_colors[0].s-5)  + "%," + (hsl_colors[0].l-8) + "%)" );
         }
     	// Hint clickability for buttons / ctas
     	if (typeof(this.data.link) === 'string' && this.data.link != '') {
@@ -325,7 +327,7 @@
 
 	Icegram_Message_Type.prototype.set_up_show_trigger = function ( ) {
 		if (!isNaN(this.data.delay_time)) {
-			if( this.data.delay_time >= 0 ) {				
+			if( this.data.delay_time >= 0 ) {	
 				var self = this;
 				this.timer = setTimeout( function() { self.show(); } , this.data.delay_time * 1000 );
 			}

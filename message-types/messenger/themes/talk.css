@@ -1,9 +1,10 @@
 .ig_messenger.talk.ig_container {
     width: 210px;
     height: 260px;
-}
 
+}
 .ig_messenger.talk .ig_content {
+    background: transparent !important;
 
 }
 
@@ -39,9 +40,9 @@
     background-repeat: no-repeat;
     font-size: 12px;
     height: 18px;
-    -ms-text-overflow: ellipsis;
+    /*-ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;*/
     white-space: nowrap;
     position: relative;
     display: block;
@@ -108,7 +109,7 @@
 
 .ig_messenger.talk .ig_footer {
     background-image: url(../images/talk-footer-1.png);
-    height: 37px;
+    height: 33px;
     border: 1px solid #BFBFBF;
     border-bottom: none;
 }
@@ -118,13 +119,13 @@
 }
 
 .ig_messenger.talk .ig_close {
-    background-image: url(../images/talk-close.png);
-    right: -4px;
+    background-image: url(../images/talk-close.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0;
     top: 4.5px;
-    margin-right: 3px;
+    right: -1px;
     width: 21px;
     height: 25px;
-    vertical-align: top;
 }
 
 

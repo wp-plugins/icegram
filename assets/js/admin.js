@@ -44,7 +44,7 @@ jQuery(function() {
 			display_message_themes(this_data[i]);
 		};
 
-		jQuery('#campaign_data').on('change', '.message_type', function(e) {
+		jQuery('.inside').on('change', '.message_type', function(e) {
 			var t = jQuery(e.target).parents('.message-setting-fields');
 			display_message_themes(t);
 		});
@@ -107,7 +107,7 @@ jQuery(function() {
 	});
 
 	jQuery("select.ajax_chosen_select_messages").ajaxChosen({
-		method: 'GET',
+		type: 'GET',
 		url: icegram_writepanel_params.ajax_url,
 		dataType: 'json',
 		afterTypeDelay: 100,
@@ -275,6 +275,7 @@ jQuery(function() {
 	//var message_rows = jQuery(this).parent().siblings('.campaign_target_rules_panel').find('.message-row').length;
 	jQuery('.ajax_chosen_select_messages').chosen();
 	jQuery('#campaign_data').on('change', '.ajax_chosen_select_messages' , function() {
+		var selected_tab = jQuery('#ig-tabs li.current').attr('variation_id');
 		var newSettings = jQuery.extend( {}, tinyMCEPreInit.mceInit[ 'content' ] );
 		var newQTS = jQuery.extend( {}, tinyMCEPreInit.qtInit[ 'content' ] );
 		var parent_campaign_box = jQuery(this).parent().siblings('.campaign_target_rules_panel');
@@ -289,7 +290,7 @@ jQuery(function() {
 		jQuery('.message-title-text').show();
 		jQuery('.message-title-input').hide();
 		jQuery.ajax({
-			method: 'POST',
+			type: 'POST',
 			url: icegram_writepanel_params.ajax_url,
 			dataType: 'json',
 			data: {
@@ -340,6 +341,9 @@ jQuery(function() {
 				}else{
 					jQuery('#edit'+response.id+'-html').click();
 				}
+				if(typeof(selected_tab) !== 'undefined'){
+						jQuery( window ).trigger( "icegram_tab_selected" ,[selected_tab]);
+				}
 			}
 		});
 	});
@@ -375,7 +379,7 @@ jQuery(function() {
 		jQuery(this).closest('h3.hndle').trigger('click');
 	});
 
-	jQuery('.campaign_preview').on( 'click', function(event) {
+	jQuery('#campaign_data').on( 'click','.campaign_preview' ,function(event) {
 		jQuery(this).closest('h3.hndle').trigger('click');
 		
 		if( jQuery('.message-row').length == 0 )
@@ -387,7 +391,7 @@ jQuery(function() {
 		params.push( {name: 'action', value: 'save_campaign_preview' });
 
 		jQuery.ajax({
-			method: 'POST',
+			type: 'POST',
 			async: false,
 			url: icegram_writepanel_params.ajax_url,
 			data: params,

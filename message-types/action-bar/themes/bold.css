@@ -78,22 +78,11 @@
 
 .action_bar.bold .ig_arrow_block.border {
     border: 3px solid #fff;
+    border-top-width: 0;
     -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
-}
-
-.action_bar.bold.top .ig_arrow_block.border, .action_bar.bold.bottom .ig_arrow_block {
-    border-width: 0 3px 3px 3px;
     -moz-border-radius: 0 0 5px 5px;
     -webkit-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px;
-}
-
-.action_bar.bold.bottom .ig_arrow_block.border, .action_bar.bold.top .ig_arrow_block {
-    border-width: 0 3px 3px 3px;
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
-    padding: .8em .4em;
 }

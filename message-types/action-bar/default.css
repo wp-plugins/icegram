@@ -6,15 +6,21 @@
     display: none;
     left: 0;    
 }
+.action_bar.ig_container.top.ig_show{
+    position: fixed;
+    z-index: 9999999;
+}
 
 .action_bar.ig_container.top {
+    top: 0;
 }
 
 .action_bar.ig_container.bottom {
+    bottom: 0;
 }
 
 .action_bar .ig_content {
-    color: #FFF;
+    /*color: #FFF;*/
 }
 
 .action_bar.hello .ig_headline {
@@ -62,7 +68,7 @@
 
 .action_bar .ig_arrow_block {
     font-weight: 700;
-    z-index: 100000;
+    z-index: 1000000;
     right: 10px;
     text-align: right;
     font-size: 20px;

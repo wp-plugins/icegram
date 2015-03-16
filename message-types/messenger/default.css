@@ -8,15 +8,8 @@
     font-family: "Lucida Grande", Arial, sans-serif;
     overflow: hidden;
     text-align: left;
-}
-
-.ig_messenger.ig_container, .ig_messenger.ig_container .ig_content {
     background-color: transparent !important;
-}
-
-.ig_messenger .ig_content {
-
-}
+} 
 
 .ig_messenger .ig_header {
     position: relative;
@@ -103,6 +96,7 @@
     height: 28px;
     width: 28px;
     vertical-align: top;
+    display: inline-block;
 }
 
 .ig_messenger .powered_by {

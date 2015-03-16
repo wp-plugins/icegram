@@ -52,6 +52,7 @@ div.icegram .ig_embed_form.ig_auto .ig_embed_form_container{
 
 div.icegram .ig_embed_form.ig_left .ig_embed_form_container{
     float: left;
+    overflow: hidden;
 }
 div.icegram .ig_embed_form.ig_right .ig_embed_form_container{
     float: right;
@@ -100,7 +101,7 @@ div.icegram .ig_embed_form.ig_horizontal input{
     width: 96%;
     margin-right: 4%;
 }
-
+    
 div.icegram .ig_embed_form .ig_form_el_group.ig_form_el_radio input{
     width: auto;
 }

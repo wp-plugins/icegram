@@ -70,6 +70,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
 
             }, 0, "linear", function() {
                 self.el.show();
+                self.el.addClass('ig_show').removeClass('ig_hide');
                 self.el.find('.ig_arrow').show();
                 self.el.find('.ig_arrow_block').addClass('open').removeClass('rotate').removeClass('border').css('position', 'initial');
             });
@@ -93,6 +94,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
                 marginTop: -this.el.outerHeight()
             }, 0, "linear", function() {
                     self.el.show();
+                    self.el.addClass('ig_show').removeClass('ig_hide');
                     self.el.find('.ig_arrow').show();
                     self.el.find('.ig_arrow_block').addClass('open').addClass('rotate').removeClass('border').css('position', 'initial');
                     self.el.find('.ig_arrow_block').css('background-color', '');
@@ -124,6 +126,7 @@ Icegram_Message_Type_Action_Bar.prototype.hide = function ( options, silent ) {
                 marginBottom: -this.el.outerHeight()
             }, 300, "linear", function() {
                  self.el.find('.ig_arrow').show();
+                 self.el.addClass('ig_hide').removeClass('ig_show');
                  self.el.find('.ig_arrow_block').removeClass('open').addClass('border').addClass('rotate').css({
                     'position': 'fixed',
                     'bottom': '0'
@@ -138,8 +141,9 @@ Icegram_Message_Type_Action_Bar.prototype.hide = function ( options, silent ) {
                 self.el.find('.ig_arrow_block').css('background-color', self.data.bg_color);                
                 self.el.find('.ig_arrow_block').css('margin-top', '0' );
                 self.el.find('.ig_arrow').show();
+                self.el.addClass('ig_hide').removeClass('ig_show');
                 self.el.find('.ig_arrow_block').removeClass('open').removeClass('rotate').addClass('border').css({
-                    'position': 'absolute',
+                    'position': 'fixed',
                     'top': '0'
                 });
             });

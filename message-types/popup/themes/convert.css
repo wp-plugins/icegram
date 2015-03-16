@@ -1,13 +1,18 @@
-.ig_popup.convert.ig_container {
-    padding: 1em;
+.ig_popup.convert .ig_container {
+    background-color: hsl(58, 100%, 90%);
+    color: hsl(0, 1%, 28%);
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding-bottom: 1.5em;
 }
 
 .ig_popup.convert .ig_headline {
     font-size: 2.5em;
-    color: hsl(0, 1%, 28%);
+    padding: .8em .8em .3em .8em;
+    /*color: hsl(0, 1%, 28%);*/
     letter-spacing: 0;
     text-align: left;
-    margin-bottom: 1em;
 }
 
 .ig_popup.convert .ig_image {
@@ -16,14 +21,10 @@
 
 .ig_popup.convert .ig_message {
     font-size: 1.5em;
+    padding: 0.5em 1.5em;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    color: hsl(0, 1%, 28%);
+    /*color: hsl(0, 1%, 28%);*/
     vertical-align: baseline;
-}
-
-.ig_popup.convert .ig_close {
-    top: -15px;
-    right: -15px;
 }
 
 .ig_popup.convert .ig_button, 
@@ -32,11 +33,10 @@
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
-    background-color: hsl(0, 94%, 41%) !important;
-    background: hsl(0, 94%, 41%) !important; 
-    font-size: 1.75em;
+    background-color: hsl(0, 94%, 41%);
     color: hsl(0, 33%, 98%);
-    border: .3em solid hsl(0, 6%, 71%) !important;
+    font-size: 1.75em;
+    border: .25em solid hsl(0, 6%, 71%) !important; 
     width: 60%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -moz-border-radius: 1em;
@@ -51,22 +51,6 @@
     clear: both;
 }
 
-.ig_popup.convert .ig_button, 
-.ig_popup.convertinput[type="submit"]:active,
-.ig_popup.convert input[type="button"]:active{
-    border-top: .3em solid hsl(0, 6%, 71%) !important;
-    -moz-border-radius: 1em;
-    -webkit-border-radius: 1em;
-    border-radius: 1em;
-
-}
-
-.ig_popup.convert.mfp-content {
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    background: hsl(58, 100%, 90%);
-}
 @media only screen and (max-device-width: 319px) {
     .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
         width: 75% !important;
@@ -83,7 +67,6 @@
     .ig_popup.convert .ig_button, .ig_popup.convert input[type="submit"], .ig_popup.convert input[type="button"]{
         width: 75% !important;
     }
-      
   }
 
  @media only screen and (min-device-width: 414px) and (max-device-width: 643px) {

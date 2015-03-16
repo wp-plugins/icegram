@@ -37,9 +37,9 @@
     background: no-repeat url(../images/clear-header.png) 0 0;
     font-size: 13px;
     height: 15px;
-    -ms-text-overflow: ellipsis;
+   /* -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;*/
     white-space: nowrap;
     position: relative;
     display: block;

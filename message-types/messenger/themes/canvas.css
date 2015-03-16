@@ -33,6 +33,10 @@
     font-weight: bold;
     color: #111;
     line-height: 1.5em;
+    max-width: 350px;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 .ig_messenger.canvas .ig_header2_image {

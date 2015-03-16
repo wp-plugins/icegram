@@ -358,7 +358,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<select name="campaign_target_rules[expiry_time]">
 							<?php foreach($expiry_options_for_shown as $key => $option){
 									?>
-									<option value="<?php echo $key; ?>" <?php selected( $campaign_target_rules['expiry_time'], $key ); ?>><?php echo $option; ?></option>
+									<option value="<?php echo $key; ?>" <?php (!empty($campaign_target_rules['expiry_time'])) ? selected( $campaign_target_rules['expiry_time'], $key ) : ''; ?>><?php echo $option; ?></option>
 							<?php
 								  }
 							?>
@@ -373,7 +373,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 						<select name="campaign_target_rules[expiry_time_clicked]">
 							<?php foreach($expiry_options_for_clicked as $key => $option){
 									?>
-									<option value="<?php echo $key; ?>" <?php selected( $campaign_target_rules['expiry_time_clicked'], $key ); ?>><?php echo $option; ?></option>
+									<option value="<?php echo $key; ?>" <?php (!empty($campaign_target_rules['expiry_time_clicked'])) ? selected( $campaign_target_rules['expiry_time_clicked'], $key ) : ''; ?>><?php echo $option; ?></option>
 							<?php
 								  }
 							?>
@@ -610,9 +610,10 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			if ( empty($_POST['post_ID']) ) die();
 			if ( !current_user_can( 'edit_post', $_POST['post_ID'] ) ) die();
 
-			if( !empty( $_POST['messages'] ) ) {
-				
-				update_post_meta( $_POST['post_ID'], 'campaign_preview', $_POST['messages'] ) ;
+			$messages = apply_filters('campaign_preview_messages' ,  $_POST['messages'] , $_POST);
+			
+			if( !empty( $messages ) ) {
+				update_post_meta( $_POST['post_ID'], 'campaign_preview', $messages ) ;
 
 				foreach ( (array) $_POST['message_data'] as $message_id => $message_data ) {
 					$type = $message_data['type'];
@@ -635,11 +636,16 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				}
 				// Determine page url to preview on...
 				$page_url = '';
+					
 				if ( !empty($_POST['campaign_target_rules']) && !empty($_POST['campaign_target_rules']['other_page']) && !empty($_POST['page_id']) && is_array($_POST['page_id'])) {
 					$page_url = get_permalink( $_POST['page_id'][0] );
 				}
 				if ($page_url == '') {
-					$page_url = home_url();
+					if(!empty($_POST['campaign_target_rules']['local_url']) && is_array($_POST['campaign_target_rules']['local_urls'])){
+						$page_url = (strpos($_POST['campaign_target_rules']['local_urls'][0], '*') === false) ? $_POST['campaign_target_rules']['local_urls'][0] : home_url();
+					}else{
+						$page_url = home_url();
+					}
 				}
 				ob_clean();
 				echo add_query_arg( 'campaign_preview_id', $_POST['post_ID'], $page_url );
