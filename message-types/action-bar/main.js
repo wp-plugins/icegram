@@ -11,7 +11,7 @@ Icegram_Message_Type_Action_Bar.prototype.constructor = Icegram_Message_Type_Act
 Icegram_Message_Type_Action_Bar.prototype.get_template_default = function () {
     return  '<div class="icegram action_bar_{{=id}}" >'+
                 '<div class="action_bar ig_container {{=theme}}" id="icegram_message_{{=id}}">'+
-                    '<div class="ig_content clear">'+
+                    '<div class="ig_content ig_clear">'+
                         '<div class="ig_arrow_block" id="action_bar_close_{{=id}}">'+
                             '<span class="ig_arrow"></span>'+
                         '</div>'+
@@ -33,6 +33,10 @@ Icegram_Message_Type_Action_Bar.prototype.post_render = function ( ) {
     if( this.data.theme == 'hello' ) {
         var message_button = this.el.find('.ig_button');
         this.el.find('.ig_data').append(message_button);
+        // Temp Fix for verticle alignment of element in Hello Theme
+        if(this.el.find('.ig_embed_form').get(0)){
+            this.el.find('.ig_data').addClass('ig_valign_form_fix');
+        }
     }
 };
 
@@ -66,6 +70,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
 
             }, 0, "linear", function() {
                 self.el.show();
+                self.el.addClass('ig_show').removeClass('ig_hide');
                 self.el.find('.ig_arrow').show();
                 self.el.find('.ig_arrow_block').addClass('open').removeClass('rotate').removeClass('border').css('position', 'initial');
             });
@@ -89,6 +94,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
                 marginTop: -this.el.outerHeight()
             }, 0, "linear", function() {
                     self.el.show();
+                    self.el.addClass('ig_show').removeClass('ig_hide');
                     self.el.find('.ig_arrow').show();
                     self.el.find('.ig_arrow_block').addClass('open').addClass('rotate').removeClass('border').css('position', 'initial');
                     self.el.find('.ig_arrow_block').css('background-color', '');
@@ -96,6 +102,7 @@ Icegram_Message_Type_Action_Bar.prototype.show = function ( options, silent ) {
             this.el.animate({
                 marginTop: 0
             }, 300);
+            //action bar
             break;
     }
     silent !== true && this.track( 'shown' );
@@ -119,6 +126,7 @@ Icegram_Message_Type_Action_Bar.prototype.hide = function ( options, silent ) {
                 marginBottom: -this.el.outerHeight()
             }, 300, "linear", function() {
                  self.el.find('.ig_arrow').show();
+                 self.el.addClass('ig_hide').removeClass('ig_show');
                  self.el.find('.ig_arrow_block').removeClass('open').addClass('border').addClass('rotate').css({
                     'position': 'fixed',
                     'bottom': '0'
@@ -133,8 +141,9 @@ Icegram_Message_Type_Action_Bar.prototype.hide = function ( options, silent ) {
                 self.el.find('.ig_arrow_block').css('background-color', self.data.bg_color);                
                 self.el.find('.ig_arrow_block').css('margin-top', '0' );
                 self.el.find('.ig_arrow').show();
+                self.el.addClass('ig_hide').removeClass('ig_show');
                 self.el.find('.ig_arrow_block').removeClass('open').removeClass('rotate').addClass('border').css({
-                    'position': 'absolute',
+                    'position': 'fixed',
                     'top': '0'
                 });
             });

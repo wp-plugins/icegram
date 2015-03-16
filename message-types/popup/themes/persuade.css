@@ -1,73 +1,71 @@
-
-.popup.persuade .ig_headline {
-    letter-spacing: 0;
-    color: hsl(0, 100%, 100%);
-    font-size: 3em;
-    text-align: center;
-    -webkit-font-smoothing: antialiased;
-    margin: .25em auto;
+.ig_popup.persuade .ig_container {
+    background: hsl(1, 83%, 62%);
+    color: #FFF;
+    border: .4em dashed hsl(0, 100%, 100%);
+    padding-bottom: .1em;
 }
 
-.popup.persuade .ig_image {
+.ig_popup.persuade .ig_headline {
+    letter-spacing: 0;
+    /*color: hsl(0, 100%, 100%);*/
+    font-size: 2.8em;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1em;
+    padding: .7em .7em 0.5em .7em;
+}
+
+.ig_popup.persuade .ig_image {
     float: left;
 }
 
-.popup.persuade .ig_message {
-    color: #FFF;
-    font-size: 1.75em;
+.ig_popup.persuade .ig_message {
+    /*color: #FFF;*/
+    padding: 0.5em 1.5em;
+    font-size: 1.5em;
     font-weight: 300;
-    margin: .5em auto 1em;
     text-align: center;
     -webkit-font-smoothing: antialiased;
 }
 
-.popup.persuade .ig_close {
-    top: -15px;
-    right: -15px;
-}
-
-.popup.persuade .ig_button, .popup.persuade input[type="submit"], .popup.persuade input[type="button"] {
-    color: hsl(0, 100%, 100%);
+.ig_popup.persuade .ig_button, 
+.ig_popup.persuade input[type="submit"], 
+.ig_popup.persuade input[type="button"] {
     text-decoration: none;
     background-color: hsl(0, 0%, 26%);
+    color: hsl(0, 100%, 100%);
     font-size: 2em;
     font-weight: 400;
-    width: 60%;
+    width: 55%;
+    border: none;
     -moz-border-radius: .6em;
     -webkit-border-radius: .6em;
     border-radius: .6em;
-    -moz-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
-    -webkit-box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
-    box-shadow: 0 .3em 0 hsl(0, 0%, 20%), 0 .3em 2em hsla(0, 0%, 0%, 0.7);
-    -moz-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
-    -webkit-box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
-    box-shadow: 0 .3em 0 #333, 0 .3em 2em rgba(0, 0, 0, 0.7);
+    border-bottom: .3em solid hsl(0, 0%, 20%);
+    -moz-box-shadow: 0 .3em 1.5em rgba(0, 0, 0, 0.6) !important;
+    -webkit-box-shadow: 0 .3em 1.5em rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 .3em 1.5em rgba(0, 0, 0, 0.6) !important;
     text-align: center;
-    margin: .2em auto .5em;
-    padding: 0.5em;
+    margin: .2em auto .5em auto;
+    padding: 0.4em;
     line-height: 1.2em;
     clear: both;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.popup.persuade .ig_button:hover, .popup.persuade input[type="submit"]:hover, .popup.persuade input[type="button"]:hover {
-    -moz-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
-    -webkit-box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
-    box-shadow: 0 .1em 0 hsl(0, 0%, 20%), 0 .1em .2em hsla(0, 0%, 0%, 0.9) !important;
-    -moz-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
-    -webkit-box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
-    box-shadow: 0 .1em 0 #333, 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
-    position: relative;
-    top: .2em
+.ig_popup.persuade .ig_button:hover, 
+.ig_popup.persuade input[type="submit"]:hover, 
+.ig_popup.persuade input[type="button"]:hover {
+    border-bottom: .1em solid hsl(0, 0%, 20%);
+    -moz-box-shadow: 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    -webkit-box-shadow: 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    box-shadow: 0 .1em .2em rgba(0, 0, 0, 0.9) !important;
+    margin: .4em auto .5em auto;
 }
 
-.popup.persuade #TB_ajaxContent {
-    border: .6em dashed hsl(0, 100%, 100%);
-}
-
-.popup.persuade#TB_window {
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    background: hsl(1, 83%, 62%);
+.ig_popup.persuade .ig_button:active, 
+.ig_popup.persuade input[type="submit"]:active, 
+.ig_popup.persuade input[type="button"]:active {
+    border-top: none;
+    margin: .4em auto .5em auto;
 }

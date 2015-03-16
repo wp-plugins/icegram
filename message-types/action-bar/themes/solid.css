@@ -1,12 +1,3 @@
-.action_bar.solid.ig_container {
-}
-
-.action_bar.solid.ig_container.top {
-}
-
-.action_bar.solid.ig_container.bottom {
-}
-
 .action_bar.solid .ig_content {
     padding: 1em 0 1em 1em;
 }
@@ -32,7 +23,9 @@
     float: left;
 }
 
-.action_bar.solid .ig_button, .action_bar.solid input[type="submit"], .action_bar.solid input[type="button"] {
+.action_bar.solid .ig_button, 
+.action_bar.solid input[type="submit"], 
+.action_bar.solid input[type="button"] {
     display: inline-block;
     font-size: 1em;
     letter-spacing: .1em;
@@ -44,17 +37,16 @@
     padding: .6em 2em;
 }
 
+.action_bar.solid .ig_button{
+    float: right;
+    margin-right: 1em !important; 
+}
 .action_bar.solid .ig_button:hover, .action_bar.solid input[type="submit"]:hover, .action_bar.solid input[type="button"]:hover {
     -moz-box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
     -webkit-box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
     box-shadow: inset 0 -4em 0 rgba(255, 255, 255, 0.15);
 }
 
-.action_bar.solid.top .ig_arrow_block.border, .action_bar.solid.bottom .ig_arrow_block {
-    border-width: 0 3px 3px 3px;
-}
-
-.action_bar.solid.bottom .ig_arrow_block.border, .action_bar.solid.top .ig_arrow_block {
-    border-width: 3px 3px 0 3px;
-    padding: .8em .4em;
+.action_bar.solid .ig_arrow_block.border {
+    border: none;
 }
