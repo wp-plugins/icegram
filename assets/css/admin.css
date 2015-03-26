@@ -698,3 +698,12 @@ CSS for landing page and Help and Support
 	content: "\f132";
 	vertical-align: middle;
 }
+/* chosen fix*/
+
+.message-setting-fields .chosen-container-single .chosen-single 
+{ 
+	z-index:initial!important; 
+} 
+.message-setting-fields .chosen-container-single.chosen-single div b { 
+	background: url(../images/chosen-sprite.png)no-repeat 0 2px!important; 
+} 

@@ -12,7 +12,7 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 		
 		$this->popup_default_delay_time = 3;
 		add_filter( 'icegram_data', array( $this, 'arrange_proper_delay_time' ) , 11);
-		add_filter( 'icegram_message_type_params_popup', array( $this, 'set_admin_style' ) );		
+		add_filter( 'icegram_message_type_params_popup', array( $this, 'set_admin_style' ) );	
 	}
 
 	function define_settings() {

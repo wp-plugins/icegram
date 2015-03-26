@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 1.8.7
+Stable tag: 1.8.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -153,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.8 = 
+Improved short code handling, WishList member compatibility and other fixes.
+
 = 1.8.7 = 
 Popups now support custom background and text colors. And a handful of fixes!
 
@@ -209,6 +212,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.8 =
+* New: Headlines now support shortcodes! 
+* Update: A message shown on click of another (using CTA actions addon), can now contain shortcodes
+* Fix: Compatibility with Wishlist Member plugin
+* Fix: Popup close event not triggered when clicking outside the popup - on its overlay
+* Update: Automatically adds http:// in CTA links if missing
+
 = 1.8.7 =
 * New: Can now define custom background and text colors for Popups
 * Fix: Button text color not showing well in some themes

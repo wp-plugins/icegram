@@ -35,9 +35,15 @@
             src: popup_id,
             type: 'inline'
             },
-            showCloseBtn :false
+            showCloseBtn :false,
+            callbacks: {
+                close: function() {
+                  // Will fire when popup is closed
+                    silent !== true && self.track( 'closed' );
+                }
+            }
         });
-        // jQuery('.mfp-content').removeClass().addClass('mfp-content ig_popup ' + self.data.theme);
+        
         silent !== true && this.track( 'shown' );
     };
     
@@ -54,6 +60,7 @@
             src: popup_id,
             type: 'inline'
         }});
-        silent !== true && this.track( 'closed' );
     };
+
+
    

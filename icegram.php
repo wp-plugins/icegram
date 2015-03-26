@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.7
+ * Version: 1.8.8
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
@@ -34,7 +34,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.7";
+        $this->version = "1.8.8";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -582,16 +582,7 @@ class Icegram {
             remove_filter('the_content', array( $this, 'after_wpautop' ) , 11);
             */
             // Redo the_content functionality to avoid other plugins adding extraneous code to messages
-            $content = $message_data['message'];
-               
-            $content = convert_chars( convert_smilies( wptexturize( $content ) ) );
-            if(isset($GLOBALS['wp_embed'])) {
-                $content = $GLOBALS['wp_embed']->autoembed($content);
-            }
-            $content = $this->after_wpautop( wpautop( $this->before_wpautop( $content ) ) );
-            $content = do_shortcode( shortcode_unautop( $content ) );
-            $messages[$key]['message'] = $content;
-            
+            $this->process_message_body($messages[$key]);
         }
 
         if( empty( $messages ) )
@@ -663,6 +654,20 @@ class Icegram {
             wp_enqueue_style( 'icegram_css_'.$message_type, $this->message_types[$message_type]['baseurl'] . 'default.css', array(), $ver );
         }
 
+    }
+    
+    // Process
+    function process_message_body(&$message_data){
+        $content = $message_data['message'];
+        $content = convert_chars( convert_smilies( wptexturize( $content ) ) );
+        if(isset($GLOBALS['wp_embed'])) {
+            $content = $GLOBALS['wp_embed']->autoembed($content);
+        }
+        $content = $this->after_wpautop( wpautop( $this->before_wpautop( $content ) ) );
+        $content = do_shortcode( shortcode_unautop( $content ) );
+        $message_data['message'] = $content;
+        //do_shortcode in headline
+        $message_data['headline'] = do_shortcode( shortcode_unautop( $message_data['headline'] ) );
     }
 
     function enqueue_admin_styles_and_scripts() {

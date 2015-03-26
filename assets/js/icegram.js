@@ -183,6 +183,12 @@
 		this.data = data;
 		this.type = data.type;
 		this.data.delay_time = parseInt(this.data.delay_time);
+		//add http:// to link
+		if (typeof(this.data.link) === 'string' && this.data.link != '') {
+		    if (!/^https?:\/\//i.test(this.data.link)) {
+		    	this.data.link = "http://" + this.data.link;
+		    }
+	    }
 		this.set_template( this.get_template_default() );
 		this.init();
 	}
