@@ -1,4 +1,4 @@
-.messenger.ig_container {
+.ig_messenger.ig_container {
     display: block;
     position: fixed;
     cursor: pointer;
@@ -8,41 +8,34 @@
     font-family: "Lucida Grande", Arial, sans-serif;
     overflow: hidden;
     text-align: left;
-}
-
-.messenger.ig_container, .messenger.ig_container .ig_content {
     background-color: transparent !important;
-}
+} 
 
-.messenger .ig_content {
-
-}
-
-.messenger .ig_header {
+.ig_messenger .ig_header {
     position: relative;
     overflow: hidden;
     display: block;
     white-space: nowrap;
 }
 
-.messenger .ig_header_image {
+.ig_messenger .ig_header_image {
     display: inline-block;    
 }
 
-.messenger .ig_header_text {
+.ig_messenger .ig_header_text {
     text-decoration: none;
     font-weight: 700;
     overflow: hidden;  
 }
 
-.messenger .ig_headline {
+.ig_messenger .ig_headline {
     overflow: hidden;
     display: inline-block; 
     text-decoration: none;
     white-space: nowrap;
 }
 
-.messenger .ig_header2_image {
+.ig_messenger .ig_header2_image {
     height: 30px;
     position: relative;
     display: block;
@@ -51,27 +44,27 @@
     border-top: none;
 }
 
-.messenger .ig_body {
+.ig_messenger .ig_body {
     overflow-x: hidden;
     display: block;
     border-bottom: none;    
 }
 
-.messenger .ig_message_body {
+.ig_messenger .ig_message {
     text-align: left;
     word-wrap: break-word;
     display: inline-block;
 }
 
-.messenger .ig_message_body p {
+.ig_messenger .ig_message p {
     margin-bottom: 0.25em;
 }
 
-.messenger  .ig_no_icon.ig_message_body {
+.ig_messenger  .ig_no_icon.ig_message {
     width: 91%;
 }
 
-.messenger .ig_separator {
+.ig_messenger .ig_separator {
     color: transparent;
     background: transparent;
     border: none;
@@ -81,31 +74,64 @@
     margin: 1px 0 2px;
 }
 
-.messenger .ig_footer {
+.ig_messenger .ig_footer {
     position: relative;
     display: block;
     background-repeat: no-repeat;
 }
 
-.messenger .ig_footer_image {
+.ig_messenger .ig_footer_image {
     background-repeat: no-repeat;
     position: relative;
     display: block;    
 }
 
-.messenger .ig_close {
+.ig_messenger .ig_close {
     position: absolute;
     display: inline-block;  
     background-repeat: no-repeat;    
 }
 
-.messenger .ig_icon {
+.ig_messenger .ig_icon {
     height: 28px;
     width: 28px;
     vertical-align: top;
+    display: inline-block;
 }
 
-.messenger .powered_by {
+.ig_messenger .powered_by {
     font-size: 10px;
     position: relative;
 }
+.ig_messenger .ig_embed_form.ig_vertical.ig_quarter .ig_embed_form_container,
+.ig_messenger .ig_embed_form.ig_horizontal.ig_quarter .ig_embed_form_container{
+    width: 50%!important;
+}
+
+.ig_messenger .ig_embed_form.ig_vertical.ig_half li,
+.ig_messenger .ig_embed_form.ig_vertical.ig_quarter li,
+.ig_messenger .ig_embed_form.ig_horizontal.ig_half li,
+.ig_messenger .ig_embed_form.ig_horizontal.ig_quarter li{
+    min-width: 96% !important;
+}
+
+.ig_messenger .ig_button, 
+.ig_messenger input[type="submit"], 
+.ig_messenger input[type="button"] {
+    border-bottom : none;
+    cursor: pointer;
+}
+.ig_messenger .ig_button:active, 
+.ig_messenger input[type="submit"]:active, 
+.ig_messenger input[type="button"]:active {
+    border-top : none;
+}
+
+.ig_messenger .ig_close {
+    background: no-repeat url(../messenger/images/clear-header.png) 0 -195px;
+    right: 10px;
+    top: 20px;
+    width: 21px;
+    height: 13px;
+}
+

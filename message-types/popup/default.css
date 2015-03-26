@@ -1,69 +1,100 @@
-.popup.ig_container {
+.ig_popup{
     opacity: 1;
     display: block;
     z-index: 100000;
-}
-
-.popup.ig_container, .popup.ig_container .ig_content {
     background-color: transparent !important;
+    color: transparent !important;
+    width: 60%;
+    margin: 32px auto 20px auto !important;
 }
 
-.popup .ig_headline {
+.ig_popup .ig_container{
+    position: relative;
+}
+
+.ig_popup .ig_container, 
+.ig_popup .ig_container .ig_content {
+    background-color: transparent;
+}
+.ig_popup .ig_container .ig_bg_overlay{
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+}
+
+.ig_popup .ig_headline {
     text-decoration: none;
     font-weight: 800;
-    line-height: 1em;
-}
-
-.popup .ig_data {
-    overflow-y: auto;
-}
-
-.popup .ig_image {
-    margin: 0 1em;
-}
-
-.popup .ig_message {
+    font-size: 2em;
     line-height: 1.2em;
 }
 
-.popup .ig_close {
+.ig_popup .ig_data {
+    /*overflow: hidden;*/
+    position: relative;
+}
+
+.ig_popup .ig_image {
+    margin: 0 1em;
+}
+
+.ig_popup .ig_message {
+    line-height: 1.2em;
+    font-size: 1.2em;
+}
+
+.ig_popup .ig_message p{
+    margin-bottom: .9em;
+}
+.ig_popup .ig_close {
     background-image: url(../popup/images/popup-close.png);
     background-repeat: no-repeat;
     background-position: left bottom;
     height: 32px;
     width: 30px;
     cursor: pointer;
-    position: absolute;
     -webkit-background-size: 100%;
     background-size: 100%;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    float: right;
+    margin: -2em -1em 0 0;
+    top: 1em;
+    position: relative;
+    z-index: 10;
 }
 
-.popup .ig_close:hover {
+.ig_popup .ig_close:hover {
+    height: 32px;
+    width: 30px;
     background-position: left top;    
 }
 
-.popup .ig_button, .popup input[type="submit"], .popup input[type="button"] {
+.ig_popup .ig_button, 
+.ig_popup input[type="submit"], 
+.ig_popup input[type="button"] {
     cursor: pointer;
     display: block;
+    border-bottom : none;
+    background-image: none;
+    position: relative;
 }
 
-.popup .ig_button:hover, .popup input[type="submit"]:hover, .popup input[type="button"]:hover {
+.ig_popup .ig_button:hover,
+.ig_popup input[type="submit"]:hover,
+.ig_popup input[type="button"]:hover {
 
 }
-
-.popup #TB_ajaxContent {
-    overflow: hidden;
-    height: auto !important;
-    width: auto !important;
+.ig_popup .ig_button:active,
+.ig_popup input[type="submit"]:active,
+.ig_popup input[type="button"]:active{
 }
 
-.popup#TB_window {
-    height: auto !important;
-}
-
-.TB_overlayBG .powered_by {
+.mfp-wrap .powered_by {
     position: fixed;
     bottom: 1em;
     left: 1em;
@@ -71,6 +102,90 @@
     padding: 0.1em;
 }
 
-div.icegram .popup input[type="submit"], div.icegram .popup input[type="button"] {
+div.icegram .ig_popup input[type="submit"], 
+div.icegram .ig_popup input[type="button"] {
     font-size: 100%;
+}
+
+@media only screen and (max-device-width: 319px) {
+    .ig_popup {
+        width: 90%;
+        top: 3% !important;
+        margin: 5px auto !important;
+        font-size: 8px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
+    .ig_popup {
+        width: 85%;
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 10px;
+
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+  @media only screen and (min-device-width: 360px) and (max-device-width: 413px) {
+    .ig_popup {
+        width: 85%;
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 12px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+ @media only screen and (min-device-width: 414px) and (max-device-width: 643px) {
+    .ig_popup {
+        width: 85%;  
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 13px;
+    }
+    .ig_popup .ig_button,
+     div.ig_popup input[type="submit"],
+     div.ig_popup input[type="button"] {
+        width: 90% !important;
+     }
+  }
+
+
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : portrait) {
+    .ig_popup {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 14px;
+    }
+  }
+ 
+  @media only screen and (min-device-width: 644px) and (max-device-width: 767px) and (orientation : landscape) {
+    .ig_popup {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 11px;
+    }
+  }
+
+/* Small devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-device-width: 992px){
+    .ig_popup {
+        top: 5% !important;
+        margin: 10px auto !important;
+        font-size: 14px;
+    }
 }

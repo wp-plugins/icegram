@@ -6,21 +6,28 @@
     display: none;
     left: 0;    
 }
+.action_bar.ig_container.top.ig_show{
+    position: fixed;
+    z-index: 9999999;
+}
 
 .action_bar.ig_container.top {
+    top: 0;
 }
 
 .action_bar.ig_container.bottom {
+    bottom: 0;
 }
 
 .action_bar .ig_content {
-    color: #FFF;
+    /*color: #FFF;*/
 }
 
 .action_bar.hello .ig_headline {
 }
 
 .action_bar .ig_message {
+    line-height: 1.3em;
 }
 
 .action_bar img.icon {
@@ -30,8 +37,16 @@
 .action_bar .ig_data {
 }
 
-.action_bar .ig_button, .action_bar input[type="submit"], .action_bar input[type="button"] {
+.action_bar .ig_button, 
+.action_bar input[type="submit"], 
+.action_bar input[type="button"] {
+    border-bottom : none;
     cursor: pointer;
+}
+.action_bar .ig_button:active, 
+.action_bar input[type="submit"]:active, 
+.action_bar input[type="button"]:active {
+    border-top : none;
 }
 
 .action_bar .ig_close {
@@ -53,13 +68,13 @@
 
 .action_bar .ig_arrow_block {
     font-weight: 700;
-    z-index: 100000;
+    z-index: 1000000;
     right: 10px;
     text-align: right;
     font-size: 20px;
     cursor: pointer;
     line-height: 0;
-    padding: 8px;
+    padding: 4px !important;
     float: right;
 }
 
@@ -78,33 +93,29 @@
     filter: alpha(opacity=90);
     opacity: 0.9;
 }
-
-.action_bar .ig_arrow_block span {
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.action_bar .ig_arrow:after {
-    font-family: dashicons;
-    content: "\f346";
-}
-
-.action_bar .top .ig_arrow_block.open {
-    padding: 5px;
-    margin-right: 5px;
-    margin-top: 8px;
-    background-color: transparent !important;
-}
-
-.action_bar .bottom .ig_arrow_block.open {
-    padding: 5px;
-    margin-right: 5px;
-}
-
 .action_bar .rotate {
     transform:rotate(180deg);
-    -ms-transform:rotate(180deg); /* IE 9 */
-    -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+    -ms-transform:rotate(180deg); 
+    -webkit-transform:rotate(180deg); 
+}
+.action_bar .ig_arrow_block span{
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px;
+    overflow: hidden;
+}
+.action_bar.top .ig_arrow_block span , .action_bar.bottom .ig_arrow_block span {
+    background-image: url(../../assets/images/arrows-sprite.png);
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 28px;
+}
+
+.action_bar.top .ig_arrow_block span { 
+    background-position: -2px -5px;
+}
+.action_bar.bottom .ig_arrow_block span {
+    background-position: -4px -5px;
 }
 
 div.icegram .action_bar form {
@@ -114,12 +125,11 @@ div.icegram .action_bar form {
 div.icegram .action_bar input, div.icegram .action_bar label {
     display: inline-block;
 }
-
-div.icegram .action_bar .clear:after {
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+   .icegram .action_bar .ig_button{
+     margin: .4em !important;
+   }
 }
