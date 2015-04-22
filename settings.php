@@ -7,6 +7,11 @@ if( isset( $_POST['submit'] ) ) {
 	} else {		
 		update_option( 'icegram_share_love', 'no' );
 	}
+	if( isset( $_POST['icegram_cache_compatibility'] ) ) {
+		update_option( 'icegram_cache_compatibility', $_POST['icegram_cache_compatibility'] );
+	} else {		
+		update_option( 'icegram_cache_compatibility', 'no' );
+	}
 }
 
 ?>
@@ -20,6 +25,15 @@ if( isset( $_POST['submit'] ) ) {
 	                <label for="icegram_share_love">
 	                    <input type="checkbox" name="icegram_share_love" id="icegram_share_love"/ value="yes" <?php checked('yes', get_option('icegram_share_love')); ?> />
 	                    <?php _e( 'Show "Powered by" link', 'icegram' ); ?>                        
+	                </label>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php _e( 'Cache Friendly?', 'icegram' ) ?></th>
+				<td>
+	                <label for="icegram_cache_compatibility">
+	                    <input type="checkbox" name="icegram_cache_compatibility" id="icegram_cache_compatibility"/ value="yes" <?php checked('yes', get_option('icegram_cache_compatibility')); ?> />
+	                    <?php _e( 'Turn on "Lazy Load" - load Icegram scripts and messages after page load to avoid caching problems.', 'icegram' ); ?>                        
 	                </label>
 				</td>
 			</tr>

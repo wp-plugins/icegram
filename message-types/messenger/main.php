@@ -9,9 +9,10 @@ class Icegram_Message_Type_Messenger extends Icegram_Message_Type {
 
 	function __construct() {
 		parent::__construct( dirname( __FILE__ ), plugins_url( '/', __FILE__ ) );
-		add_filter( 'icegram_message_type_params_messenger', array( $this, 'set_admin_style' ) );				
-	}
+		add_filter( 'icegram_message_type_params_messenger', array( $this, 'set_admin_style' ) );	
 
+	}
+	
 	function define_settings() {
 		parent::define_settings();
 		$this->settings['position']['values'] 	= array( '20', '22' );	

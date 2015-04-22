@@ -78,8 +78,11 @@ abstract class Icegram_Message_Type {
 				'settings' 	=> $this->settings
 				);
 
-		$params = apply_filters( 'icegram_message_type_params_' . $this->type,  $params );
-
+		$params = apply_filters( 'icegram_message_type_params_'.$this->type  ,$params );
+		
+		// add ds setting
+		// $params = apply_filters( 'icegram_message_params', $params , $this->type);
+		
 		$message_types[ $this->type ] = $params;
 		return $message_types;
 	}

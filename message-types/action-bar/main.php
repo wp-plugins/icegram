@@ -17,8 +17,8 @@ class Icegram_Message_Type_Action_Bar extends Icegram_Message_Type {
 		$this->settings['position']['values'] 		= array( '01', '21' );	
 		$this->settings['position']['default'] 		= '01';
 		$this->settings['theme']['default']			= 'hello';
-		$this->settings['bg_color']['default']		= '#eb593c';
-		$this->settings['text_color']['default']	= '#ffffff';
+		$this->settings['bg_color']['default']		= ''; //#eb593c
+		$this->settings['text_color']['default']	= ''; //#ffffff
 		unset ( $this->settings['animation'],
 				$this->settings['icon']
 				);

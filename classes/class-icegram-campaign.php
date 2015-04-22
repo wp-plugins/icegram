@@ -68,8 +68,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 		}
 
 		function is_valid( $options = array() ) {
-				
-			if( !empty( $this->_post->ID ) ) {
+			if( !empty( $this->_post->ID ) && $this->_post->post_status === 'publish') {
 				return apply_filters( 'icegram_campaign_validation', true, $this, $options );
 			}
 			return false;
@@ -79,6 +78,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			if( !$campaign_valid ) {
 				return $campaign_valid;
 			}
+			
 			if(in_array( 'not_logged_in', $campaign->rules_summary['users'], true ) && !is_user_logged_in() ){
 					return true;
 			}
@@ -131,7 +131,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
-			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( is_home() || is_front_page() ) ) {
+			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( $_REQUEST['is_home'] === 'true') ) {
 					return true;
 			}
 			if ( !empty( $page_id ) ) {

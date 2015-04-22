@@ -267,21 +267,35 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					</a>
 				</p>
 				<?php 
-				$default_text_color = ( !empty( $icegram->message_types[$message_data['type']]['settings']['text_color']['default'] ) ) ? $icegram->message_types[$message_data['type']]['settings']['text_color']['default'] : '';
-				$default_bg_color 	= ( !empty( $icegram->message_types[$message_data['type']]['settings']['bg_color']['default'] ) ) ? $icegram->message_types[$message_data['type']]['settings']['bg_color']['default'] : '';
-				$text_color 		= ( !empty( $message_data['text_color'] ) ) ? $message_data['text_color'] : $default_text_color;
-				$bg_color 			= ( !empty( $message_data['bg_color'] ) ) ? $message_data['bg_color'] : $default_bg_color;
+				$text_color 		= ( !empty( $message_data['text_color'] ) ) ? $message_data['text_color'] : '';
+				$bg_color 			= ( !empty( $message_data['bg_color'] ) ) ? $message_data['bg_color'] : '';
+				$cta_bg_color 		= ( !empty( $message_data['cta_bg_color'] ) ) ? $message_data['cta_bg_color'] : '';
+				$cta_text_color 	= ( !empty( $message_data['cta_text_color'] ) ) ? $message_data['cta_text_color'] : '';
+				$colors_options_check = ( !empty( $message_data['use_theme_defaults'] )  ) 
+										? checked( $message_data['use_theme_defaults'], 'yes', 0) 
+										: ( (!empty($bg_color) || !empty($text_color) || !empty($cta_bg_color) || !empty($cta_text_color)) ? '' :  'checked="checked"' );
 				
-				$color_field_html = '<p class="message_row '.implode( ' ', $settings['bg_color']).'">
-										<label for="message_bg_color" class="message_label"><strong> '.__( 'Backgound Color', 'icegram' ).'</strong></label>
-										<input type="text" class="message_field color-field" name="message_data['.$message_id.'][bg_color]" id="message_bg_color" value="'.$bg_color.'" data-default-color="'.$default_bg_color.'" />
+				$show_color_options = (!empty($colors_options_check)) ? 'style="display: none;"' : '';
+				$color_field_html = '<div class="message_colors_options_container" '.$show_color_options.'>
+									 <p class="message_row '.implode( ' ', $settings['bg_color']).'">
+										<label for="message_bg_color" class="message_label">&nbsp;</label>
+										<span class="message_label" style="width:5em !important"> '.__( 'Body', 'icegram' ).'</span>
+										<input type="text" class="message_field color-field" data-color-label="'.__( 'Background', 'icegram' ).'" name="message_data['.$message_id.'][bg_color]" id="message_bg_color" value="'.$bg_color.'"  />
+										<input type="text" class="message_field color-field" data-color-label="'.__( 'Text', 'icegram' ).'" name="message_data['.$message_id.'][text_color]" id="message_text_color" value="'.$text_color.'"  />
 									</p>
-									<p class="message_row '.implode( ' ', $settings['text_color'] ).'">
-										<label for="message_text_color" class="message_label"><strong>'.__( 'Text Color', 'icegram' ) .'</strong></label>
-										<input type="text" class="message_field color-field" name="message_data['.$message_id.'][text_color]" id="message_text_color" value="'.$text_color.'" data-default-color="'.$default_text_color.'" />
-									</p>';
+									<p class="message_row '.implode( ' ', $settings['label'] ).'">
+										<label for="message_cta_bg_color" class="message_label">&nbsp;</label>
+										<span class="message_label" style="width:5em !important">'.__( 'Button', 'icegram' ) .'</span>
+										<input type="text" class="message_field color-field" data-color-label="'.__( 'Background', 'icegram' ).'" name="message_data['.$message_id.'][cta_bg_color]" id="message_cta_bg_color" value="'.$cta_bg_color.'" />
+										<input type="text" class="message_field color-field" data-color-label="'.__( 'Text', 'icegram' ).'" name="message_data['.$message_id.'][cta_text_color]" id="message_cta_text_color" value="'.$cta_text_color.'" />
+									</p>
+									</div>';
 				$color_field = apply_filters('icegram_color_fields' , array( 'html' => $color_field_html ,'message_id' => $message_id ,'message_data' => $message_data) );
-				echo $color_field['html'];
+				$colors_options_html = '<p class="message_row '.implode( ' ', $settings['bg_color']).'">
+											<label for="message_use_theme_defaults" class="message_label"><strong>'. __( 'Colors', 'icegram' ).'</strong></label> <label >
+											<input class="show_color_options" type="checkbox" name="message_data['.$message_id.'][use_theme_defaults]" id="message_use_theme_defaults" value="yes" '. $colors_options_check .'/> '. __( 'Use theme\'s default colors', 'icegram') .'</label> '.$color_field['html'].'
+										</p>';
+				echo $colors_options_html;
 
 				?>
 				<?php
@@ -301,7 +315,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 				</p>
 				<?php 
 					// action add for design studio
-					do_action( 'icegram_after_message_body', $message_id, $message_data );
+					//do_action( 'icegram_after_message_body', $message_id, $message_data );
 				?>
 				<p class="message_row position <?php echo implode( ' ', $settings['position'] )?>">
 					<label for="message_position" class="message_label"><strong><?php _e( 'Position', 'icegram' ); ?></strong></label>
