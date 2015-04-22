@@ -1,452 +1,53 @@
-	/**
-	 * Icegram JS class
-	 * Initialize, run and manage all messages
-	 * Public interface
-	 **/
-	function Icegram( ) { 
-		var data, defaults, message_data, messages, map_id_to_index, map_type_to_index, 
-			timer, message_template_cache;
-		var tracking_data, powered_by;
-	}
-
-	Icegram.prototype.init = function ( data ) {
-		// Pre-init - can allow others to modify message data
-		jQuery( window ).trigger( 'preinit.icegram', [ data ] );
-
-		this.data = data;
-		this.defaults = jQuery.extend( {}, data.defaults );
-		this.message_data = data.messages;
-		this.messages, this.tracking_data = [];
-		this.message_template_cache = {};
-		this.map_id_to_index = {};
-		this.map_type_to_index = {};
-		this.powered_by = { link: 'http://www.icegram.com/?utm_source=inapp&utm_campaign=poweredby&utm_medium=' };
-		//this.timer = setInterval( this.timer_tick, 1000 );
-
-		// Add powered by properties
-		this.powered_by.text = this.defaults.powered_by_text;
-		this.powered_by.logo = this.defaults.powered_by_logo;
-
-		// Add container div for Icegram
-		jQuery('body').append('<div id="icegram_messages_container"></div>');
-
-		// Loop over message data and create messages & maps
-		var i = 0;
-		this.messages = [];
-		var self = this;
-		if (this.message_data.length > 0) {
-			jQuery.each( this.message_data, function ( i, v ) {
-				var m = null;
-				var classname_suffix = v['type'].split('-').join(' ').ucwords().split(' ').join('_');
-				if (typeof (window['Icegram_Message_Type_' + classname_suffix]) === 'function') {
-					m = new window['Icegram_Message_Type_' + classname_suffix]( v );
-				} else {
-					m = new Icegram_Message_Type( v );
-				}
-				self.messages.push( m );
-				self.map_id_to_index['_'+v['id'] ] = i;
-				self.map_type_to_index[ v['type'] ] = jQuery.isArray(self.map_type_to_index[ v['type'] ]) ? self.map_type_to_index[ v['type'] ] : new Array();
-				self.map_type_to_index[ v['type'] ].push(i);
-			});
-		}
-
-		// Submit event data on unload and at every 5 seconds...
-		jQuery( window ).unload( function() {
-			if (typeof(window.icegram.submit_tracking_data) === 'function') {
-				window.icegram.submit_tracking_data();
-			}
-		} );
-		setTimeout( function() { 
-			if (typeof(window.icegram.submit_tracking_data) === 'function') { 
-				window.icegram.submit_tracking_data();
-			} } , 5 * 1000 );
-
-
-		// Trigger event for others!
-		jQuery( window ).trigger( 'init.icegram', [ this ] );
-	};
-
-
-	Icegram.prototype.timer_tick = function (  ) {
-		
-	};
-
-	// Message template cache - get / set
-	Icegram.prototype.get_template_fn = function ( type ) {
-		return this.message_template_cache[ type ];
-	};
-	Icegram.prototype.set_template_fn = function ( type, fn ) {
-		this.message_template_cache[ type ] = fn;
-	};
-
-	// Utility functions to get message instances
-	Icegram.prototype.get_message = function ( index ) {
-		if (this.messages.length > index) {
-			return this.messages[ index ];
-		}
-		return undefined;
-	};
-
-	Icegram.prototype.get_message_by_id = function ( id ) {
-		if ( this.map_id_to_index.hasOwnProperty( '_'+id )) {
-			var index = this.map_id_to_index[ '_'+id ];
-			return this.get_message( index );
-		}  
-		return undefined;
-	};
-
-	Icegram.prototype.get_messages_by_type = function ( type ) {
-		if ( this.map_type_to_index.hasOwnProperty( type )) {
-			var indices = this.map_type_to_index[ type ];
-			var matches = [];
-			if (jQuery.isArray( indices )) {
-				var self = this;
-				jQuery.each( indices, function ( i, v ) {
-					matches.push( self.get_message( v ) );
-				} );
-			}
-			return matches;
-		}  
-		return undefined;
-	};
-
-	//Get powered by link
-	Icegram.prototype.get_powered_by = function ( type ) {
-		var res = jQuery.extend( {}, this.powered_by );
-		res.link = res.link + (type || '');
-		return res;
-	}
-	
-
-	//Event tracking
-	Icegram.prototype.track = function ( ev, params ) {
-		if (typeof(params) === 'object' && params.hasOwnProperty('message_id') && params.hasOwnProperty('campaign_id')) {
-			jQuery( window ).trigger( 'track.icegram', [ ev, params ] );
-			this.tracking_data.push( { 'type': ev, 'params': params} );
-		}
-	}
-	Icegram.prototype.submit_tracking_data = function ( ev, params ) {
-		if (this.tracking_data.length > 0) {
-			jQuery.ajax({
-				method: 'POST',
-				url: this.data.ajax_url,
-				async: false,
-				data: {
-					action: 'icegram_event_track',
-					event_data: this.tracking_data
-				},
-				success: function(data, status, xhr) {
-					window.icegram.tracking_data = [];
-				}
-			});
-		}
-	}
-
-
-	/**
-	 * Icegram Message Type - Base class
-	 **/
-	function Icegram_Message_Type( data ) {
-		
-		var data, template, dom_id, el, type, root_container;
-
-		this.root_container = "#icegram_messages_container";
-		this.data = data;
-		this.type = data.type;
-		this.data.delay_time = parseInt(this.data.delay_time);
-
-		this.set_template( this.get_template_default() );
-		this.init();
-	}
-
-	Icegram_Message_Type.prototype.init = function ( ) {
-		// Render HTML
-		this.render();
-
-		// Add handlers
-		this.add_event_handlers();
-	};
-
-	Icegram_Message_Type.prototype.add_event_handlers = function ( ) {
-		this.el.on('click', {self: this}, this.on_click);
-		jQuery( window ).on('resize' , {self: this} , this.on_resize);
-	}
-
-	Icegram_Message_Type.prototype.render = function ( ) {
-
-		this.pre_render();
-
-		var html = this.render_template();
-
-		// Add html to DOM, Setup dom_id, el etc.
-		jQuery(this.root_container).append(html);
-		this.dom_id = 'icegram_message_'+this.data.id;
-		this.el = jQuery('#'+this.dom_id);
-
-		this.set_position();
-
-		var pb = window.icegram.get_powered_by( this.type );
-		if ( pb.hasOwnProperty('link') && pb.hasOwnProperty('text') && pb.text != '' ) {
-			this.add_powered_by( pb );
-		}
-
-		// Hide elements if insufficient data...
-    	if(this.data.headline == undefined || this.data.headline == '') {
-            this.el.find('.ig_headline').hide();
-        }
-        if(this.data.icon == undefined || this.data.icon == '') {
-            this.el.find('.ig_icon').hide();
-        }
-        if(this.data.message == undefined || this.data.message == '') {
-            this.el.find('.ig_message').hide();
-        }
-        if(this.data.label == undefined || this.data.label == '') {
-            this.el.find('.ig_button').hide();
-        }
-
-        // Apply colors if available
-        if (this.data.text_color != undefined && this.data.text_color != '') {
-        	this.el.css('color', this.data.text_color);
-        	this.el.find('.ig_content').css('color', this.data.text_color);
-        }
-
-        if (this.data.bg_color != undefined && this.data.bg_color != '') {
-        	this.el.css('background-color', this.data.bg_color);
-        	this.el.find('.ig_content').css('background-color', this.data.bg_color);
-    	}
-
-    	if(this.data.label == undefined || this.data.label == '') {
-            this.el.find('.ig_button').hide();
-        }else if (this.data.bg_color != undefined && this.data.bg_color != '') {
-        	var hsl_color = window.icegram.get_complementary_color(this.data.bg_color);
-            this.el.find('.ig_button').css('background-color', "hsl(" + hsl_color.h + "," + hsl_color.s + "%," + hsl_color.l + "%)" );
-        }
-    	// Hint clickability for buttons / ctas
-    	if (typeof(this.data.link) === 'string' && this.data.link != '') {
-    		this.el.parent().find('.ig_cta, .ig_button').css('cursor', 'pointer');
-    	}
-
-		this.post_render();
-		
-		// Hide the message by default
-		this.hide( {}, true );
-
-		// Set up message display trigger
-		this.set_up_show_trigger();
-	}
-	
-
-	Icegram_Message_Type.prototype.render_template = function ( ) {
-		if ( typeof(window.icegram.get_template_fn( this.type ) ) !== 'function') {
-			// Adapted from John Resig's Simple JavaScript Templating
-			window.icegram.set_template_fn( this.type, new Function("obj",
-								"var p=[],print=function(){p.push.apply(p,arguments);};" +
-							        "with(obj){p.push('" +
-								this.template
-								  .replace(/[\r\t\n]/g, " ")
-								  .split("{{").join("\t")
-								  .replace(/((^|\}\})[^\t]*)'/g, "$1\r")
-								  .replace(/\t=(.*?)\}\}/g, "',$1,'")
-								  .split("\t").join("');")
-								  .split("}}").join("p.push('")
-								  .split("\r").join("\\'")
-								+ "');}return p.join('');") );
-		}
-		return window.icegram.get_template_fn( this.type )( this.data );
-	};
-
-	Icegram_Message_Type.prototype.pre_render = function ( ) {
-		
-	};
-
-	Icegram_Message_Type.prototype.post_render = function ( ) {
-    	
-	};
-
-	Icegram_Message_Type.prototype.set_up_show_trigger = function ( ) {
-		if (!isNaN(this.data.delay_time)) {
-			if( this.data.delay_time >= 0 ) {				
-				var self = this;
-				this.timer = setTimeout( function() { self.show(); } , this.data.delay_time * 1000 );
-			}
-		} else {
-			this.show();
-		}
-	};
-
-	Icegram_Message_Type.prototype.set_template = function ( str ) {
-		this.template = str;
-	};
-
-	Icegram_Message_Type.prototype.get_template_default = function () {
-		return '<div id="icegram_message_{{=id}}" class="icegram">' + 
-				'<div class="ig_headline">{{=headline}}</div>' +
-				'</div>';
-	};
-
-	Icegram_Message_Type.prototype.show = function ( options, silent ) {
-		if ( !this.is_visible() ) {
-			this.el.show( options );
-			silent !== true && this.track( 'shown' );
-		}
-	};
-
-	Icegram_Message_Type.prototype.hide = function ( options, silent ) {
-		if ( this.is_visible() ) {
-			this.el.hide( options );
-			silent !== true && this.track( 'closed' );
-		}
-	};
-
-	Icegram_Message_Type.prototype.set_position = function ( ) {
-		
-	};
-
-
-	Icegram_Message_Type.prototype.add_powered_by = function ( pb ) {
-		
-	};
-
-	// Event tracking wrapper
-	Icegram_Message_Type.prototype.track = function ( e, params ) {
-		if (typeof( window.icegram.track ) === 'function' ) {
-			params = params || {};
-			jQuery.extend( params, {message_id: this.data.id, campaign_id: this.data.campaign_id } );
-			window.icegram.track( e, params);
-		}
-	};
-
-	Icegram_Message_Type.prototype.is_visible = function ( ) {
-		return this.el.is(':visible');
-	};
-
-	// Click and other event handlers
-	Icegram_Message_Type.prototype.toggle = function ( options ) {
-		
-		if ( this.is_visible() ) {
-			this.hide( options );
-		} else {
-			this.show( options );
-		};
-	};
-	
-	Icegram_Message_Type.prototype.on_click = function ( e ) {
-		e.data = e.data || { self: this };
-		// Clicked on close button
-		if (jQuery(e.target).filter('.ig_close').length) {
-			e.data.self.hide();
-			return;
-		}
-		// Clicking on ig_button or any other link with a class ig_cta will trigger cta click
-		if(jQuery(e.target).filter('.ig_button, .ig_cta').length || jQuery(e.target).parents('.ig_button, .ig_cta').length){
-            e.data.self.on_cta_click( e );
-        }
-		
-	};
-	Icegram_Message_Type.prototype.on_resize = function ( e ) {
-
-	};
-
-	Icegram_Message_Type.prototype.on_cta_click = function ( e ) {
-		e.data = e.data || { self: this };
-		e.data.self.track( 'clicked' );
-		typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '' ? window.location.href = e.data.self.data.link : e.data.self.hide();
-	};
-
-	Icegram_Message_Type.prototype.on_cta_click_no_hide = function ( e ) {
-	        e.data = e.data || { self: this };
-	        e.data.self.track( 'clicked' );
-	        if (typeof(e.data.self.data.link) === 'string' && e.data.self.data.link != '') {
-	          window.location.href = e.data.self.data.link;
-	        }
-	};
-
-
-	/**
-	 * Utilities
-	 */
-	String.prototype.ucwords = function() {
-    	return this.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-        	return letter.toUpperCase();
-    	});
-	}
-
-	Icegram.prototype.get_complementary_color = function (hex) {
-
-	    hex = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i , function(m, r, g, b) {
-	        return r + r + g + g + b + b;
-	    });
-
-	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	    if(result){
-	        var r = parseInt(result[1], 16);
-	        var g = parseInt(result[2], 16);
-	        var b = parseInt(result[3], 16);
-			var brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
-			r /= 255;
-	        g /= 255;
-	        b /= 255;
-
-		    var maxColor = Math.max(r, g, b);
-		    var minColor = Math.min(r, g, b);
-		    //Calculate L:
-		    var L = (maxColor + minColor) / 2 ;
-		    var S = 0;
-		    var H = 0;
-		    if(maxColor != minColor){
-		        //Calculate S:
-		        S = (L < 0.5) ? (maxColor - minColor) / (maxColor + minColor) : (maxColor - minColor) / (2.0 - maxColor - minColor) ;
-		        //Calculate H:
-		        if(r == maxColor){
-		            H = (g - b) / (maxColor - minColor);
-		        }else if(g == maxColor){
-		            H = 2.0 + (b - r) / (maxColor - minColor);
-		        }else{
-		            H = 4.0 + (r - g) / (maxColor - minColor);
-		        }
-		    }
-
-		    L = Math.floor(L * 100);
-		    S = Math.floor(S * 100);
-		    H = Math.floor(H * 60);
-		    if(H<0){
-		        H += 360;
-		    }
-			if(brightness > 130){
-				S -= 15;
-				L -= 25;
-			}else{
-				S += 15;
-				L += 25;
-			}
-			
-		    return {h: H, s: S, l: L};
-	    } // result if
-	    return null;
-	}
-
-	if (typeof Object.create != 'function') {
-	    (function () {
-	        var F = function () {};
-	        Object.create = function (o) {
-	            if (arguments.length > 1) { 
-	              throw Error('Second argument not supported');
-	            }
-	            if (o === null) { 
-	              throw Error('Cannot set a null [[Prototype]]');
-	            }
-	            if (typeof o != 'object') { 
-	              throw TypeError('Argument must be an object');
-	            }
-	            F.prototype = o;
-	            return new F();
-	        };
-	    })();
-	}
-
-// This is called onReady
-jQuery(function() {
-  	// FINALLY: Create object in window for later usage
-	window.icegram = new Icegram();
-	window.icegram.init( icegram_data );
-});
+/**
+ * Icegram JS class
+ * Initialize, run and manage all messages
+ * Public interface
+ **/
+function Icegram(){}function Icegram_Message_Type(e){var e
+this.root_container="#icegram_messages_container",this.data=e,this.type=e.type,this.data.delay_time=parseInt(this.data.delay_time),"string"!=typeof this.data.link||""==this.data.link||/^tel:/i.test(this.data.link)||/^https?:\/\//i.test(this.data.link)||(this.data.link="http://"+this.data.link),this.set_template(this.get_template_default()),this.init()}Icegram.prototype.init=function(e){if(void 0!=e){jQuery(window).trigger("preinit.icegram",[e]),this.data=e,this.defaults=jQuery.extend({},e.defaults),this.message_data=e.messages,this.messages,this.tracking_data=[],this.message_template_cache={},this.map_id_to_index={},this.map_type_to_index={},this.mode=void 0==window.ig_mode?"local":window.ig_mode,this.powered_by={link:"http://www.icegram.com/?utm_source=inapp&utm_campaign=poweredby&utm_medium="},this.powered_by.text=this.defaults.powered_by_text,this.powered_by.logo=this.defaults.powered_by_logo,jQuery("body").append('<div id="icegram_messages_container"></div>')
+this.messages=[]
+var t=this
+this.message_data.length>0&&jQuery.each(this.message_data,function(e,i){try{if(-1==window.location.href.indexOf("campaign_preview_id")){if("yes"==i.retargeting&&1==jQuery.cookie("icegram_messages_shown_"+i.id))return
+if("yes"==i.retargeting_clicked&&1==jQuery.cookie("icegram_messages_clicked_"+i.id))return}var a=null,r=i.type.split("-").join(" ").ucwords().split(" ").join("_")
+a="function"==typeof window["Icegram_Message_Type_"+r]?new window["Icegram_Message_Type_"+r](i):new Icegram_Message_Type(i),t.messages.push(a),t.map_id_to_index["_"+i.id]=e,t.map_type_to_index[i.type]=jQuery.isArray(t.map_type_to_index[i.type])?t.map_type_to_index[i.type]:new Array,t.map_type_to_index[i.type].push(e)}catch(s){}}),jQuery(window).unload(function(){"function"==typeof window.icegram.submit_tracking_data&&window.icegram.submit_tracking_data(!1)}),setInterval(function(){"function"==typeof window.icegram.submit_tracking_data&&window.icegram.submit_tracking_data(!0)},5e3),jQuery(window).trigger("init.icegram",[this])}},Icegram.prototype.timer_tick=function(){},Icegram.prototype.get_template_fn=function(e){return this.message_template_cache[e]},Icegram.prototype.set_template_fn=function(e,t){this.message_template_cache[e]=t},Icegram.prototype.get_message=function(e){return this.messages.length>e?this.messages[e]:void 0},Icegram.prototype.get_message_by_id=function(e){if(this.map_id_to_index.hasOwnProperty("_"+e)){var t=this.map_id_to_index["_"+e]
+return this.get_message(t)}return void 0},Icegram.prototype.get_messages_by_type=function(e){if(this.map_type_to_index.hasOwnProperty(e)){var t=this.map_type_to_index[e],i=[]
+if(jQuery.isArray(t)){var a=this
+jQuery.each(t,function(e,t){i.push(a.get_message(t))})}return i}return void 0},Icegram.prototype.get_powered_by=function(e){var t=jQuery.extend({},this.powered_by)
+return t.link=t.link+(e||""),t},Icegram.prototype.track=function(e,t){"object"==typeof t&&t.hasOwnProperty("message_id")&&t.hasOwnProperty("campaign_id")&&(jQuery(window).trigger("track.icegram",[e,t]),this.tracking_data.push({type:e,params:t}))},Icegram.prototype.submit_tracking_data=function(e){if(this.tracking_data.length>0&&-1==window.location.href.indexOf("campaign_preview_id")){var t={type:"POST",url:this.data.ajax_url,async:e||!1,data:{action:"icegram_event_track",event_data:JSON.parse(JSON.stringify(this.tracking_data)),ig_remote_url:"remote"==this.mode?window.location.href:void 0},success:function(e,t,i){},error:function(e,t,i){}}
+"remote"==this.mode&&(t.xhrFields={withCredentials:!0},t.crossDomain=!0,t.async=!0),jQuery.ajax(t),this.tracking_data=[]}},Icegram_Message_Type.prototype.init=function(){this.render(),this.add_event_handlers()},Icegram_Message_Type.prototype.add_event_handlers=function(){this.el.on("click",{self:this},this.on_click),jQuery(window).on("resize",{self:this},this.on_resize)},Icegram_Message_Type.prototype.render=function(){this.pre_render()
+var e=this.render_template()
+try{jQuery(this.root_container).append(e)}catch(t){}this.dom_id="icegram_message_"+this.data.id,this.el=jQuery("#"+this.dom_id),this.set_position()
+var i=window.icegram.get_powered_by(this.type)
+if(i.hasOwnProperty("link")&&i.hasOwnProperty("text")&&""!=i.text&&this.add_powered_by(i),(void 0==this.data.headline||""==this.data.headline)&&this.el.find(".ig_headline").hide(),(void 0==this.data.icon||""==this.data.icon)&&this.el.find(".ig_icon").remove(),void 0==this.data.message||""==this.data.message)this.el.find(".ig_message").hide()
+else{var a=this.el.find(".ig_embed_form").get(0)
+if(a){jQuery(window).width()<644&&jQuery(a).removeClass("ig_horizontal ig_full ig_half ig_quarter").addClass("ig_vertical ig_full").find(".ig_form_el_group").css("width","96%")
+var r=jQuery(a).html()
+a=jQuery(a).empty(),jQuery(a).replaceWith(r),this.el.find(".ig_message").html(a.append(this.el.find(".ig_message").html()))
+var s=this.el.find(".ig_embed_form_container").prev(),o=this.el.find(".ig_embed_form_container").next()
+a.hasClass("ig_inline")&&s.get(0)&&(this.el.find(".ig_embed_form_container").appendTo(s),o.get(0)&&o.get(0).tagName==s.get(0).tagName&&(s.append(o.html()),o.remove()))}}if((void 0==this.data.label||""==this.data.label)&&this.el.find(".ig_button").hide(),void 0==this.data.use_theme_defaults||"yes"!=this.data.use_theme_defaults){if(void 0!=this.data.text_color&&""!=this.data.text_color&&(this.el.css("color",this.data.text_color),this.el.find(".ig_container").css("color",this.data.text_color)),void 0!=this.data.bg_color&&""!=this.data.bg_color&&(this.el.css("background-color",this.data.bg_color),this.el.find(".ig_container").css("background-color",this.data.bg_color)),void 0!=this.data.cta_bg_color&&""!=this.data.cta_bg_color){this.el.find('.ig_button, form input[type="submit"]').css("background-color",this.data.cta_bg_color)
+var n=window.icegram.hexToHsl(this.data.cta_bg_color)
+this.el.find('.ig_button, form input[type="submit"]').css("border-color","hsl("+n.h+","+(n.s-5)+"%,"+(n.l-8)+"%)")}void 0!=this.data.cta_text_color&&""!=this.data.cta_text_color&&this.el.find('.ig_button, form input[type="submit"]').css("color",this.data.cta_text_color)}(void 0==this.data.label||""==this.data.label)&&this.el.find(".ig_button").hide(),"string"==typeof this.data.link&&""!=this.data.link&&this.el.parent().find(".ig_cta, .ig_button").css("cursor","pointer"),this.post_render(),this.hide({},!0),this.set_up_show_trigger()},Icegram_Message_Type.prototype.render_template=function(){return"function"!=typeof window.icegram.get_template_fn(this.type)&&window.icegram.set_template_fn(this.type,new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('"+this.template.replace(/[\r\t\n]/g," ").split("{{").join("	").replace(/((^|\}\})[^\t]*)'/g,"$1\r").replace(/\t=(.*?)\}\}/g,"',$1,'").split("	").join("');").split("}}").join("p.push('").split("\r").join("\\'")+"');}return p.join('');")),window.icegram.get_template_fn(this.type)(this.data)},Icegram_Message_Type.prototype.pre_render=function(){},Icegram_Message_Type.prototype.post_render=function(){},Icegram_Message_Type.prototype.set_up_show_trigger=function(){if(isNaN(this.data.delay_time))this.show()
+else if(this.data.delay_time>=0){var e=this
+this.timer=setTimeout(function(){e.show()},1e3*this.data.delay_time)}},Icegram_Message_Type.prototype.set_template=function(e){this.template=e},Icegram_Message_Type.prototype.get_template_default=function(){return'<div id="icegram_message_{{=id}}" class="icegram"><div class="ig_headline">{{=headline}}</div></div>'},Icegram_Message_Type.prototype.show=function(e,t){this.is_visible()||(this.el.show(e),t!==!0&&this.track("shown"))},Icegram_Message_Type.prototype.hide=function(e,t){this.is_visible()&&(this.el.hide(e),t!==!0&&this.track("closed"))},Icegram_Message_Type.prototype.set_position=function(){},Icegram_Message_Type.prototype.add_powered_by=function(e){},Icegram_Message_Type.prototype.track=function(e,t){"function"==typeof window.icegram.track&&(t=t||{},jQuery.extend(t,{message_id:this.data.id,campaign_id:this.data.campaign_id,expiry_time:this.data.expiry_time,expiry_time_clicked:this.data.expiry_time_clicked}),window.icegram.track(e,t))},Icegram_Message_Type.prototype.is_visible=function(){return this.el.is(":visible")},Icegram_Message_Type.prototype.toggle=function(e){this.is_visible()?this.hide(e):this.show(e)},Icegram_Message_Type.prototype.on_click=function(e){if(e.data=e.data||{self:this},jQuery(e.target).filter(".ig_close").length)return void e.data.self.hide()
+var t=jQuery(e.target).closest(".icegram").find("form").first();(jQuery(e.target).filter(".ig_button, .ig_cta ,:submit").length||jQuery(e.target).parents(".ig_button, .ig_cta ").length&&!(t.find("ig_button").length>0||t.find("input[type=button]").length>0||t.find("input[type=submit]").length>0))&&e.data.self.on_cta_click(e)},Icegram_Message_Type.prototype.on_resize=function(e){},Icegram_Message_Type.prototype.on_cta_click=function(e){if(e.data=e.data||{self:this},e.data.self.track("clicked"),jQuery(e.target).closest(".icegram").find("form").length){var t=jQuery(e.target).closest(".icegram").find("form").first()
+jQuery(t).submit()}else"string"==typeof e.data.self.data.link&&""!=e.data.self.data.link?window.location.href=e.data.self.data.link:e.data.self.data.hide!==!1&&e.data.self.hide()},String.prototype.ucwords=function(){return this.toLowerCase().replace(/\b[a-z]/g,function(e){return e.toUpperCase()})},Icegram.prototype.hexToRgb=function(e){var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e)
+return t?{r:parseInt(t[1],16),g:parseInt(t[2],16),b:parseInt(t[3],16)}:null},Icegram.prototype.rgbToHsl=function(e,t,i){e/=255,t/=255,i/=255
+var a,r,s=Math.max(e,t,i),o=Math.min(e,t,i),n=(s+o)/2
+if(s==o)a=r=0
+else{var d=s-o
+switch(r=n>.5?d/(2-s-o):d/(s+o),s){case e:a=(t-i)/d
+break
+case t:a=(i-e)/d+2
+break
+case i:a=(e-t)/d+4}n=Math.floor(100*n),r=Math.floor(100*r),a=Math.floor(60*a),0>a&&(a+=360)}return{h:a,s:r,l:n}},Icegram.prototype.hexToHsl=function(e){var t=window.icegram.hexToRgb(e)
+return window.icegram.rgbToHsl(t.r,t.g,t.b)},"function"!=typeof Object.create&&!function(){var e=function(){}
+Object.create=function(t){if(arguments.length>1)throw Error("Second argument not supported")
+if(null===t)throw Error("Cannot set a null [[Prototype]]")
+if("object"!=typeof t)throw TypeError("Argument must be an object")
+return e.prototype=t,new e}}(),function(e){"function"==typeof define&&define.amd?define(["jquery"],e):e("object"==typeof exports?require("jquery"):jQuery)}(function(e){function t(e){return n.raw?e:encodeURIComponent(e)}function i(e){return n.raw?e:decodeURIComponent(e)}function a(e){return t(n.json?JSON.stringify(e):String(e))}function r(e){0===e.indexOf('"')&&(e=e.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\"))
+try{return e=decodeURIComponent(e.replace(o," ")),n.json?JSON.parse(e):e}catch(t){}}function s(t,i){var a=n.raw?t:r(t)
+return e.isFunction(i)?i(a):a}var o=/\+/g,n=e.cookie=function(r,o,d){if(void 0!==o&&!e.isFunction(o)){if(d=e.extend({},n.defaults,d),"number"==typeof d.expires){var c=d.expires,_=d.expires=new Date
+_.setTime(+_+864e5*c)}return document.cookie=[t(r),"=",a(o),d.expires?"; expires="+d.expires.toUTCString():"",d.path?"; path="+d.path:"",d.domain?"; domain="+d.domain:"",d.secure?"; secure":""].join("")}for(var p=r?void 0:{},g=document.cookie?document.cookie.split("; "):[],h=0,l=g.length;l>h;h++){var m=g[h].split("="),u=i(m.shift()),f=m.join("=")
+if(r&&r===u){p=s(f,o)
+break}r||void 0===(f=s(f))||(p[u]=f)}return p}
+n.defaults={},e.removeCookie=function(t,i){return void 0===e.cookie(t)?!1:(e.cookie(t,"",e.extend({},i,{expires:-1})),!e.cookie(t))}})

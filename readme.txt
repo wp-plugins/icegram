@@ -1,36 +1,44 @@
 === Icegram ===
-Contributors: storeapps, nareshvachhani, niravmehta, ratnakardubey, putler
+Contributors: storeapps, niravmehta, putler, icegram
 Donate link: http://www.icegram.com/
-Tags: popup, window, hellobar, optin, lead capture, marketing, header, footer, notification, messenger, targeting, segment, responsive
+Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja
 Requires at least: 3.9
-Tested up to: 4.0
-Stable tag: 1.4
+Tested up to: 4.1.1
+Stable tag: 1.8.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more.
+Popup windows, floating action bars, messengers, toast notifications and more. Capture leads, optins and grab visitors attention. All in one solution. 
 
 == Description ==
 
-**The Ultimate Plugin To Capture Leads And Connect With Your Audience**
+The Ultimate Plugin To Capture Leads And Connect With Your Audience
 
-Decrease bounce rates, increase engagement and grab your visitors' attention with this unique marketing plugin.
+**Decrease bounce rates, increase engagement and grab your visitors' attention with this unique marketing plugin.**
+
+Most similar plugins are paid and still offer a lot less. Icegram is full featured, easy to use, and still free!
 
 = Includes: =
-* Popups, header / footer bars, notifications, messengers 
+* Popups, header / footer bars, toast notifications, messengers - everything!
 * Powerful targeting rules 
 * All-in-one, fully integrated WordPress plugin 
 * Compatible with auto responders, other plugins and themes 
+* Unique headline generator for ideas
+* No forceful display of Icegram branding in your messages!
+* And a lot more...
 
 [youtube http://www.youtube.com/watch?v=89N0SXDDvOI]
 
 = Proven to Engage & Convert = 
-Icegram is based on time tested marketing and behavior science principles. Icegram messages have given phenomenal 60% click through rates to people and they never fail to deliver. When you use Icegram, you don't need to learn all those marketing secrets.. Icegram does that for you...
+Icegram is based on time tested marketing and behavior science principles. Icegram messages have given **phenomenal 60% click through rates** to people and they never fail to deliver. When you use Icegram, you don't need to learn all those marketing secrets.. Icegram does that for you...
+
+= Zero Learning Curve =
+Most other plugins are full of complicated screens and options. Icegram was designed to be easy from the ground up. You can manage campaigns and messages from a single screen. And most importantly, you won't have to call a tech friend to understand a thing! 
 
 = Beautiful, Customizable Theme Designs = 
 Icegram comes with 20 beautiful themes. They integrate well with your favorite WordPress theme and do not slow down your site. When you want to customize override styling with custom CSS.
 
-= Complete Control Over Message Delivery & Content =
+= Complete Control Over Message Content & Delivery =
 Determine where, when and how to show on-site marketing messages to visitors. Use fine grained targeting rules for niche segmentation. Plus, Icegram gives you the fully powered WordPress editor for your content. You can use any layout and formatting for content within each message container.
 
 * Continue using powerful **short codes your theme provides** for layout and styling
@@ -38,13 +46,63 @@ Determine where, when and how to show on-site marketing messages to visitors. Us
 * Embed subscription forms from **mailing list service of your choice**
 * Use short codes **other plugins** provide – embed forms, widgets, social sharing buttons, twitter feed…
 * Add **inline JavaScript or CSS** for customizations
+* Target campaigns on different pages - with Wildcard URLs, page selection and more...
 * **Full HTML** editing capability for maximum control
 
-= Learn More =
+= Works with Multi Site, WPML and even non WordPress sites =
+Icegram and its addons are WordPress Multisite compatible. Each site becomes an independent Icegram installation.
 
-* **[Discover all features and see demos on official Icegram website](http://www.icegram.com/)**
-* **[Free and paid add-ons](http://www.icegram.com/addons/)**
-* Follow us on Twitter [@icegram](https://twitter.com/icegram/)
+Icegram is also *WPML Compatible*. You can show multilingual messages in different languages as you wish.
+
+And, as a matter of fact you can show Icegram campaign and messages on non WordPress sites too! Use the premium Icegram Remote addon, and you can show Icegram campaigns anywhere.
+
+= Icegram is a Good Neighbour =
+Icegram works with most WordPress plugins and themes. It can integrate with all mailing list / newsletter / optin / CRM / form services that provide embeddable HTML form too. 
+
+Icegram works with MailChimp, Aweber, Constant Contact, MadMimi, Campaign Monitor, Get Response, Klawoo, iContact, e-GOI, SendPress, MailPoet, Infusion Soft, Email Buddy, My Mail and all others..
+
+Similarly, you can embed forms in Icegram messages using shortcodes / HTML from Gravity Forms, Contact Form 7, Ninja Forms, JetPack, Formidable Pro, Inbound Now, Quform, Fast Secure Form, Visual Form Builder and many others...
+
+Icegram campaigns and messages can be shown anywhere in WordPress using shortcodes. And Icegram has a fairly extensive API for creating new message types, themes and addons.
+
+
+= Do More with Addons =
+Icegram is an open platform. The core is already powerful, but you can do even more with free and premium addons.
+
+* Analytics - track impressions, click throughs and conversions with a free addon
+* Themes Pack 1 - additional 17 themes as a free bonus
+* Exit Intent, Scroll Position, Time Delay, JavaScript, Another Message... Show and Hide messages based on user behavior
+* Geo Targeting - based on visitor's location - continent, country, city, region or IP address
+* CTA Actions - Open link, in new window, submit form, AJAX submission, show another message, hide this message... New actions for CTA buttons
+* Remote - Show Icegram messages on any site - WordPress or otherwise
+* Additional message types - Overlay, Inline, Sidebars, Interstitial, Ribbons, Stickies, Badges...
+
+= Ok, there is even more =
+There is no end to Icegram's awesomeness!!
+
+* Unlimited campaigns
+* Unlimited messages
+* Breakthrough conversions
+* Smart, Responsive template designs
+* Display animations
+* Time delayed message display
+* Multiple display positions - top, middle, bottom, left, right, center...
+* Reuse messages across campaigns
+* Automatic Updates
+* Professional Support
+
+= Help Fellow WordPressers by Writing a Review =
+
+If you like Icegram, please leave a five star review on WordPress. That helps fellow website owners assess Icegram easily and benefit from it!
+
+
+= Website, Demos, Shop, Social, Love =
+
+* [Official Icegram website](http://www.icegram.com/)
+* **[Dozens of Demos](http://www.icegram.com/demos/)** of different Icegram messages
+* **[Shop for free and paid add-ons](http://www.icegram.com/addons/)**
+* [A few customer reviews](http://www.icegram.com/customers/)
+* Follow Icegram on Twitter [@icegram](https://twitter.com/icegram/)
 
 
 == Installation ==
@@ -69,7 +127,9 @@ You can use custom CSS/JS inline in your message HTML. You can also use your the
 
 = Optin Forms / Mailing service integration... =
 
-You can embed any optin / subscription form to your Icegram messages using HTML code. You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service.
+You can embed any optin / subscription form to your Icegram messages using HTML code. You may even use a shortcode if you are using a WP plugin from your newsletter / lead capture service. 
+
+Use the "Embed Form" button above the text editor to paste in HTML code from your mailing list service and let Icegram automatically "clean it up" for usage in Icegram messages.
 
 = Preview does not work / not refreshing... =
 
@@ -93,6 +153,47 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.8.9 = 
+Many small changes. Plus major changes for caching compatibility.
+
+= 1.8.8 = 
+Improved short code handling, WishList member compatibility and other fixes.
+
+= 1.8.7 = 
+Popups now support custom background and text colors. And a handful of fixes!
+
+= 1.8.6 = 
+Fix for "white screen" errors, updated device detection, more readable call to action button colors
+
+= 1.8.5 = 
+Bug fix release for device targeting, preview before publish not working.
+
+= 1.8.4 = 
+Popups are now responsive! Plus Visual Composer compatibility and other fixes.
+
+= 1.8.3 = 
+Campaign and message duplicate feture added. Plus some other improvements.
+
+= 1.8.2 = 
+Bug fix release for preview not working.
+
+= 1.8.1 = 
+Recommended upgrade. Many improvements.
+
+= 1.8 =
+Target campaigns to any page with wildcard URL support in "Where" conditions and CTA Click based retargeting.
+
+= 1.7.1 =
+Dismiss admin notice provision, retargeting compatibility with caches and bug fixes.
+
+= 1.7 = 
+Improvements in styling, form embeds and retargeting. 
+
+= 1.6 = 
+Improvements in optin form embedding, bug fixes and more. Required update.
+
+= 1.5 = 
+Easy optin / subscription form parser and many other enhancements. Required update.
 
 = 1.4 = 
 Many small improvements. Support for analytics added. WordPress 4.0 compatible.
@@ -114,6 +215,96 @@ Initial Release
 
 
 == Changelog ==
+= 1.8.9 =
+* New: Both body and button colors (background and foreground) can now be set
+* Update: Brought back CTA Buttons default colors
+* New: Lazy load Icegram messages for better comaptibility with caching plugins
+* Update: Updated all themes to support new theme coloring scheme
+* Fix: Some alignment issues with images in popups
+* Update: Minified all JS and CSS to improve performance
+* Update: Auto correction for CTA links now works with tel: links
+
+= 1.8.8 =
+* New: Headlines now support shortcodes! 
+* Update: A message shown on click of another (using CTA actions addon), can now contain shortcodes
+* Fix: Compatibility with Wishlist Member plugin
+* Fix: Popup close event not triggered when clicking outside the popup - on its overlay
+* Update: Automatically adds http:// in CTA links if missing
+
+= 1.8.7 =
+* New: Can now define custom background and text colors for Popups
+* Fix: Button text color not showing well in some themes
+* Fix: Analytics not getting tracked
+* Update: Revisions to theme packs and many addons
+* New: Support for Split Testing addon
+
+= 1.8.6 =
+* Fix: "Blank / White Screen of death" / Fatal error - Cannot redeclare class Mobile_Detect
+* Fix: Warning for undefined index
+* Update: Mobile Detect Library updated to version 2.8.11
+* Update: Improvmetns in complementary colors for call to action button and button text 
+* Update: Action Bar's Bold theme - reduced shadow on button text
+
+= 1.8.5 =
+* New: Added a link to Form Embed Documentation for easy access
+* Fix: Default mode of content editor set to visual
+* Fix: Popup hiding behind header for some themes
+* Fix: Device targeting rule not working on newer devices
+* Fix: Preview working only after Publishing
+
+= 1.8.4 =
+* New: Popup messages work beautifully on mobile / small devices now!
+* Fix: Timing problems with popups triggered via Behavior Trigger addon.
+* Fix: Visual Composer compatibility
+
+= 1.8.3 =
+* NEW: Duplicate a Campaign and Message easily now - click 'duplicate' in the list view!
+* Update: Using an image instead of dashicons for action bar arrows
+* Update: Renamed "messenger" css class to "ig_messenger" to avoid potential overlaps
+* Update: Clicking outside the popup (on the dark overlay) will close the popup
+
+= 1.8.2 =
+* Fix: Preview not working correctly
+
+= 1.8.1 =
+* NEW: Support for Icegram Remote - now run your campaigns on other sites - even non WordPress sites
+* Update: Better wildcard matching in Where targeting rules for URLs
+* Update: Compatibility with Avada theme
+* Update: Misc UI and performance enhancements
+
+= 1.8 =
+* NEW: Target campaigns to any page with wildcard URL support in "Where" conditions
+* NEW: CTA Click based retargeting to hide message in a campaign after being clicked
+* NEW: Message shwon retargeting can now hide message forever - after shown once
+
+= 1.7.1 =
+* Update: Dismiss button for admin notice about bonus themes and addon
+* Fix: Admin settings CSS changes, for compatibility with some themes
+* Fix: Hello Bar close button not clickable
+* Fix: Retargeting not working with some cache systems
+
+= 1.7 =
+* Update: Styling changes to action bar CTA button for alignment
+* Update: Hello Bar styling updates to better handle forms
+* Fix: Hidden field related issue while embeding subscription forms
+* Fix: Retargeting not working correctly in certain cases
+* Fix: Theme thumbnails missing on messages list
+
+= 1.6 =
+* Fix: Empty image tag causing display issues in Opera / IE
+* Update: Form embed functionality improvements
+* NEW: "Themes Pack 1" addon - 17 free themes as a bonus - available from Icegram.com
+* Fix: Toast message compatibility with Behavior Triggers
+* Update: JS and CSS URLs include version numbers now - better for caching
+* Fix: Other minor fixes
+
+= 1.5 =
+* NEW: "Embed Form" option for easy integration with optin / mailing list / subscription form / CRM services
+* NEW: Retargeting Rule: Do not show again for X number of days
+* NEW: Targeting Rule: "Not Logged In" visitor
+* NEW: Added support for submitting form on CTA click
+* NEW: "CTA Actions" premium addon
+
 = 1.4 =
 * NEW: Targeting Rule: "Exclude pages" from a site wide campaign
 * NEW: Options to cleanup Icegram data and remove shortcodes from content

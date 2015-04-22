@@ -17,15 +17,17 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			if ( !empty( $id ) ) {
 
 				$this->_post = get_post( $id );
-				
 				$this->title 		= $this->_post->post_title;
-				$this->messages 	= get_post_meta( $this->_post->ID, 'messages', true );
+				//icegram_campaign_meta_key
+				$meta_key = apply_filters('icegram_campaign_meta_key' ,'messages' ,$this->_post->ID);
+				$this->messages 	= get_post_meta( $this->_post->ID, $meta_key, true );
 				$this->rules 		= get_post_meta( $this->_post->ID, 'icegram_campaign_target_rules', true );
 				$this->rules_summary['where'] = array(
 										'homepage' 		=> ( !empty( $this->rules['homepage'] ) ) ? $this->rules['homepage'] : '',
 										'other_page' 	=> ( !empty( $this->rules['other_page'] ) && $this->rules['other_page'] == 'yes' && !empty( $this->rules['page_id'] ) ) ? $this->rules['page_id'] : '',
 										'blog' 			=> ( !empty( $this->rules['blog'] ) ) ? $this->rules['blog'] : '',
-										'sitewide' 		=> ( !empty( $this->rules['sitewide'] ) ) ? $this->rules['sitewide'] : ''
+										'sitewide' 		=> ( !empty( $this->rules['sitewide'] ) ) ? $this->rules['sitewide'] : '',
+										'local_url' 	=> ( !empty( $this->rules['local_url'] ) ) ? $this->rules['local_url'] : ''
 									);
 				$this->rules_summary['when'] = array(
 										'when' 	=> ( !empty( $this->rules['when'] ) ) ? $this->rules['when'] : '',
@@ -37,12 +39,15 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 										'tablet' => ( !empty( $this->rules['tablet'] ) ) ? $this->rules['tablet'] : '',
 										'laptop' => ( !empty( $this->rules['laptop'] ) ) ? $this->rules['laptop'] : ''
 									);
-				$this->rules_summary['users'] = ( !empty( $this->rules['logged_in'] ) && $this->rules['logged_in'] == 'logged_in' ) ? ( ( !empty( $this->rules['users'] ) ) ? $this->rules['users'] : array( 'none' ) ) : array( 'all' );
+				$this->rules_summary['users'] = ( !empty( $this->rules['logged_in'] ) && $this->rules['logged_in'] == 'logged_in' ) ? ( ( !empty( $this->rules['users'] ) ) ? $this->rules['users'] : array( 'none' ) ) : array($this->rules['logged_in']);
 
-				$this->rules_summary['retargeting'] = array( 'retargeting' => ( !empty( $this->rules['retargeting'] ) ) ? $this->rules['retargeting'] : '' );
+				$this->rules_summary['retargeting'] = array( 'retargeting' => ( !empty( $this->rules['retargeting'] ) ) ? $this->rules['retargeting'] : '' ,
+															 'expiry_time' => ( !empty( $this->rules['retargeting']) ) ? $this->rules['expiry_time'] : '' );
+				$this->rules_summary['retargeting_clicked'] = array( 'retargeting_clicked' => ( !empty( $this->rules['retargeting_clicked'] ) ) ? $this->rules['retargeting_clicked'] : '' ,
+															 'expiry_time_clicked' => ( !empty( $this->rules['retargeting_clicked']) ) ? $this->rules['expiry_time_clicked'] : '' );
 
 			}	
-
+				
 			add_filter( 'icegram_campaign_validation', array( $this, '_is_valid_user_roles' ), 10, 3 );
 			add_filter( 'icegram_campaign_validation', array( $this, '_is_valid_device' ), 10, 3 );
 			add_filter( 'icegram_campaign_validation', array( $this, '_is_valid_time' ), 10, 3 );
@@ -63,7 +68,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 		}
 
 		function is_valid( $options = array() ) {
-			if( !empty( $this->_post->ID ) ) {
+			if( !empty( $this->_post->ID ) && $this->_post->post_status === 'publish') {
 				return apply_filters( 'icegram_campaign_validation', true, $this, $options );
 			}
 			return false;
@@ -73,7 +78,11 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 			if( !$campaign_valid ) {
 				return $campaign_valid;
 			}
-			if ( in_array( 'all', $campaign->rules_summary['users'], true ) ) {
+			
+			if(in_array( 'not_logged_in', $campaign->rules_summary['users'], true ) && !is_user_logged_in() ){
+					return true;
+			}
+			elseif ( in_array( 'all', $campaign->rules_summary['users'], true ) ) {
 				return true;
 			} elseif ( is_user_logged_in() && !in_array( 'none', $campaign->rules_summary['users'], true ) ) {
 				$current_user = wp_get_current_user();
@@ -122,7 +131,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
-			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( is_home() || is_front_page() ) ) {
+			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( $_REQUEST['is_home'] === 'true') ) {
 					return true;
 			}
 			if ( !empty( $page_id ) ) {
@@ -130,7 +139,33 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
+			if ( (!empty( $campaign->rules_summary['where']['local_url'] ) && $campaign->rules_summary['where']['local_url'] == 'yes' ))  {
+				$current_page_url =  Icegram::get_current_page_url();
+				// TODO::change this check with remote mode 
+				//return if call made from remote url
+				if(!empty($_POST['ig_remote_url'])){
+					return;
+				}
+				foreach ($campaign->rules['local_urls'] as $local_url_pattern) {
+					$result = $this->is_valid_url($local_url_pattern , $current_page_url);
+					if($result){
+						return $result;
+					}else{
+						continue;
+					}
+				}
+			}
 			return false;
+		}
+
+		static function is_valid_url($pattern, $current_page_url){
+			$pattern = preg_quote($pattern,'/');
+			if( strpos($pattern, '*') !== false ){
+			   $pattern = str_replace('\*', '[-a-zA-Z0-9+&@#\/%?=~_|!:,.;]*', $pattern);
+			}
+			
+			$result  = (bool) preg_match('/'.$pattern.'$/i', $current_page_url);
+			return $result;
 		}
 	}
 }
