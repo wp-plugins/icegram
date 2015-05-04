@@ -21,7 +21,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 	       	//duplicate campaign
 	        add_filter( 'post_row_actions', array(&$this , 'add_campaign_action'), 10, 2 );
 	        add_action('admin_init', array(&$this ,'duplicate_campaign') ,10, 1);
-	        $this->site_url = site_url().'/';
+	        $this->site_url = home_url().'/';
 			
 			$this->default_target_rules = apply_filters( 'icegram_campaign_default_rules',
 														array ( 'homepage' 	=> 'yes',
@@ -89,7 +89,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 											?>
 											<tr class="form-field message-row" value="<?php echo $message['id']; ?>">
 												<td class="message_header">
-													<label class="message_header_label <?php echo $message_data['type']; ?>"><?php echo $icegram->message_types[ $message_data['type'] ]['name']; ?></label>
+													<label class="message_header_label <?php echo "ig_".$message_data['type']; ?>"><?php echo $icegram->message_types[ $message_data['type'] ]['name']; ?></label>
 												</td>
 												<td class="message_title">
 													<div class="message-title-text"><?php echo $message_title; ?></div>
@@ -489,7 +489,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 			?>
 			<tr class="form-field message-row" value="<?php echo $message_id; ?>">
 				<td class="message_header">
-					<label class="message_header_label <?php echo $message_type; ?>"><?php echo ucwords( str_replace( "-", ' ', $message_type ) ); ?></label>
+					<label class="message_header_label <?php echo "ig_".$message_type; ?>"><?php echo ucwords( str_replace( "-", ' ', $message_type ) ); ?></label>
 				</td>
 				<td class="message_title">
 					<div class="message-title-text" style="display:none;"><?php echo $message_title; ?></div>

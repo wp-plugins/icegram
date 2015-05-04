@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.9
+ * Version: 1.8.10
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
@@ -35,7 +35,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.9";
+        $this->version = "1.8.10";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -529,7 +529,7 @@ class Icegram {
         $skip_others    = $preview_mode = false;
         $campaign_ids   = $message_ids  = array();
         
-        $this->shortcode_instances = ($this->cache_compatibility == 'yes') ? $_REQUEST['shortcodes'] : $this->shortcode_instances;
+        $this->shortcode_instances = ($this->cache_compatibility == 'yes' && !empty($_REQUEST['shortcodes'])) ? $_REQUEST['shortcodes'] : $this->shortcode_instances;
         // Pull in message and campaign IDs from shortcodes - if set
         if( !empty( $this->shortcode_instances ) ) {
             foreach ($this->shortcode_instances as $i => $value) {
@@ -671,12 +671,12 @@ class Icegram {
     // Process
     function process_message_body(&$message_data){
         $content = $message_data['message'];
-        $content = convert_chars( convert_smilies( wptexturize( $content ) ) );
         if(isset($GLOBALS['wp_embed'])) {
             $content = $GLOBALS['wp_embed']->autoembed($content);
         }
         $content = $this->after_wpautop( wpautop( $this->before_wpautop( $content ) ) );
         $content = do_shortcode( shortcode_unautop( $content ) );
+        $content = convert_chars( convert_smilies( wptexturize( $content ) ) );
         $message_data['message'] = $content;
         //do_shortcode in headline
         $message_data['headline'] = do_shortcode( shortcode_unautop( $message_data['headline'] ) );
@@ -701,7 +701,7 @@ class Icegram {
             wp_enqueue_script( 'magnific_popup_js' );
         }
         
-        $icegram_writepanel_params  = array ( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'search_message_nonce' => wp_create_nonce( "search-messages" ) );
+        $icegram_writepanel_params  = array ( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'search_message_nonce' => wp_create_nonce( "search-messages" ), 'home_url' => home_url( '/' ) );
         $this->available_headlines  = apply_filters( 'icegram_available_headlines', array() );
         $icegram_writepanel_params  = array_merge( $icegram_writepanel_params, array( 'available_headlines' => $this->available_headlines ) );
         
@@ -1277,7 +1277,20 @@ class Icegram {
         return self::$current_page_id;
     }
     static function get_current_page_url() {
-        $pageURL = (!empty($_REQUEST['referral_url'])) ? $_REQUEST['referral_url'] : '';
+        if(!empty($_REQUEST['cache_compatibility']) && $_REQUEST['cache_compatibility'] == 'yes'){
+            $pageURL = (!empty($_REQUEST['referral_url'])) ? $_REQUEST['referral_url'] : '';
+        }else{
+            $pageURL = 'http';
+            if( isset($_SERVER["HTTPS"]) ) {
+                if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+            }
+            $pageURL .= "://";
+            if ($_SERVER["SERVER_PORT"] != "80") {
+                $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+            } else {
+                $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+            }
+        }
         return $pageURL;
     }
 

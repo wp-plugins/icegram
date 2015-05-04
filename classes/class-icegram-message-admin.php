@@ -47,7 +47,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						$message_types[] = $type;
 					}
 				}
-	      	 echo $out = '<a href="#popup_container"  class="'.implode( ' ', $message_types).' button" id="embed_form_but">'.__('Embed Form' , 'icegram' ).'</a>';
+	      	 echo $out = '<a href="#popup_container"  class="ig_'.implode( ' ig_', $message_types).' button" id="embed_form_but">'.__('Embed Form' , 'icegram' ).'</a>';
 		   }
 	    }
 
@@ -122,6 +122,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					foreach ( $icegram->message_types as $message_type => $message ) {
 						
 						if( !empty( $message['admin_style'] ) ) {
+							$message_type = 'ig_'.$message_type;
 							$label_bg_color 		= $message['admin_style']['label_bg_color'];
 							$theme_header_height 	= $message['admin_style']['theme_header_height'];
 							$theme_header_bg_size	= ( $theme_header_height + 3 )."em";					
@@ -191,10 +192,10 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 							continue;
 						}
 				?>
-					<p class="message_row <?php echo $message['type']; ?>">
+					<p class="message_row <?php echo "ig_".$message['type']; ?>">
 										
-						<label for="message_theme_<?php echo $message['type'] ?>" class="message_label"><strong><?php _e( 'Theme', 'icegram' ); ?></strong></label> 
-						<select id="message_theme_<?php echo $message['type'] ?>" name="message_data[<?php echo $message_id; ?>][theme][<?php echo $message['type'] ?>]" class="icegram_chosen_page message_theme message_theme_<?php echo $message['type']; ?>">
+						<label for="message_theme_ig_<?php echo $message['type'] ?>" class="message_label"><strong><?php _e( 'Theme', 'icegram' ); ?></strong></label> 
+						<select id="message_theme_ig_<?php echo $message['type'] ?>" name="message_data[<?php echo $message_id; ?>][theme][<?php echo $message['type'] ?>]" class="icegram_chosen_page message_theme message_theme_ig_<?php echo $message['type']; ?>">
 							<?php 
 							foreach ( $message['themes'] as $theme ) {
 									
@@ -209,7 +210,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					if( empty( $message['settings']['animation']['values'] ) ) continue;
 					$animations = $message['settings']['animation']['values']
 					?>
-					<p class="message_row <?php echo $message['type']; ?>">
+					<p class="message_row <?php echo "ig_".$message['type']; ?>">
 						<label for="message_animation_<?php echo $message['type'] ?>" class="message_label"><strong><?php _e( 'Animation', 'icegram' ); ?></strong></label> 
 						<select id="message_animation_<?php echo $message['type'] ?>" name="message_data[<?php echo $message_id; ?>][animation][<?php echo $message['type'] ?>]" class="icegram_chosen_page message_animation message_animation_<?php echo $message['type']; ?>">
 							<?php foreach ( $animations as $value => $label ) { ?>
@@ -221,7 +222,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					// action add for interstitial message setting
 					do_action( 'icegram_after_message_theme_settings', $message_id, $message_data );
 				?>
-				<p class="message_row <?php echo implode( ' ', $settings['headline'] )?>">
+				<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['headline'] )?>">
 					<label for="message_headline" class="message_label">
 						<strong><?php _e( 'Headline', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Shown with highest prominence. Click on idea button on right to get a new headline.', 'icegram' ); ?>"></span>
@@ -234,7 +235,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						<span class="headline-buttons-icon admin_field_icon"></span>
 					</a>
 				</p>
-				<p class="message_row <?php echo implode( ' ', $settings['label'] )?>">
+				<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['label'] )?>">
 					<label for="message_label" class="message_label">
 						<strong><?php _e( 'Button Label', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'Your call to action text. Something unusual will increase conversions.', 'icegram' ); ?>"></span>
@@ -242,7 +243,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					<input type="text" class="message_field" name="message_data[<?php echo $message_id; ?>][label]" id="message_label" value="<?php if( isset( $message_data['label'] ) ) echo esc_attr( $message_data['label'] ); ?>" />
 				</p>
 				<?php
-				$target_link_field = '<p class="message_row '.implode( ' ', $settings['link'] ).'">
+				$target_link_field = '<p class="message_row ig_'.implode( ' ig_', $settings['link'] ).'">
 										<label for="message_link" class="message_label">
 											<strong>'.__('Target Link' ,'icegram').'</strong>
 											<span class="help_tip admin_field_icon" data-tip='.__("Enter destination URL here. Clicking will redirect to this link." ,'icegram').'></span>
@@ -256,7 +257,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 				?>
 				
 
-				<p class="message_row <?php echo implode( ' ', $settings['icon'] )?>">
+				<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['icon'] )?>">
 					<label for="upload_image" class="message_label">
 						<strong><?php _e( 'Icon / Avatar Image', 'icegram' ); ?></strong>
 						<span class="help_tip admin_field_icon" data-tip="<?php _e( 'This image will appear in message content.', 'icegram' ); ?>"></span>
@@ -277,13 +278,13 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 				
 				$show_color_options = (!empty($colors_options_check)) ? 'style="display: none;"' : '';
 				$color_field_html = '<div class="message_colors_options_container" '.$show_color_options.'>
-									 <p class="message_row '.implode( ' ', $settings['bg_color']).'">
+									 <p class="message_row ig_'.implode( ' ig_', $settings['bg_color']).'">
 										<label for="message_bg_color" class="message_label">&nbsp;</label>
 										<span class="message_label" style="width:5em !important"> '.__( 'Body', 'icegram' ).'</span>
 										<input type="text" class="message_field color-field" data-color-label="'.__( 'Background', 'icegram' ).'" name="message_data['.$message_id.'][bg_color]" id="message_bg_color" value="'.$bg_color.'"  />
 										<input type="text" class="message_field color-field" data-color-label="'.__( 'Text', 'icegram' ).'" name="message_data['.$message_id.'][text_color]" id="message_text_color" value="'.$text_color.'"  />
 									</p>
-									<p class="message_row '.implode( ' ', $settings['label'] ).'">
+									<p class="message_row ig_'.implode( ' ig_', $settings['label'] ).'">
 										<label for="message_cta_bg_color" class="message_label">&nbsp;</label>
 										<span class="message_label" style="width:5em !important">'.__( 'Button', 'icegram' ) .'</span>
 										<input type="text" class="message_field color-field" data-color-label="'.__( 'Background', 'icegram' ).'" name="message_data['.$message_id.'][cta_bg_color]" id="message_cta_bg_color" value="'.$cta_bg_color.'" />
@@ -291,7 +292,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 									</p>
 									</div>';
 				$color_field = apply_filters('icegram_color_fields' , array( 'html' => $color_field_html ,'message_id' => $message_id ,'message_data' => $message_data) );
-				$colors_options_html = '<p class="message_row '.implode( ' ', $settings['bg_color']).'">
+				$colors_options_html = '<p class="message_row ig_'.implode( ' ig_', $settings['bg_color']).'">
 											<label for="message_use_theme_defaults" class="message_label"><strong>'. __( 'Colors', 'icegram' ).'</strong></label> <label >
 											<input class="show_color_options" type="checkbox" name="message_data['.$message_id.'][use_theme_defaults]" id="message_use_theme_defaults" value="yes" '. $colors_options_check .'/> '. __( 'Use theme\'s default colors', 'icegram') .'</label> '.$color_field['html'].'
 										</p>';
@@ -307,54 +308,50 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 						'tinymce' 		=> true
 					);
 				?>
-				<p class="message_row <?php echo implode( ' ', $settings['message'] )?>">
+				<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['message'] )?>">
 					<style type="text/css">.wp-editor-tools:after {display: inline-block !important; }</style>
 					<label for="message_body" class="message_body message_label"><strong><?php _e( 'Message Body', 'icegram' ); ?></strong></label>
 					<?php $message = ( !empty( $message_data['message'] ) ) ? $message_data['message'] : ''; ?>
 					<?php wp_editor( $message, 'edit'.$message_id, $editor_args ); ?>
 				</p>
-				<?php 
-					// action add for design studio
-					//do_action( 'icegram_after_message_body', $message_id, $message_data );
-				?>
-				<p class="message_row position <?php echo implode( ' ', $settings['position'] )?>">
+				<p class="message_row position <?php echo "ig_".implode( ' ig_', $settings['position'] )?>">
 					<label for="message_position" class="message_label"><strong><?php _e( 'Position', 'icegram' ); ?></strong></label>
 					<span class="message_field location-selector message_label">
 						<input type="radio" id="radio01_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="00" <?php echo ( !empty( $message_data['position'] ) && "00" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio01_<?php echo $message_id;?>" title="Top Left">
-							<span class="location <?php if( !empty( $positions['00'] ) ) { echo implode( ' ', $positions['00'] ); } ?> top left" data-position="top left"></span>
+							<span class="location <?php if( !empty( $positions['00'] ) ) { echo "ig_".implode( ' ig_', $positions['00'] ); } ?> top left" data-position="top left"></span>
 						</label>
 						<input type="radio" id="radio02_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="01" <?php echo ( !empty( $message_data['position'] ) && "01" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio02_<?php echo $message_id;?>" title="Top">
-							<span class="location <?php if( !empty( $positions['01'] ) ) { echo implode( ' ', $positions['01'] ); } ?> top" data-position="top"></span>
+							<span class="location <?php if( !empty( $positions['01'] ) ) { echo "ig_".implode( ' ig_', $positions['01'] ); } ?> top" data-position="top"></span>
 						</label>
 						<input type="radio" id="radio03_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="02" <?php echo ( !empty( $message_data['position'] ) && "02" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio03_<?php echo $message_id;?>" title="Top Right">
-							<span class="location <?php if( !empty( $positions['02'] ) ) { echo implode( ' ', $positions['02'] ); } ?> top right" data-position="top right"></span>
+							<span class="location <?php if( !empty( $positions['02'] ) ) { echo "ig_".implode( ' ig_', $positions['02'] ); } ?> top right" data-position="top right"></span>
 						</label>
 						<input type="radio" id="radio04_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="10" <?php echo ( !empty( $message_data['position'] ) && "10" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio04_<?php echo $message_id;?>" title="Middle Left">
-							<span class="location <?php if( !empty( $positions['10'] ) ) { echo implode( ' ', $positions['10'] ); } ?> middle left" data-position="middle left"></span>
+							<span class="location <?php if( !empty( $positions['10'] ) ) { echo "ig_".implode( ' ig_', $positions['10'] ); } ?> middle left" data-position="middle left"></span>
 						</label>
 						<input type="radio" id="radio05_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="11" <?php echo ( !empty( $message_data['position'] ) && "11" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio05_<?php echo $message_id;?>" title="Middle">
-							<span class="location <?php if( !empty( $positions['11'] ) ) { echo implode( ' ', $positions['11'] ); } ?> middle middle" data-position="middle middle"></span>
+							<span class="location <?php if( !empty( $positions['11'] ) ) { echo "ig_".implode( ' ig_', $positions['11'] ); } ?> middle middle" data-position="middle middle"></span>
 						</label>
 						<input type="radio" id="radio06_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="12" <?php echo ( !empty( $message_data['position'] ) && "12" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio06_<?php echo $message_id;?>" title="Middle Right">
-							<span class="location <?php if( !empty( $positions['12'] ) ) { echo implode( ' ', $positions['12'] ); } ?> middle right" data-position="middle right"></span>
+							<span class="location <?php if( !empty( $positions['12'] ) ) { echo "ig_".implode( ' ig_', $positions['12'] ); } ?> middle right" data-position="middle right"></span>
 						</label>
 						<input type="radio" id="radio07_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="20" <?php echo ( !empty( $message_data['position'] ) && "20" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio07_<?php echo $message_id;?>" title="Bottom Left">
-							<span class="location <?php if( !empty( $positions['20'] ) ) { echo implode( ' ', $positions['20'] ); } ?> bottom left" data-position="bottom left"></span>
+							<span class="location <?php if( !empty( $positions['20'] ) ) { echo "ig_".implode( ' ig_', $positions['20'] ); } ?> bottom left" data-position="bottom left"></span>
 						</label>
 						<input type="radio" id="radio08_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="21" <?php echo ( !empty( $message_data['position'] ) && "21" == $message_data['position'] || !isset( $message_data['position'] ) ) ? 'checked' : ''; ?> />
 						<label for="radio08_<?php echo $message_id;?>" title="Bottom">
-							<span class="location <?php if( !empty( $positions['21'] ) ) { echo implode( ' ', $positions['21'] ); } ?> bottom" data-position="bottom"></span>
+							<span class="location <?php if( !empty( $positions['21'] ) ) { echo "ig_".implode( ' ig_', $positions['21'] ); } ?> bottom" data-position="bottom"></span>
 						</label>
 						<input type="radio" id="radio09_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][position][ig_default]" value="22" <?php echo ( !empty( $message_data['position'] ) && "22" == $message_data['position'] ) ? 'checked' : ''; ?> />
 						<label for="radio09_<?php echo $message_id;?>" title="Bottom Right">
-							<span class="location <?php if( !empty( $positions['22'] ) ) { echo implode( ' ', $positions['22'] ); } ?> bottom right" data-position="bottom right"></span>
+							<span class="location <?php if( !empty( $positions['22'] ) ) { echo "ig_".implode( ' ig_', $positions['22'] ); } ?> bottom right" data-position="bottom right"></span>
 						</label>
 					</span>
 				</p>
