@@ -21,6 +21,8 @@ class Icegram_Message_Type_Messenger extends Icegram_Message_Type {
 														  "appear" 	=> __( 'Appear', 'icegram' ) );	
 		$this->settings['animation']['default'] = 'slide';
 		$this->settings['theme']['default']		= 'social';
+		$this->settings['form_layout']['values'] 	= array('inline' );	 // May be 'bottom'
+		$this->settings['form_layout']['default'] 	= 'inline';
 		unset ( $this->settings['text_color'],
 				$this->settings['bg_color'],
 				$this->settings['label']

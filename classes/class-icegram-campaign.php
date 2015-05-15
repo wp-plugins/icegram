@@ -131,7 +131,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
-			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ( $_REQUEST['is_home'] === 'true') ) {
+			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && (  $_REQUEST['is_home'] === 'true' || is_home() || is_front_page()  )) {
 					return true;
 			}
 			if ( !empty( $page_id ) ) {
@@ -146,7 +146,6 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 				if(!empty($_POST['ig_remote_url'])){
 					return;
 				}
-
 				foreach ($campaign->rules['local_urls'] as $local_url_pattern) {
 					$result = $this->is_valid_url($local_url_pattern , $current_page_url);
 					if($result){

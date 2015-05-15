@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja ,wordpress lead generation, wordpress lightbox optin, wordpress lightbox optin form, wordpress lightbox optins, wordpress mobile optin forms, wordpress mobile popup, wordpress mobile popups, wordpress optin form, wordpress overlay popup, wordpress popup, wordpress popup form, wordpress popup plugin, wordpress popup solution, wordpress popups ,  popups, subscribe,  wp popups, optin bars, action grabber, constant contact, toast notifications, leads, lists,  builder, action bar,  floating bar, footer bar, hellobar alternative, pop over, Popup plugin, aweber, campaign monitor, constant contact, email list, exit-intent, getresponse, analytics, Hubspot, icontact, infusionsoft, newsletter,  Mailing list pop-up, retargeting, Responsive Popup, split testing,  AB testing
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 1.8.10
+Stable tag: 1.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -153,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.9 = 
+Form embed functionality improvements , Added forms styles.
+
 = 1.8.10 = 
 Fixes for minified js and css. Changes for WP themes compatibility.
 
@@ -218,6 +221,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.9 =
+* New:Forms now comes with  various form styles and multiple positions
+* New:Forms also provides background and text color
+* New:Forms also supports header,footer-text/HTML
+* Update: Updated form embed functionality
+* Fix: Homepage page targeting not working when "Lazy loading" was off
+
 = 1.8.10 =
 * Fix: Comapatibility for themes with CSS class name conflicts 
 * Fix: Comaptibility with "autoptimize" and other minification plugins

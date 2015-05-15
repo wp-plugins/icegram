@@ -16,6 +16,8 @@ class Icegram_Message_Type_Action_Bar extends Icegram_Message_Type {
 		parent::define_settings();
 		$this->settings['position']['values'] 		= array( '01', '21' );	
 		$this->settings['position']['default'] 		= '01';
+		$this->settings['form_layout']['values'] 	= array( 'left', 'right', 'bottom', 'inline' );	
+		$this->settings['form_layout']['default'] 	= 'bottom';
 		$this->settings['theme']['default']			= 'hello';
 		$this->settings['bg_color']['default']		= ''; //#eb593c
 		$this->settings['text_color']['default']	= ''; //#ffffff

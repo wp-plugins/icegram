@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.8.10
+ * Version: 1.9
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
@@ -35,7 +35,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.8.10";
+        $this->version = "1.9";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -65,6 +65,7 @@ class Icegram {
             add_action( 'wp_footer', array( &$this, 'display_messages' ) );
         }
         add_shortcode( 'icegram', array( &$this, 'execute_shortcode' ) );
+        add_shortcode( 'ig_form', array( &$this, 'execute_form_shortcode' ) );
         // WPML compatibility
         add_filter( 'icegram_identify_current_page',  array( &$this, 'wpml_get_parent_id' ), 10 );
 
@@ -485,6 +486,11 @@ class Icegram {
         }
         return $icegram_branding_data;
     }
+    
+    //Execute Form shortcode
+    function execute_form_shortcode( $atts = array() ) {
+        return '<div class="ig_form_container layout_inline"></div>';
+    }
 
     function execute_shortcode( $atts = array() ) {
         // When shortcode is called, it will only prepare an array with conditions
@@ -662,6 +668,7 @@ class Icegram {
                 $css [] = $theme['baseurl'] . $theme_default.'.css';
                 $icegram_data['messages'][$key]['theme'] = $theme_default;
             }
+            $css = array_unique($css);
         }
         $icegram_data['scripts'] =  apply_filters('add_icegram_script' , $scripts);
         $icegram_data['css'] =   apply_filters('add_icegram_css' , $css);
@@ -680,6 +687,11 @@ class Icegram {
         $message_data['message'] = $content;
         //do_shortcode in headline
         $message_data['headline'] = do_shortcode( shortcode_unautop( $message_data['headline'] ) );
+        //TODO :: Test short codes
+        //shortcode support for Third party forms
+        if(!empty($message_data['form_html_original'] )){
+            $message_data['form_html'] = do_shortcode( shortcode_unautop( $message_data['form_html_original'] ) );
+        }
     }
 
     function enqueue_admin_styles_and_scripts() {
@@ -696,10 +708,6 @@ class Icegram {
         wp_enqueue_script( 'icegram_writepanel' );
         wp_enqueue_script( 'icegram_ajax-chosen' );
         wp_enqueue_script( 'icegram_tiptip' );
-        wp_register_script( 'magnific_popup_js', $this->plugin_url . '/assets/js/magnific-popup.js', array ( 'jquery' ), $this->version, true);
-        if( !wp_script_is( 'magnific_popup_js' ) ) {
-            wp_enqueue_script( 'magnific_popup_js' );
-        }
         
         $icegram_writepanel_params  = array ( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'search_message_nonce' => wp_create_nonce( "search-messages" ), 'home_url' => home_url( '/' ) );
         $this->available_headlines  = apply_filters( 'icegram_available_headlines', array() );
@@ -712,7 +720,6 @@ class Icegram {
         wp_enqueue_style( 'icegram_admin_styles', $this->plugin_url . '/assets/css/admin.css', array(), $this->version  );
         wp_enqueue_style( 'icegram_jquery-ui-style', $this->plugin_url . '/assets/css/jquery-ui.min.css', array(), $this->version );
         wp_enqueue_style( 'icegram_chosen_styles', $this->plugin_url . '/assets/css/chosen.min.css', array(), $this->version );
-        wp_enqueue_style( 'magnific_popup_css', $this->plugin_url . '/assets/css/magnific-popup.css', array(), $this->version );
 
         if ( !wp_script_is( 'jquery-ui-datepicker' ) ) {
             wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -903,7 +910,12 @@ class Icegram {
         //local url
         $sql .= " OR ( pm.meta_value LIKE '%%%s%%' )";
         $sql_params[] = 's:9:"local_url";s:3:"yes";';
-        if (!empty($_REQUEST['is_home']) && $_REQUEST['is_home'] === 'true' )  {
+        if(!empty($_REQUEST['cache_compatibility']) && $_REQUEST['cache_compatibility'] == 'yes'){
+            $is_home = (!empty($_REQUEST['is_home']) && $_REQUEST['is_home'] === 'true') ?  true : false ;
+        }else{
+            $is_home = (is_home() || is_front_page()) ? true : false;
+        }
+        if ($is_home === true )  {
             $sql .= " OR ( pm.meta_value LIKE '%%%s%%' )";
             $sql_params[] = 's:8:"homepage";s:3:"yes";';
         }

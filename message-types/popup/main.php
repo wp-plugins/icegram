@@ -18,6 +18,8 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 	function define_settings() {
 		parent::define_settings();
 		$this->settings['theme']['default']	= 'persuade';
+		$this->settings['form_layout']['values'] 	= array( 'left', 'right', 'bottom', 'inline' );	
+		$this->settings['form_layout']['default'] 	= 'left';
 		$this->settings['bg_color']['default']		= '';
 		$this->settings['text_color']['default']	= '';
 		unset ( $this->settings['position'],
