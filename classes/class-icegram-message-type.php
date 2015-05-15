@@ -100,7 +100,8 @@ abstract class Icegram_Message_Type {
 						    'bg_color' 		=> array( 'type' => 'color' ),
 						    'text_color' 	=> array( 'type' => 'color' ),
 						    'position' 		=> array( 'type' => 'position' ),
-						    'embed_form'    => array( 'type' => 'form' )
+						    'form_layout' 	=> array( 'type' => 'position' ), //TODO :: check this , remove if not required
+						    'embed_form'    => array( 'type' => 'form' ) // TODO :: remove this setting from all MS type
 						    );
 
 	}
