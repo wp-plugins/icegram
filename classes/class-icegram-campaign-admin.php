@@ -354,7 +354,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<label class="options_header"><?php _e( 'Retargeting', 'icegram' ); ?></label>
 					<label for="retargeting">
 						<input type="checkbox" name="campaign_target_rules[retargeting]" id="retargeting" value="yes" <?php ( !empty( $campaign_target_rules['retargeting'] ) ) ? checked( $campaign_target_rules['retargeting'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once shown, do NOT show a message again for', 'icegram' ); ?>
+						<?php _e( 'Once shown, do NOT show this campaign again for', 'icegram' ); ?>
 						<select name="campaign_target_rules[expiry_time]">
 							<?php foreach($expiry_options_for_shown as $key => $option){
 									?>
@@ -369,7 +369,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<label class="options_header">&nbsp;</label>
 					<label for="retargeting_clicked">
 						<input type="checkbox" name="campaign_target_rules[retargeting_clicked]" id="retargeting_clicked" value="yes" <?php ( !empty( $campaign_target_rules['retargeting_clicked'] ) ) ? checked( $campaign_target_rules['retargeting_clicked'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once CTA is clicked, do NOT show a message again for', 'icegram' ); ?>
+						<?php _e( 'Once CTA is clicked, do NOT show this campaign again for', 'icegram' ); ?>
 						<select name="campaign_target_rules[expiry_time_clicked]">
 							<?php foreach($expiry_options_for_clicked as $key => $option){
 									?>

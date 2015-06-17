@@ -3,8 +3,8 @@ Contributors: icegram, storeapps, niravmehta, putler
 Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja ,wordpress lead generation, wordpress lightbox optin, wordpress lightbox optin form, wordpress lightbox optins, wordpress mobile optin forms, wordpress mobile popup, wordpress mobile popups, wordpress optin form, wordpress overlay popup, wordpress popup, wordpress popup form, wordpress popup plugin, wordpress popup solution, wordpress popups ,  popups, subscribe,  wp popups, optin bars, action grabber, constant contact, toast notifications, leads, lists,  builder, action bar,  floating bar, footer bar, hellobar alternative, pop over, Popup plugin, aweber, campaign monitor, constant contact, email list, exit-intent, getresponse, analytics, Hubspot, icontact, infusionsoft, newsletter,  Mailing list pop-up, retargeting, Responsive Popup, split testing,  AB testing
 Requires at least: 3.9
-Tested up to: 4.1.1
-Stable tag: 1.9
+Tested up to: 4.1.2
+Stable tag: 1.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -153,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.9.1 = 
+Few improvements in form functionality.
+
 = 1.9 = 
 Form embed functionality improvements , Added forms styles.
 
@@ -221,6 +224,13 @@ Initial Release
 
 
 == Changelog ==
+= 1.9.1 =
+* Update: Retargeting option now work for campaign instead of message
+* Fix: Inline form shortcode not getting preserved in message body
+* Fix: Form style options not getting saved
+* Fix: Minor issues with form css
+* Fix: Compatibility issues of previous embed form functionality with new one 
+
 = 1.9 =
 * New:Forms now comes with  various form styles and multiple positions
 * New:Forms also provides background and text color
@@ -229,14 +239,14 @@ Initial Release
 * Fix: Homepage page targeting not working when "Lazy loading" was off
 
 = 1.8.10 =
-* Fix: Comapatibility for themes with CSS class name conflicts 
-* Fix: Comaptibility with "autoptimize" and other minification plugins
+* Fix: Compatibility for themes with CSS class name conflicts 
+* Fix: Compatibility with "auto optimize" and other minification plugins
 * Fix: Local site targeting not working without wildcard character
 
 = 1.8.9 =
 * New: Both body and button colors (background and foreground) can now be set
 * Update: Brought back CTA Buttons default colors
-* New: Lazy load Icegram messages for better comaptibility with caching plugins
+* New: Lazy load Icegram messages for better compatibility with caching plugins
 * Update: Updated all themes to support new theme coloring scheme
 * Fix: Some alignment issues with images in popups
 * Update: Minified all JS and CSS to improve performance
