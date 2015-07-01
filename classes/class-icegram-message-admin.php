@@ -226,13 +226,14 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 
 				<div class="message_form_options" <?php echo $show_form_options; ?>  message_id="<?php echo $message_id; ?>">
 					<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>">
+						<!-- <label for="message_form_style" class="message_label">&nbsp;</label>  -->
+						<!-- <span class="message_label"> <?php //_e('Style', 'icegram' ); ?></span> -->
 						<label for="message_form_style" class="message_label">&nbsp;</label> 
-						<span class="message_label"> <?php _e('Style', 'icegram' ); ?></span>
-						<label for="message_form_style" class="message_label">&nbsp;</label> 
-						<select id="message_form_style" name="message_data[<?php echo $message_id; ?>][form_style]" class="icegram_chosen_page message_form_style " value="<?php echo $message_data['form_style']?>">
+						<select id="message_form_style" name="message_data[<?php echo $message_id; ?>][form_style]" class="icegram_chosen_page message_form_style " >
 							<?php 
 							$available_form_styles = $this->available_form_styles();
 							foreach ( $available_form_styles as $style ) {
+								// $bg_img = ($style['name'] !== 'None' ) ? "background-image: url(" .  $icegram->plugin_url.'/assets/images/' . strtolower(str_replace( ' ', '_', $style['name'])) . ".png)" : "";
 								$bg_img = "background-image: url(" .  $icegram->plugin_url.'/assets/images/' . strtolower(str_replace( ' ', '_', $style['name'])) . ".png)";
 								?>
 								<option style="<?php echo $bg_img; ?>" <?php echo ( !empty( $message_data['form_style'] ) && strtolower(str_replace( ' ', '_', $style['name'])) == $message_data['form_style'] ) ? 'selected' : ''; ?>  value="<?php echo esc_attr( strtolower(str_replace( ' ', '_', $style['name'])) ) ?>" class="<?php echo strtolower(str_replace( ' ', '_', $style['name'])) ?>" <?php echo ( !empty( $message_data['form_style'] )  && esc_attr( strtolower($style['name']) ) == $message_data['form_style'] ) ? 'selected' : ''; ?>><?php echo esc_html( $style['name'] ) ?></option>
@@ -243,7 +244,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					<p class="form_layouts message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>">
 						<label for="message_form_layouts" class="message_label">&nbsp;</label>
 						<div class="form_radio_group" >
-							<span class="message_label message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>"> <?php _e('Position', 'icegram' ); ?></span>
+							<!-- <span class="message_label message_row <?php //echo "ig_".implode( ' ig_', $settings['embed_form'] )?>"> <?php// _e('Position', 'icegram' ); ?></span> -->
 							<span class="location <?php if( !empty( $form_layouts['left'] ) ) { echo "ig_".implode( ' ig_', $form_layouts['left'] ); } ?>" >
 								<label style="background-position:0px 23px;" for="form_layout_left_<?php echo $message_id;?>" title="<?php _e('Left', 'icegram' ); ?>"> 
 								<input class="message_form_layout" type="radio" id="form_layout_left_<?php echo $message_id;?>" name="message_data[<?php echo $message_id; ?>][form_layout]" value="left" <?php echo ( !empty($message_data['form_layout']) && "left" == $message_data['form_layout'] ) ? 'checked' : ( empty($message_data['form_layout']) && "left" == $default_form_layout ? 'checked' : '') ; ?> />
@@ -282,18 +283,16 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 								</label>
 							</span>
 						</div>
-						<div class="form_inline_shortcode campaign_shortcode light">
-							<?php echo __( 'You can insert <code>[ig_form]</code> wherever you want a form as inline in message body.', 'icegram' ); ?>
-						</div>
+						
 					</p>
 					<?php
+											// <label for="message_form_bg_color" class="message_label">&nbsp;</label>
+											// <span class="message_label" > '.__( 'Color', 'icegram' ).'</span>
 
 						$color_field_html = '<p class="message_form_color message_row ig_"'.implode( ' ig_', $settings['embed_form'] ) .'" '. $show_color_options.'>
 											<label for="message_form_bg_color" class="message_label">&nbsp;</label>
-											<span class="message_label" > '.__( 'Color', 'icegram' ).'</span>
-											<label for="message_form_bg_color" class="message_label">&nbsp;</label>
-											<input type="text" class="message_field color-field" data-color-label="'.__( 'Background', 'icegram' ).'" name="message_data['.$message_id.'][form_bg_color]" id="message_form_bg_color" value="'. $form_bg_color .'"  />
-											<input type="text" class="message_field color-field" data-color-label="'.__( 'Text', 'icegram' ).'" name="message_data['.$message_id.'][form_text_color]" id="message_form_text_color" value="'.$form_text_color.'" style="margin-left:5em !important" />
+											<input type="text" class="message_field color-field" data-color-label="'.__( 'Background Color', 'icegram' ).'" name="message_data['.$message_id.'][form_bg_color]" id="message_form_bg_color" value="'. $form_bg_color .'"  />
+											<input type="text" class="message_field color-field" data-color-label="'.__( 'Text Color', 'icegram' ).'" name="message_data['.$message_id.'][form_text_color]" id="message_form_text_color" value="'.$form_text_color.'" style="margin-left:5em !important" />
 											</p>';
 						$color_field = apply_filters('icegram_color_fields' , array( 'html' => $color_field_html ,'message_id' => $message_id ,'message_data' => $message_data) );
 					
@@ -301,8 +300,8 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					?>
 
 					<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>">
-						<label for="" class="message_label">&nbsp;</label>
-						<span class="message_label"> <?php _e('Header', 'icegram' ); ?></span>
+						<!-- <label for="" class="message_label">&nbsp;</label> -->
+						<!-- <span class="message_label"> <?php //_e('Header', 'icegram' ); ?></span> -->
 						<label for="" class="message_label">&nbsp;</label>
 						<textarea class="message_field message_form_header" rows="2" autocomplete="off" cols="65" name="message_data[<?php echo $message_id; ?>][form_header]" id="" value="" placeholder="<?php _e('Text / HTML to show before the form', 'icegram' ); ?>"><?php echo esc_attr( $form_header ); ?></textarea>
 					</p>
@@ -318,11 +317,15 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					</p>
 					
 					<p class="message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>">
-						<label for="" class="message_label">&nbsp;</label>
-						<span class="message_label"> <?php _e('Footer', 'icegram' ); ?></span>
+						<!-- <label for="" class="message_label">&nbsp;</label> -->
+						<!-- <span class="message_label"> <?php //_e('Footer', 'icegram' ); ?></span> -->
 						<label for="" class="message_label">&nbsp;</label>
 						<textarea class="message_field message_form_footer" rows="2" autocomplete="off" cols="65" name="message_data[<?php echo $message_id; ?>][form_footer]" id="" value="" placeholder="<?php _e('Text / HTML to show after the form', 'icegram' ); ?>"><?php echo esc_attr( $form_footer ); ?></textarea>
 					</p>
+					<div class="form_inline_shortcode campaign_shortcode light message_row <?php echo "ig_".implode( ' ig_', $settings['embed_form'] )?>" style="font-size:.9em;display:inline;">
+							<?php //echo __( 'You can insert <code>[ig_form]</code> wherever you want a form as inline in message body.', 'icegram' ); ?>
+							<?php echo __( 'Insert <code>[ig_form]</code> where you want to show this form in message body.', 'icegram' ); ?>
+					</div>
 				</div>
 
 				<!-- Embed Form options : End -->
@@ -588,6 +591,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 					}					
 				}
 			}
+				
 			// return apply_filters( 'icegram_message_form_layouts_to_show', $form_layouts );
 			return $form_layouts;
 
@@ -641,7 +645,7 @@ if ( !class_exists( 'Icegram_Message_Admin' ) ) {
 		//TODO :: check this and do changes if required
 		function available_form_styles( ) {
 			$available_form_styles = array(
-					array('name' => 'None'),
+					array('name' => 'Style 0'),
 					array('name' => 'Style 1'),
 					array('name' => 'Style 2'),
 					array('name' => 'Style 3'),

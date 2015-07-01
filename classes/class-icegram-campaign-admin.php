@@ -60,7 +60,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				$campaign_box .= '<option value="'.$message['type'].'">'.__( 'Create new', 'icegram' ).' '.$message['name'].' ...</option>';
 			}
 			$campaign_box .= '</select>';
-			$campaign_box .= '<div class="button button-primary campaign_preview" value="' . home_url() . '">' . __( 'Preview', 'icegram' ) . '</div>';
+			$campaign_box .= '<div class="button button-primary campaign_preview">' . __( 'Preview', 'icegram' ) . '</div>';
 
 			$title = '<label class="options_header" for="icegram_messages"><strong>' . __( 'Message', 'icegram' ) . '</strong></label>';
 			?>
