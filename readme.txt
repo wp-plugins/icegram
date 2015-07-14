@@ -4,7 +4,7 @@ Donate link: http://www.icegram.com/
 Tags: popup, window, hellobar, optin, lead capture, marketing, form, notification, messenger, targeting, monster, ninja ,wordpress lead generation, wordpress lightbox optin, wordpress lightbox optin form, wordpress lightbox optins, wordpress mobile optin forms, wordpress mobile popup, wordpress mobile popups, wordpress optin form, wordpress overlay popup, wordpress popup, wordpress popup form, wordpress popup plugin, wordpress popup solution, wordpress popups ,  popups, subscribe,  wp popups, optin bars, action grabber, constant contact, toast notifications, leads, lists,  builder, action bar,  floating bar, footer bar, hellobar alternative, pop over, Popup plugin, aweber, campaign monitor, constant contact, email list, exit-intent, getresponse, analytics, Hubspot, icontact, infusionsoft, newsletter,  Mailing list pop-up, retargeting, Responsive Popup, split testing,  AB testing
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -153,6 +153,9 @@ Contact Us, provide as much detail of the problem as you can. We will try to sol
 3. Editing an Icegram campaign - add multiple messages, edit them, targeting rules, full HTML editor, themes and more
 
 == Upgrade Notice ==
+= 1.9.4 = 
+Bug fix release for forms.
+
 = 1.9.3 = 
 Bug fix release for "Target link" not working.
 
@@ -230,6 +233,12 @@ Initial Release
 
 
 == Changelog ==
+= 1.9.4 =
+* Fix: Ninja Forms was showing two submit buttons with Icegram Form embed functionality
+* Fix: Mailpoet hidden fields were visible with Form embed functionality
+* Fix: Minor issues with form css
+* Fix: Use themes default option was not working in message admin settings
+
 = 1.9.3 =
 * Fix: Redirection to "Target Link" was not working in Icegram message
 * Fix: Inline form shortcode not getting preserved for message types with only inline position

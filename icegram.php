@@ -3,7 +3,7 @@
  * Plugin Name: Icegram
  * Plugin URI: http://www.icegram.com/
  * Description: All in one solution to inspire, convert and engage your audiences. Action bars, Popup windows, Messengers, Toast notifications and more. Awesome themes and powerful rules.
- * Version: 1.9.3
+ * Version: 1.9.4
  * Author: icegram
  * Author URI: http://www.icegram.com/
  *
@@ -35,7 +35,7 @@ class Icegram {
     
     function __construct() {
 
-        $this->version = "1.9.3";
+        $this->version = "1.9.4";
         $this->shortcode_instances = array();
         $this->mode = 'local';
         $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
