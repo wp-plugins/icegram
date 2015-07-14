@@ -60,7 +60,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 				$campaign_box .= '<option value="'.$message['type'].'">'.__( 'Create new', 'icegram' ).' '.$message['name'].' ...</option>';
 			}
 			$campaign_box .= '</select>';
-			$campaign_box .= '<div class="button button-primary campaign_preview" value="' . home_url() . '">' . __( 'Preview', 'icegram' ) . '</div>';
+			$campaign_box .= '<div class="button button-primary campaign_preview">' . __( 'Preview', 'icegram' ) . '</div>';
 
 			$title = '<label class="options_header" for="icegram_messages"><strong>' . __( 'Message', 'icegram' ) . '</strong></label>';
 			?>
@@ -354,7 +354,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<label class="options_header"><?php _e( 'Retargeting', 'icegram' ); ?></label>
 					<label for="retargeting">
 						<input type="checkbox" name="campaign_target_rules[retargeting]" id="retargeting" value="yes" <?php ( !empty( $campaign_target_rules['retargeting'] ) ) ? checked( $campaign_target_rules['retargeting'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once shown, do NOT show a message again for', 'icegram' ); ?>
+						<?php _e( 'Once shown, do NOT show this campaign again for', 'icegram' ); ?>
 						<select name="campaign_target_rules[expiry_time]">
 							<?php foreach($expiry_options_for_shown as $key => $option){
 									?>
@@ -369,7 +369,7 @@ if ( !class_exists( 'Icegram_Campaign_Admin' ) ) {
 					<label class="options_header">&nbsp;</label>
 					<label for="retargeting_clicked">
 						<input type="checkbox" name="campaign_target_rules[retargeting_clicked]" id="retargeting_clicked" value="yes" <?php ( !empty( $campaign_target_rules['retargeting_clicked'] ) ) ? checked( $campaign_target_rules['retargeting_clicked'], 'yes' ) : ''; ?> />
-						<?php _e( 'Once CTA is clicked, do NOT show a message again for', 'icegram' ); ?>
+						<?php _e( 'Once CTA is clicked, do NOT show this campaign again for', 'icegram' ); ?>
 						<select name="campaign_target_rules[expiry_time_clicked]">
 							<?php foreach($expiry_options_for_clicked as $key => $option){
 									?>
