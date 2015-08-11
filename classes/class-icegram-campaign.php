@@ -21,6 +21,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 				//icegram_campaign_meta_key
 				$meta_key = apply_filters('icegram_campaign_meta_key' ,'messages' ,$this->_post->ID);
 				$this->messages 	= get_post_meta( $this->_post->ID, $meta_key, true );
+				
 				$this->rules 		= get_post_meta( $this->_post->ID, 'icegram_campaign_target_rules', true );
 				$this->rules_summary['where'] = array(
 										'homepage' 		=> ( !empty( $this->rules['homepage'] ) ) ? $this->rules['homepage'] : '',
@@ -131,7 +132,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
-			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && (  $_REQUEST['is_home'] === 'true' || is_home() || is_front_page()  )) {
+			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ((isset($_REQUEST['is_home']) && $_REQUEST['is_home'] === 'true') || is_home() || is_front_page()  )) {
 					return true;
 			}
 			if ( !empty( $page_id ) ) {

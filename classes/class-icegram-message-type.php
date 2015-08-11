@@ -66,8 +66,9 @@ abstract class Icegram_Message_Type {
 		}
 		// Allow other plugins to add themes
 		$themes = apply_filters( 'icegram_message_type_themes',  $themes ,$this->type);
+		
 		$this->define_settings();
-
+		
 		$params = array( 
 				'name' 	  	=> $this->name,
 				'type' 	  	=> $this->type,
@@ -79,16 +80,13 @@ abstract class Icegram_Message_Type {
 				);
 
 		$params = apply_filters( 'icegram_message_type_params_'.$this->type  ,$params );
-		
-		// add ds setting
-		// $params = apply_filters( 'icegram_message_params', $params , $this->type);
+		$params = apply_filters( 'icegram_message_type_params', $params, $this->type );
 		
 		$message_types[ $this->type ] = $params;
 		return $message_types;
 	}
 
 	function define_settings() {
-
 		$this->settings = array(
 						    'animation' 	=> array( 'type' => 'select' ),
 						    'theme' 		=> array( 'type' => 'select' ),
@@ -103,6 +101,9 @@ abstract class Icegram_Message_Type {
 						    'form_layout' 	=> array( 'type' => 'position' ), //TODO :: check this , remove if not required
 						    'embed_form'    => array( 'type' => 'form' ) // TODO :: remove this setting from all MS type
 						    );
+		// add animations
+		$this->settings['animation']['values'] 	= array( 'no-anim'=>'No Animation','slide' => 'Slide', 'appear' => 'Appear' );
+		$this->settings['animation']['default'] = 'slide';
 
 	}
 }
