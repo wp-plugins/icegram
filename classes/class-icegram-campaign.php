@@ -132,7 +132,7 @@ if ( !class_exists( 'Icegram_Campaign' ) ) {
 					return true;
 				}
 			}
-			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && (  $_REQUEST['is_home'] === 'true' || is_home() || is_front_page()  )) {
+			if ( !empty( $campaign->rules_summary['where']['homepage'] ) && $campaign->rules_summary['where']['homepage'] == 'yes' && ((isset($_REQUEST['is_home']) && $_REQUEST['is_home'] === 'true') || is_home() || is_front_page()  )) {
 					return true;
 			}
 			if ( !empty( $page_id ) ) {

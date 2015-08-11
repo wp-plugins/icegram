@@ -16,13 +16,6 @@ class Icegram_Message_Type_Toast extends Icegram_Message_Type {
 		parent::define_settings();
 		$this->settings['position']['values'] 	= array( '00', '01', '02', '11', '20', '21', '22' );	
 		$this->settings['position']['default'] 	= '02';
-		$this->settings['animation']['values'] 	= array ( "bang" 		=> __( "Bang", 'icegram' ),
-														"slide-down" 	=> __( "Slide Down", 'icegram' ),
-														"pop" 			=> __( "Pop", 'icegram' ),
-														"appear" 		=> __( "Appear", 'icegram' ),
-														"slide-left" 	=> __( "Slide Left", 'icegram' )
-														);	
-		$this->settings['animation']['default'] = 'bang';
 		$this->settings['theme']['default']		= 'announce';
 		unset ( $this->settings['text_color'],
 				$this->settings['bg_color'],

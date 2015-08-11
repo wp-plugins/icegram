@@ -17,9 +17,6 @@ class Icegram_Message_Type_Messenger extends Icegram_Message_Type {
 		parent::define_settings();
 		$this->settings['position']['values'] 	= array( '20', '22' );	
 		$this->settings['position']['default'] 	= '22';
-		$this->settings['animation']['values'] 	= array ( "slide" 	=> __( 'Slide', 'icegram' ),
-														  "appear" 	=> __( 'Appear', 'icegram' ) );	
-		$this->settings['animation']['default'] = 'slide';
 		$this->settings['theme']['default']		= 'social';
 		$this->settings['form_layout']['values'] 	= array('inline' );	 // May be 'bottom'
 		$this->settings['form_layout']['default'] 	= 'inline';

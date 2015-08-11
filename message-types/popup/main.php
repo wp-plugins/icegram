@@ -44,7 +44,6 @@ class Icegram_Message_Type_Popup extends Icegram_Message_Type {
 	}
 
 	function set_admin_style( $params ) {
-
 		$params['admin_style'] = array( 'label_bg_color' 		=> '#22B189',
 										'theme_header_height'	=> '6em',
 										'thumbnail_width' 		=> '43%',
